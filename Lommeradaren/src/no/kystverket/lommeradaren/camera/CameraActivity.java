@@ -32,11 +32,12 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	private float[] mGravity;
 	private float[] mGeomagnetic;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cameraview);
 		mGLView = (MyGLSurfaceView) findViewById(R.id.myGLSurfaceView1);
-		
+
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -68,28 +69,32 @@ public class CameraActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public void onSensorChanged(SensorEvent evt) {
-
 		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 			mGravity = evt.values.clone();
 		if (evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
 			mGeomagnetic = evt.values.clone();
-		if(evt.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR)
-			mGLView.getSensorData(evt);
+		if (evt.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR)
+			mGLView.getSensorData(evt.values.clone());
 		if (mGravity != null && mGeomagnetic != null) {
 			float R[] = new float[9];
 			float I[] = new float[9];
 			if (SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic)) {
 				float orientation[] = new float[3];
 				SensorManager.getOrientation(R, orientation);
-				animateCompass((int) (Math.toDegrees(orientation[0]) + 90)); // adds
-																				// 90
-																				// to
-																				// correct
-																				// for
-																				// landscape
-																				// mode
+				animateCompass((int) (Math.toDegrees(orientation[0]) + 90));
 			}
 		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
 	}
 
 	private void initCameraView() {
@@ -110,17 +115,5 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		as.addAnimation(ta);
 		compass.startAnimation(as);
 		currentDegree = (int) -degree;
-	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		// TODO Auto-generated method stub
-
 	}
 }

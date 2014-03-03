@@ -1,4 +1,4 @@
-package no.kystverket.lommeradaren.camera.augmented;
+package no.kystverket.lommeradaren.camera.augmented.math;
 
 /**
  * Currently a placeholder class to test basic math. This class should
@@ -81,11 +81,12 @@ public class CartesianCoordinates {
 				* Math.sin(lon);
 	}
 
+	/**
+	 * TODO --- Z-axis might need adjustments for flattening of the earth.
+	 * @param lat
+	 */
 	private void setZ(double lat) {
-		this.xyz[2] = (this.distanceFromSatellite * Math.sin(lat)); // * (1 - (1
-																	// *
-																	// 298.257223563));//Flattening
-																	// factor
+		this.xyz[2] = (this.distanceFromSatellite * Math.sin(lat)); 
 	}
 
 }
