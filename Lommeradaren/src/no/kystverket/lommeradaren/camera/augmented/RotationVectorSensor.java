@@ -5,6 +5,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class RotationVectorSensor {
 
 	private SensorManager sensorManager;

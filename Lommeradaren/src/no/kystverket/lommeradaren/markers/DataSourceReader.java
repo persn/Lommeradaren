@@ -9,6 +9,11 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class DataSourceReader {
 
 	private String rawData;
