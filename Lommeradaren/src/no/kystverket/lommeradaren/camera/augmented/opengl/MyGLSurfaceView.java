@@ -6,6 +6,11 @@ import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class MyGLSurfaceView extends GLSurfaceView {
 
 	private MarkerRenderer mRenderer;

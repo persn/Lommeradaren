@@ -1,12 +1,16 @@
 package no.kystverket.lommeradaren.markers;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class DataSource {
 
 	private String name;
 	private String url;
 
 	public DataSource(String name, String url) {
-		super();
 		this.name = name;
 		this.url = url;
 	}
