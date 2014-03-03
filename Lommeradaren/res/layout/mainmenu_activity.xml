@@ -11,34 +11,32 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:onClick="cameraOnClick"
-        android:text="placeholder_camerabutton" />
-
-    <Button
-        android:id="@+id/mainmenuGalleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="74dp"
-        android:layout_toRightOf="@+id/mainmenuCameraButton"
-        android:onClick="galleryOnClick"
-        android:text="placeholder_gallerybutton" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="placeholder_button4" />
+        android:text="@string/camera" />
 
     <Button
         android:id="@+id/mainmenuMapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="59dp"
-        android:layout_toRightOf="@+id/mainmenuGalleryButton"
+        android:layout_toRightOf="@+id/mainmenuCameraButton"
         android:onClick="goToMapScreenOnClick"
-        android:text="placeholder_mapbutton" />
+        android:text="@string/map" />
+
+    <Button
+        android:id="@+id/mainmenuGalleryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/mainmenuMapButton"
+        android:onClick="galleryOnClick"
+        android:text="@string/gallery" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/mainmenuGalleryButton"
+        android:text="placeholder_button4" />
 
 </RelativeLayout>

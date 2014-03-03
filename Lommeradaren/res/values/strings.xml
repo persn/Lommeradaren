@@ -2,4 +2,12 @@
 
     <string name="app_name">Lommeradaren</string>
 
+    <string name="take_picture">Take Picture</string>
+
+    <string name="camera">Camera</string>
+
+    <string name="map">Map</string>
+
+    <string name="gallery">Gallery</string>
+
 </resources>
