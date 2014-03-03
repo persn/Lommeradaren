@@ -59,19 +59,6 @@ public class LinearAlgebra {
 		pointOfInterest.draw(drawMatrix);
 	}
 
-	private void rotatePointOfInterest(float[] originMatrix, float angle,
-			float x, float y, float z) {
-		float[] rotationMatrixTest = new float[16];
-		//Placeholder roation to make 2D objects visible from anywhere in the system.
-		long time = SystemClock.uptimeMillis() % 4000L;
-		angle = 0.090f * ((int) time);
-		//Placeholder roation to make 2D objects visible from anywhere in the system.
-		Matrix.setIdentityM(rotationMatrixTest, 0);
-		Matrix.rotateM(rotationMatrixTest, 0, angle, x, y, z);
-		Matrix.multiplyMM(originMatrix, 0, originMatrix, 0, rotationMatrixTest,
-				0);
-	}
-
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
 			float centerX, float centerY, float centerZ, float upX, float upY,
 			float upZ) {
@@ -86,6 +73,19 @@ public class LinearAlgebra {
 		float ratio2 = (float) height / width;
 		Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -ratio2, ratio2,
 				2, 360);
+	}
+	
+	private void rotatePointOfInterest(float[] originMatrix, float angle,
+			float x, float y, float z) {
+		float[] rotationMatrixTest = new float[16];
+		//Placeholder roation to make 2D objects visible from anywhere in the system.
+		long time = SystemClock.uptimeMillis() % 4000L;
+		angle = 0.090f * ((int) time);
+		//Placeholder roation to make 2D objects visible from anywhere in the system.
+		Matrix.setIdentityM(rotationMatrixTest, 0);
+		Matrix.rotateM(rotationMatrixTest, 0, angle, x, y, z);
+		Matrix.multiplyMM(originMatrix, 0, originMatrix, 0, rotationMatrixTest,
+				0);
 	}
 
 }

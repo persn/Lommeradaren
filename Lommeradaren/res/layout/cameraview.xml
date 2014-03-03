@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" >
     </RelativeLayout>
 
-    <no.kystverket.lommeradaren.camera.augmented.opengl.MyGLSurfaceView
+    <no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView
         android:id="@+id/myGLSurfaceView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
