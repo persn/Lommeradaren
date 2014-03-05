@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -17,6 +18,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnTouchListener {
@@ -59,6 +61,17 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		mSensorManager.registerListener(this, rotationSensor,
 				SensorManager.SENSOR_DELAY_GAME);
 		initCameraView();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e) {
+	    switch(keycode) {
+	        case KeyEvent.KEYCODE_MENU:
+	        	//TODO Add menubutton impl.
+	            return true;
+	    }
+
+	    return super.onKeyDown(keycode, e);
 	}
 
 	@Override
