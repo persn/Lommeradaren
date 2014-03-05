@@ -1,7 +1,7 @@
 package no.kystverket.lommeradaren.camera;
 
 import no.kystverket.lommeradaren.R;
-import no.kystverket.lommeradaren.camera.augmented.opengl.MyGLSurfaceView;
+import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,7 +23,7 @@ import android.widget.Toast;
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnTouchListener {
 
-	private MyGLSurfaceView mGLView;
+	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
 	private ImageView compass;
 	private int currentDegree = 0;
@@ -38,7 +38,7 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cameraview);
-		mGLView = (MyGLSurfaceView) findViewById(R.id.myGLSurfaceView1);
+		mGLView = (MarkerSurfaceView) findViewById(R.id.myGLSurfaceView1);
 
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = mSensorManager

@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="map_options">
+    <string-array name="string_array_map_options">
         <item>Normal</item>
         <item>Terrain</item>
         <item>Hybrid</item>
         <item>Satellite</item>
+    </string-array>
+    <string-array name="string_array_datasources">
+        <item >Kystverket|http://test.shiprep.no/shiprepwebuisys/api/NearbyShips</item>
     </string-array>
 
 </resources>

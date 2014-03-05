@@ -11,12 +11,12 @@ import android.util.AttributeSet;
  * @author Per Olav Flaten
  *
  */
-public class MyGLSurfaceView extends GLSurfaceView {
+public class MarkerSurfaceView extends GLSurfaceView {
 
 	private MarkerRenderer mRenderer;
 	private float[] vectorBuffer = { 0.0f, 0.0f, 0.0f };
 
-	public MyGLSurfaceView(Context context, AttributeSet att) {
+	public MarkerSurfaceView(Context context, AttributeSet att) {
 		super(context, att);
 		this.setEGLContextClientVersion(2);
 

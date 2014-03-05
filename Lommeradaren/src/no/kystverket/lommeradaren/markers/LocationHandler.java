@@ -3,7 +3,6 @@ package no.kystverket.lommeradaren.markers;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -11,6 +10,11 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class LocationHandler implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
@@ -18,22 +22,37 @@ public class LocationHandler implements
 	private LocationClient lc;
 	private Location curLoc;
 	private LocationRequest lr;
-	private int updateInterval = 1000 * 10;
+	private final static int UPDATE_INTERVAL = 5000 * 30;
 
 	public LocationHandler(Context context) {
 		this.lc = new LocationClient(context, this, this);
 		lc.connect();
 		lr = LocationRequest.create();
 		lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		lr.setInterval(updateInterval);
+		lr.setInterval(UPDATE_INTERVAL);
 	}
 
 	public Location getLocation() {
 		if (curLoc != null) {
 			return curLoc;
-		} else {
-			return lc.getLastLocation();
+		}else{
+			Location dummy = new Location("LastResort");
+			dummy.setLatitude(63);
+			dummy.setLongitude(10);
+			return dummy;
 		}
+	}
+	
+	public String getLongtitude(){
+		return "" + this.getLocation().getLongitude();
+	}
+	
+	public String getLatitude(){
+		return "" + this.getLocation().getLatitude();
+	}
+	
+	public String getAltitude(){
+		return "" + this.getLocation().getAltitude();
 	}
 
 	public void stop() { // Call when the parent activity stops. Create new LH
@@ -53,18 +72,19 @@ public class LocationHandler implements
 	@Override
 	public void onConnected(Bundle arg0) {
 		lc.requestLocationUpdates(lr, this);
+		this.curLoc = lc.getLastLocation();
 	}
 
 	@Override
 	public void onDisconnected() {
 		lc.removeLocationUpdates(this);
-		Log.d("LocHandler onDisconnected", "placeholder");
+		//Log.d("LocHandler onDisconnected", "placeholder");
 
 	}
 
 	@Override
 	public void onLocationChanged(Location loc) {
 		curLoc = loc;
-		Log.d("LocHandler onLocationChanged", curLoc.toString());
+		//Log.d("LocHandler onLocationChanged", curLoc.toString());
 	}
 }

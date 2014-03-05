@@ -9,19 +9,23 @@ import java.net.URL;
 
 import android.util.Log;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class TextHandler {
 
 	public String makeUrl(String startUrl, String lat, String lng, String alt,
 			String radius) {
-		return startUrl + "&latitude=" + lat + "&longitude=" + lng
+		return startUrl + "?latitude=" + lat + "&longitude=" + lng
 				+ "&altitude=" + alt + "&radius=" + radius;
 	}
 
 	public String getRawDataFromUrl(String url) {
 		String rawString = "";
 		try {
-			InputStream input;
-			input = new URL(url).openStream();
+			InputStream input = new URL(url).openStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(input));
 			String line;
 			while ((line = br.readLine()) != null) {
