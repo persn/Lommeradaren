@@ -43,14 +43,14 @@
             android:layout_row="0" />
     </GridLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_choosemaptype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="takePictureOnClick"
-        android:text="@string/take_picture" />
+        android:background="@drawable/camerabutton_selector"
+        android:onClick="takePictureOnClick" />
 
     <ImageView
         android:id="@+id/imageView1"
