@@ -3,6 +3,7 @@ package no.kystverket.lommeradaren.camera;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;

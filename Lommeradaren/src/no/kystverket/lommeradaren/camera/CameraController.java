@@ -118,6 +118,7 @@ public class CameraController {
 	 */
 	public void snapPicture() {
 		if (this.readyToTakePicture) {
+			Log.d("TEST CAMERA","TEST CAMERA");
 			try {
 				this.readyToTakePicture = false;
 				this.camera.takePicture(null, null, this.mPicture);
@@ -131,6 +132,8 @@ public class CameraController {
 			}
 		}
 	}
+	
+	
 
 	/**
 	 * Initiator for the handler algorithm that saves a picture on file.

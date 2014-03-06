@@ -1,13 +1,16 @@
 package no.kystverket.lommeradaren.camera;
 
+import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -65,15 +68,26 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	
 	@Override
 	public boolean onKeyDown(int keycode, KeyEvent e) {
+		Toast.makeText(getApplicationContext(), "Keycode: " + keycode, Toast.LENGTH_SHORT).show();
 	    switch(keycode) {
 	        case KeyEvent.KEYCODE_MENU:
 	        	//TODO Add menubutton impl.
 	            return true;
+	        case KeyEvent.KEYCODE_CAMERA:
+	        	this.mPreview.snapPicture();
+	        	return true;
+	        case KeyEvent.ACTION_DOWN:
+	        	Toast.makeText(getApplicationContext(), "TestCameraFocus", Toast.LENGTH_SHORT).show();
+	        	return true;
+	        case KeyEvent.KEYCODE_BACK:
+	        	startActivity(new Intent(this.getApplicationContext(), MainActivity.class));
+	        	finish();
+	        	return true;
 	    }
-
+	    Toast.makeText(getApplicationContext(), "No Event for this key", Toast.LENGTH_SHORT).show();
 	    return super.onKeyDown(keycode, e);
 	}
-
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -108,6 +122,10 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 		// TODO Auto-generated method stub
+	}
+	
+	public void takePictureOnClick(View v){
+		this.mPreview.snapPicture();
 	}
 
 	private void initCameraView() {

@@ -6,6 +6,7 @@ import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 /**
@@ -24,7 +25,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void cameraOnClick(View v) {
-		startActivity(new Intent(this.getApplicationContext(), CameraActivity.class));
+		startActivity(new Intent(this.getApplicationContext(),
+				CameraActivity.class));
 		finish();
 	}
 
@@ -38,5 +40,15 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this.getApplicationContext(),
 				MapActivity.class));
 		finish();
+	}
+
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e) {
+		switch (keycode) {
+		case KeyEvent.KEYCODE_BACK:
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keycode, e);
 	}
 }
