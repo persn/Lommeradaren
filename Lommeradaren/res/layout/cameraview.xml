@@ -50,7 +50,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:onClick="takePictureOnClick"
-        android:text="@string/take_picture" />
+        android:text="@string/string_take_picture" />
 
     <ImageView
         android:id="@+id/imageView1"

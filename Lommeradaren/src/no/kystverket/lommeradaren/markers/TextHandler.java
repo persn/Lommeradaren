@@ -34,8 +34,10 @@ public class TextHandler {
 			br.close();
 		} catch (MalformedURLException e) {
 			Log.d("GetRawDataFromUrl", "MalformedURLException");
+			e.printStackTrace();
 		} catch (IOException e) {
 			Log.d("GetRawDataFromUrl", "IOException");
+			e.printStackTrace();
 		}
 		return rawString;
 	}

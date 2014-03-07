@@ -98,6 +98,7 @@ public class DataSourceHandler {
 		} catch (JSONException jsonE) {
 			Log.d("no.kystverket.lommeradaren",
 					"DataSourceReader.java extractAllPOI");
+			jsonE.printStackTrace();
 		}
 	}
 
@@ -117,15 +118,16 @@ public class DataSourceHandler {
 			double distance = currentJSON.getDouble("distance");
 			String hasPage = currentJSON.getString("has_detail_page");
 			String webpage = currentJSON.getString("webpage");
-			String mmsi = currentJSON.getString("mmsi");
+			// int mmsi = currentJSON.getInt("mmsi");
 			// double speed = currentJSON.getDouble("speed");
 			// double course = currentJSON.getDouble("course");
 			String positionTime = currentJSON.getString("positionTime");
-			pointOfInterest = new POI(id, title, lat, lng, alt, mmsi, distance,
+			pointOfInterest = new POI(id, title, lat, lng, alt, distance,
 					hasPage, webpage, positionTime);
 		} catch (JSONException jsonE) {
-			Log.d("no.kystverket.lommeradaren",
-					"DataSourcereader.java extractPOIFromDataSource");
+			Log.e("no.kystverket.lommeradaren",
+					"DataSourceHandler.java extractPOIFromDataSource");
+			jsonE.printStackTrace();
 		}
 		return pointOfInterest;
 	}

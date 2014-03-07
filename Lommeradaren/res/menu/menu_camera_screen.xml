@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_camera_choose_map" android:title="@string/string_choose_map_type">
+        <menu>
+            <item android:id="@+id/sub_menu_camera_normal" android:title="@string/string_map_type_normal"/>
+            <item android:id="@+id/sub_menu_camera_terrain" android:title="@string/string_map_type_terrain"/>
+            <item android:id="@+id/sub_menu_camera_hybrid" android:title="@string/string_map_type_hybrid"/>
+            <item android:id="@+id/sub_menu_camera_satellite" android:title="@string/string_map_type_satellite"/>
+        </menu>
+    </item>
+    <item android:id="@+id/menu_camera_go_to_screen" android:title="@string/string_go_to_screen">
+        <menu>
+            <item android:id="@+id/sub_menu_camera_map" android:title="@string/string_map"/>
+            <item android:id="@+id/sub_menu_camera_gallery" android:title="@string/string_gallery"/>
+            <item android:id="@+id/sub_menu_camera_user" android:title="@string/string_user_account"/>
+        </menu>
+    </item>
+    
+
+</menu>

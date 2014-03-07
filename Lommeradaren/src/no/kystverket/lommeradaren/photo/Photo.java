@@ -2,6 +2,11 @@ package no.kystverket.lommeradaren.photo;
 
 import android.graphics.Bitmap;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class Photo {
 
     private Bitmap image;

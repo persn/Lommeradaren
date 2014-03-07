@@ -35,7 +35,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/buttonbackgroundselector"
             android:onClick="cameraOnClick"
-            android:text="@string/camera" />
+            android:text="@string/string_camera" />
 
         <Button
             android:id="@+id/mainmenuMapButton"
@@ -49,7 +49,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/buttonbackgroundselector"
             android:onClick="goToMapScreenOnClick"
-            android:text="@string/map" />
+            android:text="@string/string_map" />
 
         <Button
             android:id="@+id/mainmenuGalleryButton"
@@ -63,7 +63,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/buttonbackgroundselector"
             android:onClick="galleryOnClick"
-            android:text="@string/gallery" />
+            android:text="@string/string_gallery" />
 
         <Button
             android:id="@+id/button4"
@@ -76,7 +76,7 @@
             android:layout_marginRight="2.5dp"
             android:layout_weight="1"
             android:background="@drawable/buttonbackgroundselector"
-            android:text="placeholder" />
+            android:text="@string/string_user_account" />
 
     </LinearLayout>
 

@@ -78,13 +78,10 @@ public class LocationHandler implements
 	@Override
 	public void onDisconnected() {
 		lc.removeLocationUpdates(this);
-		//Log.d("LocHandler onDisconnected", "placeholder");
-
 	}
 
 	@Override
 	public void onLocationChanged(Location loc) {
 		curLoc = loc;
-		//Log.d("LocHandler onLocationChanged", curLoc.toString());
 	}
 }

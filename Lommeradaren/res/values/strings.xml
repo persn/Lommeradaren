@@ -1,10 +1,16 @@
 <resources>
 
     <string name="app_name">Lommeradaren</string>
-    <string name="app_name">Lommeradaren</string>
-    <string name="take_picture">Take Picture</string>
-    <string name="camera">Camera</string>
-    <string name="map">Map</string>
-    <string name="gallery">Gallery</string>
+    <string name="string_take_picture">Take Picture</string>
+    <string name="string_camera">Camera</string>
+    <string name="string_map">Map</string>
+    <string name="string_gallery">Gallery</string>
+    <string name="string_user_account">User Account</string>
+    <string name="string_map_type_normal">Normal</string>
+    <string name="string_map_type_terrain">Terrain</string>
+    <string name="string_map_type_hybrid">Hybrid</string>
+    <string name="string_map_type_satellite">Satellite</string>
+    <string name="string_choose_map_type">Choose Map Type</string>
+    <string name="string_go_to_screen">Go To Screen</string>
 
 </resources>
