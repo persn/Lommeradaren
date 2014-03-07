@@ -10,13 +10,4 @@
         android:layout_height="wrap_content" >
     </com.google.android.gms.maps.MapView>
 
-    <Button
-        android:id="@+id/btn_choosemaptype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:onClick="chooseMapTypeOnClick"
-        android:text="placeholder" />
-
 </RelativeLayout>

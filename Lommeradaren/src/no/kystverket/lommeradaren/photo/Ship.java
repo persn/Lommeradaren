@@ -16,10 +16,10 @@ public class Ship extends POI {
 
 
 	public Ship(int id, String name, double lat, double lng, double alt,
-			String mmsi, double distance, String has_detail_page, String webpage,
+			int mmsi, double distance, String has_detail_page, String webpage,
 			String positionTime, String imo, double speed, String lastPort,
 			String destination, double course) {
-		super(id, name, lat, lng, alt, mmsi, distance, has_detail_page,
+		super(id, name, lat, lng, alt, distance, has_detail_page,
 				webpage, positionTime);
 		this.speed = speed;
 		this.lastPort = lastPort;

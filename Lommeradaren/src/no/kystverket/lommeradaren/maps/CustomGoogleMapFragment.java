@@ -4,21 +4,19 @@ import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -36,6 +34,7 @@ public class CustomGoogleMapFragment extends Fragment {
 	private Bundle bundle;
 	private LocationHandler currentLocation;
 	private DataSourceCollection dataSourceCollection;
+	private float zoom;
 
 	private Handler handler;
 	private Runnable updateMarkersThread;
@@ -61,7 +60,6 @@ public class CustomGoogleMapFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View inflatedView = inflater.inflate(R.layout.googlemap_fragment,
 				container, false);
-		this.chooseMapTypeOnClick(inflatedView);
 
 		MapsInitializer.initialize(getActivity());
 		this.gMapView = (MapView) inflatedView.findViewById(R.id.map);
@@ -81,6 +79,7 @@ public class CustomGoogleMapFragment extends Fragment {
 		super.onResume();
 		this.gMapView.onResume();
 		startMarkerRefresh();
+		this.zoom = calculateRelativeZoomDistance();
 	}
 
 	/**
@@ -111,53 +110,50 @@ public class CustomGoogleMapFragment extends Fragment {
 	}
 
 	/**
-	 * Fetches the btn_choosemaptype Button component, and initialized the
-	 * onClickListener set to it. Note that this is not built exactly to the
-	 * method set in the xml-form googlemap_fragment, because the button exists
-	 * inside of a fragment, but xml-listeners require Activities. The xml form
-	 * will still contain the method name so for practical reasons, so people
-	 * know which method to look up.
+	 * Refresh of map so that it gets redrawn, but rotated to pointing
+	 * direction.
 	 * 
-	 * @param v
+	 * @param bearing
+	 *            The direction the unit is pointing. From 0-360 degrees.
 	 */
-	private void chooseMapTypeOnClick(View v) {
-		final Button chooseMapTypeButton = ((Button) v
-				.findViewById(R.id.btn_choosemaptype));
-		chooseMapTypeButton.setOnClickListener(new View.OnClickListener() {
+	public void updateBearing(float bearing) {
+		if (this.gMap.getMyLocation() != null) {
+			LatLng location;
+			location = new LatLng(this.gMap.getMyLocation().getLatitude(),
+					this.gMap.getMyLocation().getLongitude());
+			CameraPosition currentPlace = new CameraPosition.Builder()
+					.target(location).bearing(bearing).zoom(this.zoom).build();
+			gMap.moveCamera(CameraUpdateFactory.newCameraPosition(currentPlace));
+		}
+	}
 
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setItems(R.array.string_array_map_options,
-						new DialogInterface.OnClickListener() {
+	/**
+	 * Toggles GUI-settings specific for mini-map.
+	 */
+	public void toggleMiniMapSettings() {
+		this.gMap.getUiSettings().setMyLocationButtonEnabled(false);
+		this.gMap.getUiSettings().setZoomControlsEnabled(false);
+		this.gMap.getUiSettings().setAllGesturesEnabled(false);
+	}
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								switch (which) {
-								case 0: // Set normal map mode
-									gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-									break;
-								case 1: // Set terrain map mode
-									gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-									break;
-								case 2: // Set hybrid map mode
-									gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-									break;
-								case 3: // Set satellite map mode
-									gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-									break;
-								default:
-									Log.d("no.kystverket",
-											"Entered unaccessible case in switch CustomGoogleMapFragment.java chooseMapTypeOnClick");
-									break;
-								}
-							}
-						});
-				builder.create().show();
-			}
-		});
+	/**
+	 * http://stackoverflow.com/questions/6002563/android-how-do-i-set-the-zoom-
+	 * level-of-map-view-to-1-km-radius-around-my-curren
+	 * 
+	 * @return
+	 */
+	private float calculateRelativeZoomDistance() {
+		final float EQUATOR_LENGTH_METER = 40075016.6856f;
+		Point size = new Point();
+		getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+		float widthInPixels = size.x;
+		float metersPerPixel = EQUATOR_LENGTH_METER / 256;
+		float zoomLevel = 1;
+		while ((metersPerPixel * widthInPixels) > 50000) {
+			metersPerPixel /= 2;
+			zoomLevel++;
+		}
+		return zoomLevel;
 	}
 
 	/**
@@ -184,13 +180,10 @@ public class CustomGoogleMapFragment extends Fragment {
 	 */
 	private void setUpMap() {
 		this.gMap.setMyLocationEnabled(true);
-		this.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-				66.47821, 14.67773), 3));
-		this.gMap.getUiSettings().setZoomControlsEnabled(false);
 	}
 
 	/**
-	 * Starts the tread that handles marker refreshong.
+	 * Starts the tread that handles marker refreshing.
 	 */
 	private void startMarkerRefresh() {
 		getActivity().runOnUiThread(this.updateMarkersThread);

@@ -3,7 +3,7 @@ package no.kystverket.lommeradaren.markers;
 /**
  * 
  * @author Henrik Reitan
- *
+ * 
  */
 public class POI {
 
@@ -12,22 +12,21 @@ public class POI {
 	private double lat;
 	private double lng;
 	private double alt;
-	private String mmsi;
+	//private int mmsi;
 	private double distance;
 	private String has_detail_page;
 	private String webpage;
 	private String positionTime;
-	private String imo;
+	//private String imo;
 
 	public POI(int id, String name, double lat, double lng, double alt,
-			String mmsi, double distance, String has_detail_page, String webpage,
+			double distance, String has_detail_page, String webpage,
 			String positionTime) {
 		this.id = id;
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 		this.alt = alt;
-		this.mmsi = mmsi;
 		this.distance = distance;
 		this.has_detail_page = has_detail_page;
 		this.webpage = webpage;
@@ -54,10 +53,6 @@ public class POI {
 		return alt;
 	}
 
-	public String getMmsi() {
-		return mmsi;
-	}
-
 	public double getDistance() {
 		return distance;
 	}
@@ -72,10 +67,6 @@ public class POI {
 
 	public String getPositionTime() {
 		return positionTime;
-	}
-	
-	public String getImo(){
-		return imo;
 	}
 
 }

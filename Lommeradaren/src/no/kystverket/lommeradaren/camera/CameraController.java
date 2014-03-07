@@ -89,7 +89,7 @@ public class CameraController {
 	 * 
 	 * @param mHolder
 	 */
-	public void redrawCamera(SurfaceHolder mHolder,int width,int height) {
+	public void redrawCamera(SurfaceHolder mHolder, int width, int height) {
 		if (mHolder.getSurface() == null) {
 			return;
 		}
@@ -98,6 +98,7 @@ public class CameraController {
 			this.camera.stopPreview();
 		} catch (Exception e) {
 			Log.d("no.kystverket", "CameraController.java redrawSurface 1");
+			e.printStackTrace();
 		}
 
 		try {
@@ -108,6 +109,7 @@ public class CameraController {
 			this.camera.startPreview();
 		} catch (Exception e) {
 			Log.d("no.kystverket", "CameraController.java redrawSurface 2");
+			e.printStackTrace();
 		}
 	}
 
@@ -130,6 +132,17 @@ public class CameraController {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void autoFocusAndSnapPicture() {
+
+		this.camera.autoFocus(new Camera.AutoFocusCallback() {
+
+			@Override
+			public void onAutoFocus(boolean success, Camera camera) {
+				snapPicture();
+			}
+		});
 	}
 
 	/**
@@ -155,9 +168,11 @@ public class CameraController {
 				} catch (FileNotFoundException e) {
 					Log.d("no.kystverket",
 							"FileNotFound CameraController.java initPictureCallback 2");
+					e.printStackTrace();
 				} catch (IOException e) {
 					Log.d("no.kystverket",
 							"CameraController.java initPictureCallback 3");
+					e.printStackTrace();
 				}
 
 			}

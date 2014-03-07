@@ -42,6 +42,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	public void snapPicture() {
 		this.cameraController.snapPicture();
 	}
+	
+	public void autoFocusAndTakePicture(){
+		this.cameraController.autoFocusAndSnapPicture();
+	}
 
 	/**
 	 * Coded in convention with Googles suggestion code

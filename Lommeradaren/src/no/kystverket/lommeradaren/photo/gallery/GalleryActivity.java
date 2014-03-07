@@ -2,13 +2,20 @@ package no.kystverket.lommeradaren.photo.gallery;
 
 import java.util.ArrayList;
 
+import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
+import no.kystverket.lommeradaren.camera.CameraActivity;
+import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.Photo;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -19,6 +26,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class GalleryActivity extends Activity implements
 		AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 
@@ -53,6 +65,7 @@ public class GalleryActivity extends Activity implements
 		g.setOnItemSelectedListener(this);
 	}
 
+	@Override
 	public void onItemSelected(AdapterView<?> parent, View v, int position,
 			long id) {
 		mSwitcher.setImageDrawable(new BitmapDrawable(getApplicationContext()
@@ -61,9 +74,11 @@ public class GalleryActivity extends Activity implements
 		textSwitcher.setText(pictures.get(position).getImgName());
 	}
 
+	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 	}
 
+	@Override
 	public View makeView() {
 		ImageView i = new ImageView(this);
 		i.setBackgroundColor(0xFF000000);
@@ -72,4 +87,42 @@ public class GalleryActivity extends Activity implements
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		return i;
 	}
+
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e) {
+		switch (keycode) {
+		case KeyEvent.KEYCODE_BACK:
+			startActivity(new Intent(this.getApplicationContext(),
+					MainActivity.class));
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keycode, e);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_gallery_screen, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.sub_menu_gallery_camera:
+			startActivity(new Intent(this.getApplicationContext(),
+					CameraActivity.class));
+			finish();
+			return true;
+		case R.id.sub_menu_gallery_map:
+			startActivity(new Intent(this.getApplicationContext(),
+					MapActivity.class));
+			finish();
+			return true;
+		case R.id.sub_menu_gallery_user:
+			return false;// Not yet implemented
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 }

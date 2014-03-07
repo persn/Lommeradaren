@@ -1,14 +1,21 @@
 package no.kystverket.lommeradaren.camera;
 
+import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
+import no.kystverket.lommeradaren.maps.CustomGoogleMapFragment;
+import no.kystverket.lommeradaren.maps.MapActivity;
+import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -18,13 +25,21 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnTouchListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
+	private CustomGoogleMapFragment gMap;
 	private ImageView compass;
 	private int currentDegree = 0;
 	private SensorManager mSensorManager;
@@ -48,7 +63,10 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		rotationSensor = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 		compass = (ImageView) findViewById(R.id.imageView1);
-		initCameraView();
+
+		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
+				.findFragmentById(R.id.fragment1));
+		this.gMap.toggleMiniMapSettings();
 	}
 
 	@Override
@@ -62,16 +80,23 @@ public class CameraActivity extends Activity implements SensorEventListener,
 				SensorManager.SENSOR_DELAY_GAME);
 		initCameraView();
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keycode, KeyEvent e) {
-	    switch(keycode) {
-	        case KeyEvent.KEYCODE_MENU:
-	        	//TODO Add menubutton impl.
-	            return true;
-	    }
-
-	    return super.onKeyDown(keycode, e);
+		switch (keycode) {
+		case KeyEvent.KEYCODE_CAMERA:
+			this.mPreview.snapPicture();
+			return true;
+		case KeyEvent.KEYCODE_FOCUS:
+			this.mPreview.autoFocusAndTakePicture();
+			return true;
+		case KeyEvent.KEYCODE_BACK:
+			startActivity(new Intent(this.getApplicationContext(),
+					MainActivity.class));
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keycode, e);
 	}
 
 	@Override
@@ -89,12 +114,15 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		if (evt.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR)
 			mGLView.getSensorData(evt.values.clone());
 		if (mGravity != null && mGeomagnetic != null) {
-			float R[] = new float[9];
-			float I[] = new float[9];
-			if (SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic)) {
+			float rotationMatrix[] = new float[9];
+			float inclinationMatrix[] = new float[9];
+			if (SensorManager.getRotationMatrix(rotationMatrix,
+					inclinationMatrix, mGravity, mGeomagnetic)) {
 				float orientation[] = new float[3];
-				SensorManager.getOrientation(R, orientation);
+				SensorManager.getOrientation(rotationMatrix, orientation);
 				animateCompass((int) (Math.toDegrees(orientation[0]) + 90));
+				this.gMap
+						.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 			}
 		}
 	}
@@ -108,6 +136,55 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_camera_screen, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.sub_menu_camera_normal:
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_NORMAL);
+			return true;
+		case R.id.sub_menu_camera_terrain:
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_TERRAIN);
+			return true;
+		case R.id.sub_menu_camera_hybrid:
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_HYBRID);
+			return true;
+		case R.id.sub_menu_camera_satellite:
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_SATELLITE);
+			return true;
+		case R.id.sub_menu_camera_map:
+			startActivity(new Intent(this.getApplicationContext(),
+					MapActivity.class));
+			finish();
+			return true;
+		case R.id.sub_menu_camera_gallery:
+			startActivity(new Intent(this.getApplicationContext(),
+					GalleryActivity.class));
+			finish();
+			return true;
+		case R.id.sub_menu_map_user:
+			return false;// Not yet implemented
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * This is the method called as designated from the TakePicture-button in cameraview.xml
+	 * @param v
+	 */
+	public void takePictureOnClick(View v) {
+		this.mPreview.autoFocusAndTakePicture();
 	}
 
 	private void initCameraView() {

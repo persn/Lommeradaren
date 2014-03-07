@@ -8,6 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class PhotoHandler {
 
     private ArrayList<Photo> pictures;

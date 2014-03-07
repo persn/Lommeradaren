@@ -11,6 +11,11 @@ import android.widget.Gallery;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
 
+/**
+ * 
+ * @author Henrik Reitan
+ *
+ */
 public class ImageAdapter extends BaseAdapter {
     
 	private Context mContext;
