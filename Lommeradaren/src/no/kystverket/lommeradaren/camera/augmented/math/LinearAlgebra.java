@@ -38,12 +38,14 @@ public class LinearAlgebra {
 		float[] rotationMatrixZ = new float[16];
 		
 		Matrix.setIdentityM(mTempMatrix, 0);
-		Matrix.setRotateM(rotationMatrixZ, 0, rotationX, 0, 0, 1);
-		Matrix.setRotateM(rotationMatrixX, 0, rotationY, 1, 0, 0);
-		Matrix.setRotateM(rotationMatrixY, 0, rotationZ, 0, 1, 0);
-		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixZ, 0, mTempMatrix, 0);
+		
+		Matrix.setRotateM(rotationMatrixX, 0, rotationX, 1, 0, 0);
+		Matrix.setRotateM(rotationMatrixY, 0, rotationY, 0, 1, 0);
+		Matrix.setRotateM(rotationMatrixZ, 0, rotationZ, 0, 0, 1);
+		
 		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixX, 0, mTempMatrix, 0);
 		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixY, 0, mTempMatrix, 0);
+		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixZ, 0, mTempMatrix, 0);
 
 		Matrix.multiplyMM(mTempMatrix, 0, mViewMatrix, 0, mTempMatrix, 0);
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mTempMatrix,0);

@@ -46,8 +46,8 @@ public class MarkerSurfaceView extends GLSurfaceView {
 			orientation[2] = (float) Math.toDegrees(orientation[2]);
 
 			this.mRenderer.setEye(0, 0, 0);
-			this.mRenderer.setCenter(orientation[1], orientation[2],
-					orientation[0]);
+			this.mRenderer.setCenter(orientation[0], orientation[1],
+					orientation[2]);
 			this.mRenderer.setUp(0, 1, 0);
 
 			this.requestRender();
