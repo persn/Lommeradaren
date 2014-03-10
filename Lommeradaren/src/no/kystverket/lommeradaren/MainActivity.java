@@ -32,15 +32,20 @@ public class MainActivity extends Activity {
 		getWindowManager().getDefaultDisplay().getSize(screenSize);
 		setContentView(R.layout.mainmenu_activity);
 		backgroundImage = (ImageView) findViewById(R.id.mainmenu_background);
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
 				PhotoHandler.decodeSampledBitmapFromResource(getResources(),
 						R.drawable.mainmenu_background, screenSize.x,
 						screenSize.y)));
-
 	}
-	
+
 	@Override
-	public void onStop(){
+	public void onStop() {
 		super.onStop();
 		PhotoHandler.stripImageView(backgroundImage);
 	}

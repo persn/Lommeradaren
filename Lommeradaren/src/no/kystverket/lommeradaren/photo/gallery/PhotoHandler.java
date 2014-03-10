@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -74,6 +75,9 @@ public class PhotoHandler {
 		final int width = options.outWidth;
 		int inSampleSize = 1;
 
+		Log.w("ph", "height"+Math.round((float) height
+					/ (float) reqHeight));
+		Log.w("ph", "width"+Math.round((float) width / (float) reqWidth));
 		if (height > reqHeight || width > reqWidth) {
 
 			// Calculate ratios of height and width to requested height and
@@ -81,14 +85,13 @@ public class PhotoHandler {
 			final int heightRatio = Math.round((float) height
 					/ (float) reqHeight);
 			final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-			// Choose the smallest ratio as inSampleSize value, this will
-			// guarantee
-			// a final image with both dimensions larger than or equal to the
-			// requested height and width.
-			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+			if(heightRatio > widthRatio){
+				inSampleSize = heightRatio;
+			} else {
+				inSampleSize = widthRatio;
+			}
 		}
-
+		Log.w("ph", "scale"+inSampleSize);
 		return inSampleSize;
 	}
 
@@ -102,22 +105,21 @@ public class PhotoHandler {
 	 * @param reqHeight
 	 * @return
 	 */
-	public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-	        int reqWidth, int reqHeight) {
+	public static Bitmap decodeSampledBitmapFromResource(Resources res,
+			int resId, int reqWidth, int reqHeight) {
 
-	    // First decode with inJustDecodeBounds=true to check dimensions
-	    final BitmapFactory.Options options = new BitmapFactory.Options();
-	    options.inJustDecodeBounds = true;
-	    BitmapFactory.decodeResource(res, resId, options);
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(res, resId, options);
 
-	    // Calculate inSampleSize
-	    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-	    // Decode bitmap with inSampleSize set
-	    options.inJustDecodeBounds = false;
-	    return BitmapFactory.decodeResource(res, resId, options);
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth,	reqHeight);
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeResource(res, resId, options);
 	}
-	
+
 	public static Bitmap decodeSampledBitmapFromUrl(String pathName,
 			int reqWidth, int reqHeight) {
 
@@ -143,8 +145,10 @@ public class PhotoHandler {
 		if (view.getDrawable() instanceof BitmapDrawable) {
 			((BitmapDrawable) view.getDrawable()).getBitmap().recycle();
 		}
-		view.getDrawable().setCallback(null);
-		view.setImageDrawable(null);
+		if (view.getDrawable() != null) {
+			view.getDrawable().setCallback(null);
+			view.setImageDrawable(null);
+		}
 		view.getResources().flushLayoutCache();
 		view.destroyDrawingCache();
 	}
