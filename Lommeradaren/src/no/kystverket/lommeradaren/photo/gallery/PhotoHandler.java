@@ -74,10 +74,6 @@ public class PhotoHandler {
 		final int height = options.outHeight;
 		final int width = options.outWidth;
 		int inSampleSize = 1;
-
-		Log.w("ph", "height"+Math.round((float) height
-					/ (float) reqHeight));
-		Log.w("ph", "width"+Math.round((float) width / (float) reqWidth));
 		if (height > reqHeight || width > reqWidth) {
 
 			// Calculate ratios of height and width to requested height and
@@ -91,7 +87,6 @@ public class PhotoHandler {
 				inSampleSize = widthRatio;
 			}
 		}
-		Log.w("ph", "scale"+inSampleSize);
 		return inSampleSize;
 	}
 
