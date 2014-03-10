@@ -53,7 +53,7 @@
         android:onClick="takePictureOnClick" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/mainmenu_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

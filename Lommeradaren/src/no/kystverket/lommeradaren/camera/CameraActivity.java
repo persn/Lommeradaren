@@ -62,7 +62,7 @@ public class CameraActivity extends Activity implements SensorEventListener,
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		rotationSensor = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-		compass = (ImageView) findViewById(R.id.imageView1);
+		compass = (ImageView) findViewById(R.id.mainmenu_background);
 
 		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
 				.findFragmentById(R.id.fragment1));

@@ -38,8 +38,8 @@ public class GalleryActivity extends Activity implements
 	private ImageSwitcher mSwitcher;
 	private TextView textSwitcher;
 	private PhotoHandler pHandler;
-	int targetW;
-	int targetH;
+	private int targetW;
+	private int targetH;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
