@@ -6,9 +6,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 /**
+ * Not in use for now
  * 
  * @author Per Olav Flaten
- *
+ * @deprecated
+ * 
  */
 public class RotationVectorSensor {
 

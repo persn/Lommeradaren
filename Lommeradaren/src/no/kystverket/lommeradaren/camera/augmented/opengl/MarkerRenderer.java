@@ -88,13 +88,9 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onDrawFrame(GL10 unused) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-		
-		//if (isFirstFrame) {
-			this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0, 1, 0);
-			//isFirstFrame = false;
-		//}
-		
-		//this.linAlg.rotateWorld(center[0], center[1], center[2]);
+
+		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
+				1, 0);
 
 		this.linAlg.drawPointOfInterest(this.mTriangle, -50, 0, 0);
 		this.linAlg.drawPointOfInterest(this.otherTriangle, 50, 0, 0);
@@ -102,7 +98,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawPointOfInterest(this.fourthTriangle, 0, 0, 50);
 		this.linAlg.drawPointOfInterest(this.fifthTriangle, 0, -50, 0);
 		this.linAlg.drawPointOfInterest(this.sixthTriangle, 0, 50, 0);
-		
+
 		this.drawAllMarkers();
 	}
 
@@ -127,19 +123,23 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			throw new RuntimeException(glOperation + ": glError " + error);
 		}
 	}
-	
-	public void setDataSourceCollection(DataSourceCollection dataSourceCollection){
+
+	public void setDataSourceCollection(
+			DataSourceCollection dataSourceCollection) {
 		this.datasourceCollection = dataSourceCollection;
 	}
 
 	private void drawAllMarkers() {
-		if(this.datasourceCollection != null){
-		for (int i = 0; i < this.datasourceCollection.getDataSourceListSize(); i++) {
-			for (int j = 0; j < this.datasourceCollection.getPOIArrayLength(i); j++) {
-//				Log.d("TestPOIExtract", this.datasourceCollection.getPOI(i, j)
-//						.getName());
+		if (this.datasourceCollection != null) {
+			for (int i = 0; i < this.datasourceCollection
+					.getDataSourceListSize(); i++) {
+				for (int j = 0; j < this.datasourceCollection
+						.getPOIArrayLength(i); j++) {
+					// Log.d("TestPOIExtract",
+					// this.datasourceCollection.getPOI(i, j)
+					// .getName());
+				}
 			}
-		}
 		}
 	}
 

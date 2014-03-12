@@ -17,9 +17,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -30,8 +28,7 @@ import com.google.android.gms.maps.MapView;
  * @author Per Olav Flaten
  * 
  */
-public class CameraActivity extends Activity implements SensorEventListener,
-		OnTouchListener {
+public class CameraActivity extends Activity implements SensorEventListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
@@ -99,12 +96,6 @@ public class CameraActivity extends Activity implements SensorEventListener,
 			this.gMap
 					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
-	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

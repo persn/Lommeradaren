@@ -83,10 +83,11 @@ public class CartesianCoordinates {
 
 	/**
 	 * TODO --- Z-axis might need adjustments for flattening of the earth.
+	 * 
 	 * @param lat
 	 */
 	private void setZ(double lat) {
-		this.xyz[2] = (this.distanceFromSatellite * Math.sin(lat)); 
+		this.xyz[2] = (this.distanceFromSatellite * Math.sin(lat));
 	}
 
 }

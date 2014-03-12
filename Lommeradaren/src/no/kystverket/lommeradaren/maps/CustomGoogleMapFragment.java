@@ -219,12 +219,13 @@ public class CustomGoogleMapFragment extends Fragment {
 			@Override
 			public void run() {
 				gMap.clear();
-				
-				//Make sure the marker data associated with the Augmented Reality Engine is up to date as well.
-				MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity().findViewById(R.id.marker_surface_view);
-				if(markerView != null)
+
+				// Make sure the marker data associated with the Augmented
+				// Reality Engine is up to date as well.
+				MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
+						.findViewById(R.id.marker_surface_view);
+				if (markerView != null)
 					markerView.setDataSourceCollection(dataSourceCollection);
-					
 
 				for (int i = 0; i < dataSourceCollection
 						.getDataSourceListSize(); i++) {
