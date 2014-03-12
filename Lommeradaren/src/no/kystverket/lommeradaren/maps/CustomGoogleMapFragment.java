@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.maps;
 
 import no.kystverket.lommeradaren.R;
+import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
@@ -111,7 +112,7 @@ public class CustomGoogleMapFragment extends Fragment {
 
 	/**
 	 * Refresh of map so that it gets redrawn, but rotated to pointing
-	 * direction.
+	 * direction. For use with mini-map.
 	 * 
 	 * @param bearing
 	 *            The direction the unit is pointing. From 0-360 degrees.
@@ -134,6 +135,17 @@ public class CustomGoogleMapFragment extends Fragment {
 		this.gMap.getUiSettings().setMyLocationButtonEnabled(false);
 		this.gMap.getUiSettings().setZoomControlsEnabled(false);
 		this.gMap.getUiSettings().setAllGesturesEnabled(false);
+	}
+
+	/**
+	 * Marker information is needed multiple places in the application, we
+	 * assume they get instantiated in this class, and let it act as a master
+	 * class for marker insances.
+	 * 
+	 * @return
+	 */
+	public DataSourceCollection getDataSourceCollection() {
+		return this.dataSourceCollection;
 	}
 
 	/**
@@ -207,6 +219,14 @@ public class CustomGoogleMapFragment extends Fragment {
 			@Override
 			public void run() {
 				gMap.clear();
+
+				// Make sure the marker data associated with the Augmented
+				// Reality Engine is up to date as well.
+				MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
+						.findViewById(R.id.marker_surface_view);
+				if (markerView != null)
+					markerView.setDataSourceCollection(dataSourceCollection);
+				markerView.setCurrentLocation(currentLocation);
 
 				for (int i = 0; i < dataSourceCollection
 						.getDataSourceListSize(); i++) {
