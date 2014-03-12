@@ -5,7 +5,6 @@ import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.maps.CustomGoogleMapFragment;
 import no.kystverket.lommeradaren.maps.MapActivity;
-import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
