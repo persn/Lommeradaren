@@ -1,8 +1,10 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
+import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+import android.util.Log;
 
 /**
  * A class for handling matrices in a 3-Dimensional environment with Augmented
@@ -61,6 +63,15 @@ public class LinearAlgebra {
 		pointOfInterest.draw(drawMatrix);
 	}
 
+	
+	public void drawText(GLText glText, String text, float x,
+			float y, float z, float rX, float rY, float rZ) {
+		Log.d("text", "drawing text");
+		glText.begin( 1.0f, 1.0f, 1.0f, 1.0f, mMVPMatrix ); // Begin Text Rendering (Set Color WHITE)
+		glText.drawC(text, x, y, z, rX, rY, rZ);
+		glText.end(); // End Text Rendering
+	}
+	
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
 			float centerX, float centerY, float centerZ, float upX, float upY,
 			float upZ) {

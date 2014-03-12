@@ -19,7 +19,7 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		super(context, att);
 		this.setEGLContextClientVersion(2);
 
-		this.mRenderer = new MarkerRenderer();
+		this.mRenderer = new MarkerRenderer(getContext());
 		setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 		this.setRenderer(this.mRenderer);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
