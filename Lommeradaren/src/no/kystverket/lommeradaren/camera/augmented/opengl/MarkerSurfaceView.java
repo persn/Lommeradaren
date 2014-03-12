@@ -3,7 +3,6 @@ package no.kystverket.lommeradaren.camera.augmented.opengl;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import android.content.Context;
 import android.graphics.PixelFormat;
-import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
@@ -28,27 +27,9 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		this.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
 
-	public void getSensorData(float[] rotationVector) {
-			float quaternion[] = new float[4];
-			float[] rotationMatrix = new float[16];
-			float orientation[] = new float[3];
-
-			filterVector(0.8f, rotationVector);
-			SensorManager.getQuaternionFromVector(quaternion, rotationVector);
-			SensorManager.getRotationMatrixFromVector(rotationMatrix,
-					quaternion);
-			SensorManager.remapCoordinateSystem(rotationMatrix,
-					SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X,
-					rotationMatrix);
-			SensorManager.getOrientation(rotationMatrix, orientation);
-
-			orientation[0] = (float) Math.toDegrees(orientation[0]);
-			orientation[1] = (float) Math.toDegrees(orientation[1]);
-			orientation[2] = (float) Math.toDegrees(orientation[2]);
-
+	public void getSensorData(float[] orientation) {
 			this.mRenderer.setEye(0, 0, 0);
-			this.mRenderer.setCenter(orientation[0], orientation[1],
-					orientation[2]);
+			this.mRenderer.setCenter((float)Math.cos(orientation[0]), 0, (float)Math.sin(orientation[0]));
 			this.mRenderer.setUp(0, 1, 0);
 
 			this.requestRender();

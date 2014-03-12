@@ -39,14 +39,11 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private float[] center;
 	private float[] up;
 
-	private boolean isFirstFrame;
-
 	public MarkerRenderer() {
 		this.linAlg = new LinearAlgebra();
 		this.eye = new float[3];
 		this.center = new float[3];
 		this.up = new float[3];
-		this.isFirstFrame = true;
 	}
 
 	public void setEye(float eyeX, float eyeY, float eyeZ) {
@@ -91,13 +88,13 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onDrawFrame(GL10 unused) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
-		if (isFirstFrame) {
-			this.linAlg.initCameraView(0, 0, 0, 0, 0, 50, 0, 1, 0);
-			isFirstFrame = false;
-		}
-
-		this.linAlg.rotateWorld(center[0], center[1], center[2]);
+		
+		//if (isFirstFrame) {
+			this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0, 1, 0);
+			//isFirstFrame = false;
+		//}
+		
+		//this.linAlg.rotateWorld(center[0], center[1], center[2]);
 
 		this.linAlg.drawPointOfInterest(this.mTriangle, -50, 0, 0);
 		this.linAlg.drawPointOfInterest(this.otherTriangle, 50, 0, 0);

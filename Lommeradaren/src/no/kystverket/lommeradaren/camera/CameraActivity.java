@@ -2,6 +2,7 @@ package no.kystverket.lommeradaren.camera;
 
 import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
+import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.maps.CustomGoogleMapFragment;
 import no.kystverket.lommeradaren.maps.MapActivity;
@@ -19,11 +20,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +28,7 @@ import com.google.android.gms.maps.MapView;
 /**
  * 
  * @author Per Olav Flaten
- *
+ * 
  */
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnTouchListener {
@@ -40,30 +36,22 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
 	private CustomGoogleMapFragment gMap;
-	private ImageView compass;
-	private int currentDegree = 0;
 	private SensorManager mSensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
-	private Sensor rotationSensor;
-	private float[] mGravity;
-	private float[] mGeomagnetic;
+	private SensorHandler sensorHandler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cameraview);
 		mGLView = (MarkerSurfaceView) findViewById(R.id.marker_surface_view);
-
+		sensorHandler = new SensorHandler();
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		rotationSensor = mSensorManager
-				.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-		compass = (ImageView) findViewById(R.id.mainmenu_background);
-
 		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
 				.findFragmentById(R.id.fragment1));
 		this.gMap.toggleMiniMapSettings();
@@ -75,8 +63,6 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		mSensorManager.registerListener(this, accelerometer,
 				SensorManager.SENSOR_DELAY_GAME);
 		mSensorManager.registerListener(this, magnetometer,
-				SensorManager.SENSOR_DELAY_GAME);
-		mSensorManager.registerListener(this, rotationSensor,
 				SensorManager.SENSOR_DELAY_GAME);
 		initCameraView();
 	}
@@ -107,23 +93,11 @@ public class CameraActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public void onSensorChanged(SensorEvent evt) {
-		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			mGravity = evt.values.clone();
-		if (evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
-			mGeomagnetic = evt.values.clone();
-		if (evt.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR)
-			mGLView.getSensorData(evt.values.clone());
-		if (mGravity != null && mGeomagnetic != null) {
-			float rotationMatrix[] = new float[9];
-			float inclinationMatrix[] = new float[9];
-			if (SensorManager.getRotationMatrix(rotationMatrix,
-					inclinationMatrix, mGravity, mGeomagnetic)) {
-				float orientation[] = new float[3];
-				SensorManager.getOrientation(rotationMatrix, orientation);
-				animateCompass((int) (Math.toDegrees(orientation[0]) + 90));
-				this.gMap
-						.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
-			}
+		if (sensorHandler.handleEvent(evt)) {
+			float[] orientation = sensorHandler.getOrientation();
+			mGLView.getSensorData(orientation.clone());
+			this.gMap
+					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
 	}
 
@@ -180,7 +154,9 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	}
 
 	/**
-	 * This is the method called as designated from the TakePicture-button in cameraview.xml
+	 * This is the method called as designated from the TakePicture-button in
+	 * cameraview.xml
+	 * 
 	 * @param v
 	 */
 	public void takePictureOnClick(View v) {
@@ -192,18 +168,5 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		this.mPreview = new CameraView(this, getString(R.string.app_name));
 		((RelativeLayout) findViewById(R.id.camera_preview_layout))
 				.addView(mPreview);
-	}
-
-	private void animateCompass(int degree) {
-		RotateAnimation ra = new RotateAnimation(currentDegree, -degree,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		TranslateAnimation ta = new TranslateAnimation(0, 0,
-				compass.getHeight() / 2, compass.getHeight() / 2);
-		AnimationSet as = new AnimationSet(false);
-		as.addAnimation(ra);
-		as.addAnimation(ta);
-		compass.startAnimation(as);
-		currentDegree = (int) -degree;
 	}
 }
