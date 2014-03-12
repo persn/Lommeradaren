@@ -5,6 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
+import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.util.Log;
  */
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
+	private DataSourceCollection datasourceCollection;
+
 	// Note that the triangle objects are hardcoded placeholder shapes to
 	// reference positioning of
 	// the camera in a 3D-environment, and should be removed once camera is
@@ -29,7 +32,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private Triangle fourthTriangle;
 	private Triangle fifthTriangle;
 	private Triangle sixthTriangle;
-	
+
 	private LinearAlgebra linAlg;
 
 	private float[] eye;
@@ -67,8 +70,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		
-		//Placeholder drawings
+
+		// Placeholder drawings
 		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
 		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
 		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
@@ -82,18 +85,18 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.fourthTriangle = new Triangle(color4);
 		this.fifthTriangle = new Triangle(color5);
 		this.sixthTriangle = new Triangle(color6);
-		//Placeholder drawings
+		// Placeholder drawings
 	}
 
 	@Override
 	public void onDrawFrame(GL10 unused) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-		
+
 		if (isFirstFrame) {
 			this.linAlg.initCameraView(0, 0, 0, 0, 0, 50, 0, 1, 0);
 			isFirstFrame = false;
 		}
-		
+
 		this.linAlg.rotateWorld(center[0], center[1], center[2]);
 
 		this.linAlg.drawPointOfInterest(this.mTriangle, -50, 0, 0);
@@ -102,6 +105,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawPointOfInterest(this.fourthTriangle, 0, 0, 50);
 		this.linAlg.drawPointOfInterest(this.fifthTriangle, 0, -50, 0);
 		this.linAlg.drawPointOfInterest(this.sixthTriangle, 0, 50, 0);
+		
+		this.drawAllMarkers();
 	}
 
 	@Override
@@ -120,8 +125,24 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	public static void checkGlError(String glOperation) {
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-			Log.e("no.kystverket.lommeradaren", glOperation + ": glError " + error);
+			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
+					+ error);
 			throw new RuntimeException(glOperation + ": glError " + error);
+		}
+	}
+	
+	public void setDataSourceCollection(DataSourceCollection dataSourceCollection){
+		this.datasourceCollection = dataSourceCollection;
+	}
+
+	private void drawAllMarkers() {
+		if(this.datasourceCollection != null){
+		for (int i = 0; i < this.datasourceCollection.getDataSourceListSize(); i++) {
+			for (int j = 0; j < this.datasourceCollection.getPOIArrayLength(i); j++) {
+//				Log.d("TestPOIExtract", this.datasourceCollection.getPOI(i, j)
+//						.getName());
+			}
+		}
 		}
 	}
 

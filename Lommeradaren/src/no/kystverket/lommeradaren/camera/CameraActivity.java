@@ -5,6 +5,7 @@ import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.maps.CustomGoogleMapFragment;
 import no.kystverket.lommeradaren.maps.MapActivity;
+import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cameraview);
-		mGLView = (MarkerSurfaceView) findViewById(R.id.myGLSurfaceView1);
+		mGLView = (MarkerSurfaceView) findViewById(R.id.marker_surface_view);
 
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = mSensorManager

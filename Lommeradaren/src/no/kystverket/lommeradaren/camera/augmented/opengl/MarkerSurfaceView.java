@@ -1,5 +1,6 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
+import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.hardware.SensorManager;
@@ -19,7 +20,7 @@ public class MarkerSurfaceView extends GLSurfaceView {
 	public MarkerSurfaceView(Context context, AttributeSet att) {
 		super(context, att);
 		this.setEGLContextClientVersion(2);
-
+		
 		this.mRenderer = new MarkerRenderer();
 		setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 		this.setRenderer(this.mRenderer);
@@ -51,6 +52,10 @@ public class MarkerSurfaceView extends GLSurfaceView {
 			this.mRenderer.setUp(0, 1, 0);
 
 			this.requestRender();
+	}
+	
+	public void setDataSourceCollection(DataSourceCollection dataSourceCollection){
+		this.mRenderer.setDataSourceCollection(dataSourceCollection);
 	}
 
 	/**
