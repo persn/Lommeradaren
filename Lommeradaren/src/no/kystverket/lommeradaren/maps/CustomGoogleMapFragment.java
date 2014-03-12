@@ -226,6 +226,7 @@ public class CustomGoogleMapFragment extends Fragment {
 						.findViewById(R.id.marker_surface_view);
 				if (markerView != null)
 					markerView.setDataSourceCollection(dataSourceCollection);
+				markerView.setCurrentLocation(currentLocation);
 
 				for (int i = 0; i < dataSourceCollection
 						.getDataSourceListSize(); i++) {

@@ -4,8 +4,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
+import no.kystverket.lommeradaren.camera.augmented.math.RelativePosition;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
+import no.kystverket.lommeradaren.markers.LocationHandler;
+import no.kystverket.lommeradaren.markers.POI;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.util.Log;
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private DataSourceCollection datasourceCollection;
+	private LocationHandler locationHandler;
 
 	// Note that the triangle objects are hardcoded placeholder shapes to
 	// reference positioning of
@@ -128,6 +132,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			DataSourceCollection dataSourceCollection) {
 		this.datasourceCollection = dataSourceCollection;
 	}
+	
+	public void setLocationHandler(LocationHandler locationHandler){
+		this.locationHandler = locationHandler;
+	}
 
 	private void drawAllMarkers() {
 		if (this.datasourceCollection != null) {
@@ -135,9 +143,11 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 					.getDataSourceListSize(); i++) {
 				for (int j = 0; j < this.datasourceCollection
 						.getPOIArrayLength(i); j++) {
-					// Log.d("TestPOIExtract",
-					// this.datasourceCollection.getPOI(i, j)
-					// .getName());
+					POI poi = this.datasourceCollection.getPOI(i, j);
+//					Log.d("ShipName",this.datasourceCollection.getPOI(i, j).getName());
+//					Log.d("DistanceAltitude","" + RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(), (float)poi.getAlt()));
+//					Log.d("DistanceLatitude","" + RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(), (float)poi.getLat()));
+//					Log.d("DistanceLongitude","" + RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(), (float)poi.getLng()));
 				}
 			}
 		}
