@@ -37,7 +37,8 @@
         </activity>
         <activity android:name=".maps.MapActivity" >
         </activity>
-        <activity android:name=".camera.CameraActivity" >
+        <activity android:name=".camera.CameraActivity" 
+            android:screenOrientation="landscape">
         </activity>
         <activity android:name=".photo.gallery.GalleryActivity" >
         </activity>
