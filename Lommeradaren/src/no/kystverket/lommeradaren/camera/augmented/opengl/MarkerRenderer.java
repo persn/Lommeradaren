@@ -102,7 +102,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
 				1, 0);
-		
+
 		glText.setScale(0.1f);
 		this.linAlg.drawText(glText, "Test String 3D!", 0, 0, -50, 0, 0, 0);
 		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
@@ -144,8 +144,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			DataSourceCollection dataSourceCollection) {
 		this.datasourceCollection = dataSourceCollection;
 	}
-	
-	public void setLocationHandler(LocationHandler locationHandler){
+
+	public void setLocationHandler(LocationHandler locationHandler) {
 		this.locationHandler = locationHandler;
 	}
 
@@ -156,10 +156,17 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 				for (int j = 0; j < this.datasourceCollection
 						.getPOIArrayLength(i); j++) {
 					POI poi = this.datasourceCollection.getPOI(i, j);
-//					Log.d("ShipName",this.datasourceCollection.getPOI(i, j).getName());
-//					Log.d("DistanceAltitude","" + RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(), (float)poi.getAlt()));
-//					Log.d("DistanceLatitude","" + RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(), (float)poi.getLat()));
-//					Log.d("DistanceLongitude","" + RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(), (float)poi.getLng()));
+					// Log.d("ShipName",this.datasourceCollection.getPOI(i,
+					// j).getName());
+					// Log.d("DistanceAltitude","" +
+					// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
+					// (float)poi.getAlt()));
+					// Log.d("DistanceLatitude","" +
+					// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
+					// (float)poi.getLat()));
+					// Log.d("DistanceLongitude","" +
+					// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
+					// (float)poi.getLng()));
 				}
 			}
 		}

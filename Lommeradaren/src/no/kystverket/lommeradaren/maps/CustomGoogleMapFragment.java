@@ -224,9 +224,10 @@ public class CustomGoogleMapFragment extends Fragment {
 				// Reality Engine is up to date as well.
 				MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
 						.findViewById(R.id.marker_surface_view);
-				if (markerView != null)
+				if (markerView != null) {
 					markerView.setDataSourceCollection(dataSourceCollection);
-				markerView.setCurrentLocation(currentLocation);
+					markerView.setCurrentLocation(currentLocation);
+				}
 
 				for (int i = 0; i < dataSourceCollection
 						.getDataSourceListSize(); i++) {
