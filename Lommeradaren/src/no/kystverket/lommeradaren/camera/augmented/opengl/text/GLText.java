@@ -12,7 +12,7 @@ public class GLText {
 
 	// --Constants--//
 	public final static int CHAR_START = 32; // First Character (ASCII Code)
-	public final static int CHAR_END = 126; // Last Character (ASCII Code)
+	public final static int CHAR_END = 255; // Last Character (ASCII Code)
 	public final static int CHAR_CNT = (((CHAR_END - CHAR_START) + 1) + 1); // Character
 																			// Count
 																			// (Including
@@ -330,11 +330,15 @@ public class GLText {
 
 		// create a model matrix based on x, y and angleDeg
 		float[] modelMatrix = new float[16];
+		
 		Matrix.setIdentityM(modelMatrix, 0);
+
 		Matrix.translateM(modelMatrix, 0, x, y, z);
+		
 		Matrix.rotateM(modelMatrix, 0, angleDegZ, 0, 0, 1);
 		Matrix.rotateM(modelMatrix, 0, angleDegX, 1, 0, 0);
 		Matrix.rotateM(modelMatrix, 0, angleDegY, 0, 1, 0);
+		
 
 		float letterX, letterY;
 		letterX = letterY = 0;
@@ -376,8 +380,8 @@ public class GLText {
 	public float drawC(String text, float x, float y, float z, float angleDegX,
 			float angleDegY, float angleDegZ) {
 		float len = getLength(text); // Get Text Length
-		draw(text, x - (len / 2.0f), y - (getCharHeight() / 2.0f), z,
-				angleDegX, angleDegY, angleDegZ); // Draw Text Centered
+			draw(text, x - (len / 2.0f), y - (getCharHeight() / 2.0f), z,
+					angleDegX, angleDegY, angleDegZ); // Draw Text Centered
 		return len; // Return Length
 	}
 
