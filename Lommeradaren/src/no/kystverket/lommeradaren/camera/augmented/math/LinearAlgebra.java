@@ -55,7 +55,7 @@ public class LinearAlgebra {
 		float[] drawMatrix = new float[16];
 		Matrix.setIdentityM(drawMatrix, 0);
 		Matrix.translateM(drawMatrix, 0, x, y, z);
-		rotatePointOfInterest(drawMatrix, 0, 1, 1, 1);
+		rotatePointOfInterest(drawMatrix, 0, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		pointOfInterest.draw(drawMatrix);
 	}

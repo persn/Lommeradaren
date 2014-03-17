@@ -115,8 +115,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawPointOfInterest(this.otherTriangle, 50, 0, 0);
 		this.linAlg.drawPointOfInterest(this.thirdTriangle, 0, 0, -50);
 		this.linAlg.drawPointOfInterest(this.fourthTriangle, 0, 0, 50);
-		this.linAlg.drawPointOfInterest(this.fifthTriangle, 0, -50, 0);
-		this.linAlg.drawPointOfInterest(this.sixthTriangle, 0, 50, 0);
 
 		this.drawAllMarkers();
 	}
