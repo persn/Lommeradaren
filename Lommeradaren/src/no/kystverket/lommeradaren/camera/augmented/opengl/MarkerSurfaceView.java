@@ -2,10 +2,14 @@ package no.kystverket.lommeradaren.camera.augmented.opengl;
 
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.markers.LocationHandler;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * 
@@ -38,13 +42,59 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		this.requestRender();
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent e) {
+		float x = e.getX();
+		float y = e.getY();
+		switch (e.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			MarkerWrapper[] markerCluster = this.mRenderer.getMarkerCluster(x,
+					y);
+			this.displayMarkerClusterDialog(markerCluster);
+			break;
+		}
+		return true;
+	}
+
 	public void setDataSourceCollection(
 			DataSourceCollection dataSourceCollection) {
 		this.mRenderer.setDataSourceCollection(dataSourceCollection);
 	}
-	
-	public void setCurrentLocation(LocationHandler currentLocation){
+
+	public void setCurrentLocation(LocationHandler currentLocation) {
 		this.mRenderer.setLocationHandler(currentLocation);
+	}
+
+	public void setRendererScreenSize(int width, int height) {
+		this.mRenderer.setScreenSize(width, height);
+	}
+
+	private void displayMarkerClusterDialog(final MarkerWrapper[] markerCluster) {
+		if (markerCluster.length > 0) { // Avoid displaying blank dialog
+			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			builder.setTitle("Marker Cluster");
+			builder.setCancelable(true);
+			builder.setItems(this.buildClusterDialogOptions(markerCluster),
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(getContext(),
+									markerCluster[which].getTag(),
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+			builder.create().show();
+		}
+	}
+
+	private CharSequence[] buildClusterDialogOptions(
+			MarkerWrapper[] markerCluster) {
+		CharSequence[] options = new CharSequence[markerCluster.length];
+		for (int i = 0; i < options.length; i++) {
+			options[i] = markerCluster[i].getTag();
+		}
+		return options;
 	}
 
 }

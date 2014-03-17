@@ -1,16 +1,18 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
 import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
-import no.kystverket.lommeradaren.camera.augmented.math.RelativePosition;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
-import android.content.Context;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -26,18 +28,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private DataSourceCollection datasourceCollection;
 	private LocationHandler locationHandler;
-
-	// Note that the triangle objects are hardcoded placeholder shapes to
-	// reference positioning of
-	// the camera in a 3D-environment, and should be removed once camera is
-	// working smoothly, along
-	// with implementation of dynamic marker drawing.
-	private Triangle mTriangle;
-	private Triangle otherTriangle;
-	private Triangle thirdTriangle;
-	private Triangle fourthTriangle;
-	private Triangle fifthTriangle;
-	private Triangle sixthTriangle;
+	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
 	private GLText glText;
@@ -46,6 +37,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private float[] eye;
 	private float[] center;
 	private float[] up;
+	private int screenWidth;
+	private int screenHeight;
+
+	private static final int TOUCH_RADIUS = 50;
 
 	public MarkerRenderer(Context context) {
 		this.context = context;
@@ -79,41 +74,33 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		glText = new GLText(context.getAssets());
 		glText.load("Roboto-Regular.ttf", 14, 2, 2);
 
-		// Placeholder drawings
-		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
-		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
-		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
-		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
-		float[] color5 = { 1.0f, 1.0f, 0.0f, 1.0f }; // yellow
-		float[] color6 = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
-
-		this.mTriangle = new Triangle(color1);
-		this.otherTriangle = new Triangle(color2);
-		this.thirdTriangle = new Triangle(color3);
-		this.fourthTriangle = new Triangle(color4);
-		this.fifthTriangle = new Triangle(color5);
-		this.sixthTriangle = new Triangle(color6);
-		// Placeholder drawings
+		this.initiateTriangles();
 	}
 
 	@Override
 	public void onDrawFrame(GL10 unused) {
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
-				1, 0);
+		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
+				center[1], center[2], up[0], up[1], up[2]);
 
-		glText.setScale(0.1f);
-		this.linAlg.drawText(glText, "Test String 3D!", 0, 0, -50, 0, 0, 0);
-		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
-				1, 0);
+		// glText.setScale(0.1f);
+		// this.linAlg.drawText(glText, "Test String 3D!", 0, 0, -50, 0, 0, 0);
+		// this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2],
+		// 0,
+		// 1, 0);
 
-		this.linAlg.drawPointOfInterest(this.mTriangle, -50, 0, 0);
-		this.linAlg.drawPointOfInterest(this.otherTriangle, 50, 0, 0);
-		this.linAlg.drawPointOfInterest(this.thirdTriangle, 0, 0, -50);
-		this.linAlg.drawPointOfInterest(this.fourthTriangle, 0, 0, 50);
-		this.linAlg.drawPointOfInterest(this.fifthTriangle, 0, -50, 0);
-		this.linAlg.drawPointOfInterest(this.sixthTriangle, 0, 50, 0);
+		for (MarkerWrapper markerWrapper : markerWrappers) {
+			float x = markerWrapper.getCartesianCoordinates()[0];
+			float y = markerWrapper.getCartesianCoordinates()[1];
+			float z = markerWrapper.getCartesianCoordinates()[2];
+			Triangle pointOfInterest = markerWrapper.getTriangle();
+			markerWrapper.setScreenCoordinates(this.linAlg
+					.findPointOfInterestScreenPosition(
+							markerWrapper.getCartesianCoordinates(),
+							this.screenWidth, this.screenHeight));
+			this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
+		}
 
 		this.drawAllMarkers();
 	}
@@ -149,6 +136,28 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.locationHandler = locationHandler;
 	}
 
+	public void setScreenSize(int width, int height) {
+		this.screenWidth = width;
+		this.screenHeight = height;
+	}
+
+	public MarkerWrapper[] getMarkerCluster(float touchX, float touchY) {
+		List<MarkerWrapper> markerCluster = new ArrayList<MarkerWrapper>();
+		int clusterElementCount = 0;
+		for (MarkerWrapper markerWrapper : markerWrappers) {
+			int markerScreenX = markerWrapper.getScreenCoordinates()[0];
+			int markerScreenY = markerWrapper.getScreenCoordinates()[1];
+			if ((markerScreenX > touchX - TOUCH_RADIUS)
+					&& (markerScreenX < touchX + TOUCH_RADIUS)
+					&& (markerScreenY > touchY - TOUCH_RADIUS)
+					&& (markerScreenY < touchY + TOUCH_RADIUS)) {
+				markerCluster.add(markerWrapper);
+				clusterElementCount++;
+			}
+		}
+		return markerCluster.toArray(new MarkerWrapper[clusterElementCount]);
+	}
+
 	private void drawAllMarkers() {
 		if (this.datasourceCollection != null) {
 			for (int i = 0; i < this.datasourceCollection
@@ -170,6 +179,52 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Used for debugging 3D positioning until POI drawing is implemented
+	 * 
+	 * @deprecated
+	 */
+	private void initiateTriangles() {
+		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
+		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
+		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
+		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
+		float[] color5 = { 1.0f, 1.0f, 0.0f, 1.0f }; // yellow
+		float[] color6 = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
+
+		float[] cartesian1 = { -50, 0, 0 };
+		float[] cartesian2 = { 50, 0, 0 };
+		float[] cartesian3 = { 0, 0, -50 };
+		float[] cartesian4 = { 0, 0, 50 };
+		float[] cartesian5 = { 0, -50, 0 };
+		float[] cartesian6 = { 0, 50, 0 };
+
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color1),
+				"RedTriangle", cartesian1, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian1,
+								this.screenWidth, this.screenHeight)));
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color2),
+				"GreenTriangle", cartesian2, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian2,
+								this.screenWidth, this.screenHeight)));
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color3),
+				"BlueTriangle", cartesian3, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian3,
+								this.screenWidth, this.screenHeight)));
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color4),
+				"PurpleTriangle", cartesian4, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian4,
+								this.screenWidth, this.screenHeight)));
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color5),
+				"YellowTriangle", cartesian5, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian5,
+								this.screenWidth, this.screenHeight)));
+		this.markerWrappers.add(new MarkerWrapper(new Triangle(color6),
+				"WhiteTriangle", cartesian6, this.linAlg
+						.findPointOfInterestScreenPosition(cartesian6,
+								this.screenWidth, this.screenHeight)));
 	}
 
 }

@@ -4,6 +4,7 @@ import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+import android.util.Log;
 
 /**
  * A class for handling matrices in a 3-Dimensional environment with Augmented
@@ -60,28 +61,48 @@ public class LinearAlgebra {
 		pointOfInterest.draw(drawMatrix);
 	}
 
-	
-	public void drawText(GLText glText, String text, float x,
-			float y, float z, float rX, float rY, float rZ) {
-		glText.begin( 1.0f, 1.0f, 1.0f, 1.0f, mMVPMatrix ); // Begin Text Rendering (Set Color WHITE)
+	public void drawText(GLText glText, String text, float x, float y, float z,
+			float rX, float rY, float rZ) {
+		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, mMVPMatrix); // Begin Text
+															// Rendering (Set
+															// Color WHITE)
 		glText.drawC(text, x, y, z, rX, rY, rZ);
 		glText.end(); // End Text Rendering
 	}
-	
+
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
 			float centerX, float centerY, float centerZ, float upX, float upY,
 			float upZ) {
+		// http://webglfactory.blogspot.no/2011/05/how-to-convert-world-to-screen.html
 		Matrix.setLookAtM(this.mViewMatrix, 0, eyeX, eyeY, eyeZ, centerX,
 				centerY, centerZ, upX, upY, upZ);
 		Matrix.multiplyMM(this.mMVPMatrix, 0, this.mProjectionMatrix, 0,
 				this.mViewMatrix, 0);
 	}
 
+	public int[] findPointOfInterestScreenPosition(
+			float[] cartesianCoordinates, int screenWidth, int screenHeight) {
+		float[] vector = { cartesianCoordinates[0], cartesianCoordinates[1],
+				cartesianCoordinates[2], 1f };
+		Matrix.multiplyMV(vector, 0, this.mMVPMatrix, 0, vector, 0);
+		if (vector[3] > 1) {
+			vector = new float[] { // Divide x, y, and z by w
+			vector[0] / vector[3], vector[1] / vector[3],
+					vector[2] / vector[3], };
+		}
+		vector = new float[] { // Divide x and y by z
+		vector[0] / vector[2], vector[1] / vector[2], };
+		int[] pixelVector = { Math.round(((vector[0] + 1) / 2) * screenWidth),
+				Math.round(((1 - vector[1]) / 2) * screenHeight) };
+		return pixelVector;
+	}
+
 	public void initCameraLens(int width, int height) {
 		float ratio = (float) width / height;
-		float ratio2 = (float) height / width;
-		Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -ratio2, ratio2,
-				2, 360);
+		// float ratio2 = (float) height / width;
+		// Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -ratio2, ratio2,
+		// 2, 360);
+		Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 2, 100);
 	}
 
 	private void rotatePointOfInterest(float[] originMatrix, float angle,
@@ -97,6 +118,26 @@ public class LinearAlgebra {
 		Matrix.rotateM(rotationMatrixTest, 0, angle, x, y, z);
 		Matrix.multiplyMM(originMatrix, 0, originMatrix, 0, rotationMatrixTest,
 				0);
+	}
+
+	/**
+	 * For debugging purposes only.
+	 * 
+	 * @param tag
+	 *            Unique log-identifier for easy finding
+	 * @param matrix
+	 *            A 16 length float array representing a matrix
+	 * @deprecated
+	 */
+	private void logMatrix(String tag, float[] matrix) {
+		Log.d(tag + "1", "[" + matrix[0] + " " + matrix[1] + " " + matrix[2]
+				+ " " + matrix[3] + "]");
+		Log.d(tag + "2", "[" + matrix[4] + " " + matrix[5] + " " + matrix[6]
+				+ " " + matrix[7] + "]");
+		Log.d(tag + "3", "[" + matrix[8] + " " + matrix[9] + " " + matrix[10]
+				+ " " + matrix[11] + "]");
+		Log.d(tag + "4", "[" + matrix[12] + " " + matrix[13] + " " + matrix[14]
+				+ " " + matrix[15] + "]");
 	}
 
 }

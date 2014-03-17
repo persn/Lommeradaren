@@ -9,6 +9,7 @@ import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -43,6 +44,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cameraview);
 		mGLView = (MarkerSurfaceView) findViewById(R.id.marker_surface_view);
+		this.setRendererScreenSize();
 		sensorHandler = new SensorHandler();
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = mSensorManager
@@ -159,5 +161,11 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		this.mPreview = new CameraView(this, getString(R.string.app_name));
 		((RelativeLayout) findViewById(R.id.camera_preview_layout))
 				.addView(mPreview);
+	}
+	
+	private void setRendererScreenSize(){
+		Point size = new Point();
+		getWindowManager().getDefaultDisplay().getSize(size);
+		this.mGLView.setRendererScreenSize(size.x, size.y);
 	}
 }
