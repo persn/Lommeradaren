@@ -27,7 +27,6 @@ import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 /**
@@ -204,20 +203,7 @@ public class GalleryActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
-
-	// @Override
-	// public boolean onSingleTapUp(MotionEvent arg0) {
-	// if (textSwitcher.getVisibility() == View.VISIBLE
-	// && gallery.getVisibility() == View.VISIBLE) {
-	// textSwitcher.setVisibility(View.INVISIBLE);
-	// gallery.setVisibility(View.INVISIBLE);
-	// } else {
-	// textSwitcher.setVisibility(View.VISIBLE);
-	// gallery.setVisibility(View.VISIBLE);
-	// }
-	// return false;
-	// }
-
+	
 	@Override
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		if (textSwitcher.getAlpha() == 1f && gallery.getAlpha() == 1f) {
