@@ -56,18 +56,28 @@ public class LinearAlgebra {
 		float[] drawMatrix = new float[16];
 		Matrix.setIdentityM(drawMatrix, 0);
 		Matrix.translateM(drawMatrix, 0, x, y, z);
-		rotatePointOfInterest(drawMatrix, 0, 1, 1, 1);
+		rotatePointOfInterest(drawMatrix, 0, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		pointOfInterest.draw(drawMatrix);
 	}
 
-	public void drawText(GLText glText, String text, float x, float y, float z,
-			float rX, float rY, float rZ) {
-		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, mMVPMatrix); // Begin Text
-															// Rendering (Set
-															// Color WHITE)
-		glText.drawC(text, x, y, z, rX, rY, rZ);
-		glText.end(); // End Text Rendering
+	public void drawText(GLText glText, String text, float posX, float posY, float posZ) {
+		float degRot = (float) Math.toDegrees(Math.atan2((double) posX,
+				(double) -posZ));
+		float[] drawMatrix = new float[16];
+		float[] rotationMatrixTest = new float[16];
+
+		Matrix.setIdentityM(drawMatrix, 0);
+		Matrix.setIdentityM(rotationMatrixTest, 0);
+
+		Matrix.translateM(drawMatrix, 0, posX, posY, posZ);
+		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
+		Matrix.rotateM(rotationMatrixTest, 0, -degRot, 0, 1, 0);
+		Matrix.multiplyMM(drawMatrix, 0, drawMatrix, 0, rotationMatrixTest, 0);
+
+		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
+		glText.drawC(text, 0, 0, 0, 0, -0, 0);
+		glText.end();
 	}
 
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,

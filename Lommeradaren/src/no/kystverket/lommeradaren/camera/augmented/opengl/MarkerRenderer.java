@@ -72,7 +72,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glText = new GLText(context.getAssets());
-		glText.load("Roboto-Regular.ttf", 14, 2, 2);
+		glText.load("Roboto-Regular.ttf", 28, 2, 2);
+		glText.setScale(0.05f);
 
 		this.initiateTriangles();
 	}
@@ -84,11 +85,12 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		// glText.setScale(0.1f);
-		// this.linAlg.drawText(glText, "Test String 3D!", 0, 0, -50, 0, 0, 0);
-		// this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2],
-		// 0,
-		// 1, 0);
+		this.linAlg.drawText(glText, "North", 0, 0, -50);
+		this.linAlg.drawText(glText, "South", 0, 0, 50);
+		this.linAlg.drawText(glText, "East", 50, 0, 0);
+		this.linAlg.drawText(glText, "West", -50, 0, 0);
+		this.linAlg.initCameraView(0, 0, 0, center[0], center[1], center[2], 0,
+				1, 0);
 
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];
