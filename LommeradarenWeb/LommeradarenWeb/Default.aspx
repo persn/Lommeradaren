@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="LommeradarenWeb.WebForm1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="LommeradarenWeb.Default" %>
 
 <!DOCTYPE html>
 
@@ -16,7 +16,7 @@
     <form id="form1" runat="server">
     <div>
     
-        TÆÆÆÆKST</div>
+        I AM THE NIGHT</div>
     </form>
     <p>
         &nbsp;</p>
