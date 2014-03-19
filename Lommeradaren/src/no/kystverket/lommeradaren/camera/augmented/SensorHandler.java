@@ -14,7 +14,7 @@ public class SensorHandler {
 	private float[] orientation;
 	private float[] gravity = { 0, 0, 0 };
 	private float[] magnetic = { 0, 0, 0 };
-	final float alpha = 0.15f;
+	private final float alpha = 0.15f;
 
 	public boolean handleEvent(SensorEvent evt) {
 		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
