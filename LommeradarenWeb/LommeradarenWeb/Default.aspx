@@ -11,11 +11,16 @@
     <div>
     
         I AM THE NIGHT</div>
-    </form>
     <p>
         <img alt="" src="assets/bat_cat.jpg" /></p>
+        <asp:Button ID="Button1" runat="server" Text="FetchSQLData" />
+        <asp:Button ID="Button2" runat="server" Text="AddSQLData" />
     <p>
-        &nbsp;</p>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        </p>
+        <p>
+            &nbsp;</p>
+    </form>
     <p>
         &nbsp;</p>
     <p>
