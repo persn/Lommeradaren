@@ -16,7 +16,7 @@ namespace LommeradarenWeb.db
     {
         public PointOfInterest()
         {
-            this.Picture = new HashSet<Picture>();
+            this.Pictures = new HashSet<Pictures>();
         }
     
         public int POI_ID { get; set; }
@@ -25,6 +25,6 @@ namespace LommeradarenWeb.db
         public string mmsi { get; set; }
         public string webpage { get; set; }
     
-        public virtual ICollection<Picture> Picture { get; set; }
+        public virtual ICollection<Pictures> Pictures { get; set; }
     }
 }

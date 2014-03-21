@@ -12,17 +12,18 @@ namespace LommeradarenWeb.db
     using System;
     using System.Collections.Generic;
     
-    public partial class Picture
+    public partial class Users
     {
-        public int PictureID { get; set; }
-        public int UserUserID { get; set; }
-        public int PointOfInterestPOI_ID { get; set; }
-        public string Picutre { get; set; }
-        public Nullable<double> Latitude { get; set; }
-        public Nullable<double> Longitude { get; set; }
-        public Nullable<System.DateTime> Timestamp { get; set; }
+        public Users()
+        {
+            this.Pictures = new HashSet<Pictures>();
+        }
     
-        public virtual PointOfInterest PointOfInterest { get; set; }
-        public virtual User User { get; set; }
+        public int UserID { get; set; }
+        public string UserEmail { get; set; }
+        public string UserPassword { get; set; }
+        public string UserName { get; set; }
+    
+        public virtual ICollection<Pictures> Pictures { get; set; }
     }
 }

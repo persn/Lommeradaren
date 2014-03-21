@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F2CBFD6-82CC-4B51-9690-B63AF1C0A8AD}</ProjectGuid>
+    <ProjectGuid>{4D4484E5-B8DE-4BBF-A677-069B08F2445A}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -65,37 +65,35 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\bat_cat.jpg" />
-    <Content Include="db\Database.edmx.sql" />
-    <Content Include="Web.config" />
+    <Content Include="Assets\bat_cat.jpg" />
     <Content Include="Default.aspx" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="db\Database.Context.cs">
+    <Compile Include="db\LommeradarDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Database.Context.tt</DependentUpon>
+      <DependentUpon>LommeradarDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="db\Database.cs">
+    <Compile Include="db\LommeradarDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>LommeradarDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="db\Database.Designer.cs">
+    <Compile Include="db\LommeradarDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Database.edmx</DependentUpon>
+      <DependentUpon>LommeradarDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="db\Picture.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+    <Compile Include="db\Pictures.cs">
+      <DependentUpon>LommeradarDB.tt</DependentUpon>
     </Compile>
     <Compile Include="db\PointOfInterest.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>LommeradarDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="db\User.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+    <Compile Include="db\Users.cs">
+      <DependentUpon>LommeradarDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -103,27 +101,28 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="db\Database.edmx">
+    <EntityDeploy Include="db\LommeradarDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+      <LastGenOutput>LommeradarDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="db\Database.edmx.diagram">
-      <DependentUpon>Database.edmx</DependentUpon>
-    </Content>
-    <Content Include="db\Database.Context.tt">
+    <Content Include="db\LommeradarDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Database.Context.cs</LastGenOutput>
-      <DependentUpon>Database.edmx</DependentUpon>
+      <DependentUpon>LommeradarDB.edmx</DependentUpon>
+      <LastGenOutput>LommeradarDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="db\LommeradarDB.edmx.diagram">
+      <DependentUpon>LommeradarDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="db\LommeradarDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LommeradarDB.edmx</DependentUpon>
+      <LastGenOutput>LommeradarDB.cs</LastGenOutput>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="db\Database.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Database.cs</LastGenOutput>
-      <DependentUpon>Database.edmx</DependentUpon>
-    </Content>
-    <None Include="Properties\PublishProfiles\lommeradaren.pubxml" />
+    <None Include="Properties\PublishProfiles\LommeradarenWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -131,7 +130,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -148,7 +146,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2196</DevelopmentServerPort>
+          <DevelopmentServerPort>6773</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2026/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

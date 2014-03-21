@@ -13,10 +13,10 @@ namespace LommeradarenWeb.db
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DatabaseContainer : DbContext
+    public partial class LommeradarDBEntities : DbContext
     {
-        public DatabaseContainer()
-            : base("name=DatabaseContainer")
+        public LommeradarDBEntities()
+            : base("name=LommeradarDBEntities")
         {
         }
     
@@ -25,8 +25,8 @@ namespace LommeradarenWeb.db
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<Pictures> Pictures { get; set; }
         public virtual DbSet<PointOfInterest> PointOfInterest { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }
