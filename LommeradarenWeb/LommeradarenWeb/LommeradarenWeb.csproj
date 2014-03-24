@@ -88,6 +88,7 @@
     <Content Include="users\Gallery.aspx" />
     <Content Include="Maps\Maps.aspx" />
     <Content Include="Maps\MapScript.js" />
+    <Content Include="users\UserInfo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,13 @@
     </Compile>
     <Compile Include="users\Gallery.aspx.designer.cs">
       <DependentUpon>Gallery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="users\UserInfo.aspx.cs">
+      <DependentUpon>UserInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="users\UserInfo.aspx.designer.cs">
+      <DependentUpon>UserInfo.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

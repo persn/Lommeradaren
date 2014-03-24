@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -14,7 +15,7 @@
             <table class="auto-style1">
                 <tr>
                     <td>
-                        Header
+                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Assets/bat_cat.jpg" />
                     </td>
                 </tr>
                 <tr>
@@ -23,7 +24,8 @@
                             <Items>
                                 <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"></asp:MenuItem>
                                 <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery"></asp:MenuItem>
-                                <asp:MenuItem Text="Map" Value="Map"></asp:MenuItem>
+                                <asp:MenuItem Text="Map" Value="Map" NavigateUrl="~/Maps/Maps.aspx"></asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account"></asp:MenuItem>
                             </Items>
                         </asp:Menu>
                     </td>
