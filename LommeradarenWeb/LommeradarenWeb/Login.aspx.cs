@@ -28,7 +28,15 @@ namespace LommeradarenWeb
             bool userValid = false;
             using (LommeradarDBEntities entities = new LommeradarDBEntities())
             {
-                userValid = entities.Users.Any(user => user.UserName == userName && user.UserPassword == passWord);
+                try
+                {
+                    string hashedPW = (from user in entities.Users where user.UserName.Equals(userName) select user.UserPassword).First();
+                    userValid = Crypto.VerifyHashedPassword(hashedPW, passWord);
+                }
+                catch (Exception e)
+                {
+                    
+                }
             }
             return userValid;
         }

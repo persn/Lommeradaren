@@ -34,9 +34,9 @@ namespace LommeradarenWeb.users
         {
             if (oldPasswordField.Text != null && newPasswordField != null)
             {
-                if (oldPasswordField.Text.Equals(currentUser.UserPassword) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
+                if (Crypto.VerifyHashedPassword(currentUser.UserPassword, oldPasswordField.Text) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
                 {
-                    currentUser.UserPassword = newPasswordField.Text;
+                    currentUser.UserPassword = Crypto.HashPassword(newPasswordField.Text);
                     entities.SaveChanges();
                 }
             }
