@@ -79,6 +79,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
+    <Content Include="Newuser.aspx" />
     <Content Include="users\Gallery.aspx" />
     <Content Include="Maps\Maps.aspx" />
     <Content Include="Maps\Maps.css" />
@@ -142,6 +143,13 @@
     </Compile>
     <Compile Include="Maps\Maps.aspx.designer.cs">
       <DependentUpon>Maps.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Newuser.aspx.cs">
+      <DependentUpon>Newuser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Newuser.aspx.designer.cs">
+      <DependentUpon>Newuser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="users\Gallery.aspx.cs">

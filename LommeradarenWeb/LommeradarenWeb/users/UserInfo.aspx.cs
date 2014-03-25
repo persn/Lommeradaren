@@ -11,7 +11,7 @@ namespace LommeradarenWeb.users
     public partial class UserInfo : System.Web.UI.Page
     {
         private Users currentUser;
-        LommeradarDBEntities entities;
+        private LommeradarDBEntities entities;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)

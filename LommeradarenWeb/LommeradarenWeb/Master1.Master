@@ -22,6 +22,7 @@
                     <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
                     <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery"/>
                     <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account"/>
+                    <asp:MenuItem NavigateUrl="~/Newuser.aspx" Text="Register Account" Value="Register Account"/>
                 </Items>
             </asp:Menu>
         </div>
