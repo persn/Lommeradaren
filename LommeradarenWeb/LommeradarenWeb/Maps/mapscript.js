@@ -4,10 +4,9 @@
 */
 
 //var url = 'http://test.shiprep.no/shiprepwebuisys/api/NearbyShips?latitude=63.4385841&longitude=10.4007685&altitude=0.0&radius=1890'
+var loc = new google.maps.LatLng(63.4385841, 12.1828);
 
-function initialize() {
-
-    var loc = new google.maps.LatLng(63.4385841, 12.1828);
+function initialize() {    
 
     var mapOptions = {
         center: loc,
