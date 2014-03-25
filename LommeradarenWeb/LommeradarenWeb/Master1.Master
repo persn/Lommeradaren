@@ -17,10 +17,10 @@
         <div style="height: 37px">
             <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table">
                 <Items>
-                    <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"></asp:MenuItem>
-                    <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery"></asp:MenuItem>
-                    <asp:MenuItem Text="Map" Value="Map" NavigateUrl="~/Maps/Maps.aspx"></asp:MenuItem>
-                    <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account"></asp:MenuItem>
+                    <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"/>
+                    <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
+                    <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery"/>
+                    <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account"/>
                 </Items>
             </asp:Menu>
         </div>

@@ -1,7 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Maps.aspx.cs" Inherits="LommeradarenWeb.Maps" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Maps.aspx.cs" Inherits="LommeradarenWeb.Maps" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Lommeradaren Maps</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link href="Maps.css" rel="stylesheet" type="text/css" />
@@ -10,38 +9,36 @@
     <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
     <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
     <script type="text/javascript" src="mapscript.js"></script>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="infobox-wrapper">
-            <div id="infobox">
-                <div id="content">
-                    <div id="siteNotice"></div>
-                    <h1 id="firstHeading" class="firstHeading">Namdalingen</h1>
-                    <div id="bodyContent">
-                        <p>
-                            <asp:Image ID="Image1" runat="server" src="http://www.kystverket.no/Content/1.0.148.036/Images/logo.png" />
-                        </p>
-                        <p>
-                            <b>Latitude:</b> 63<br />
-                            <b>Longitude:</b> 10<br />
-                            <b>Elevation:</b> 0
-                        </p>
-                        <p>
-                            <b>IMO:</b> 2131241<br />
-                            <b>MMSI:</b> 12312421
-                        </p>
+</asp:Content>
 
-                        <p>
-                            <b>Speed:</b> Over 9000<br />
-                            <b>Position Time:</b> 24.03.2014 14:30
-                        </p>
-                        <p><b>Website:</b> http://Blabla</p>
-                    </div>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="infobox-wrapper">
+        <div id="infobox">
+            <div id="content">
+                <div id="siteNotice"></div>
+                <h1 id="firstHeading" class="firstHeading">Namdalingen</h1>
+                <div id="bodyContent">
+                    <p>
+                        <asp:Image ID="Image1" runat="server" src="http://www.kystverket.no/Content/1.0.148.036/Images/logo.png" />
+                    </p>
+                    <p>
+                        <b>Latitude:</b> 63<br />
+                        <b>Longitude:</b> 10<br />
+                        <b>Elevation:</b> 0
+                    </p>
+                    <p>
+                        <b>IMO:</b> 2131241<br />
+                        <b>MMSI:</b> 12312421
+                    </p>
+
+                    <p>
+                        <b>Speed:</b> Over 9000<br />
+                        <b>Position Time:</b> 24.03.2014 14:30
+                    </p>
+                    <p><b>Website:</b> http://Blabla</p>
                 </div>
             </div>
         </div>
-        <div id="map-canvas" />
-    </form>
-</body>
-</html>
+    </div>
+    <div id="map-canvas" style="width:800px; height:600px" />
+</asp:Content>

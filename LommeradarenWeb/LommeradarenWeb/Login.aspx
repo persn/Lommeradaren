@@ -13,7 +13,7 @@
                         <input id="txtUserName" type="text" runat="server" /></td>
                     <td>
                         <asp:RequiredFieldValidator ControlToValidate="txtUserName"
-                            Display="Static" ErrorMessage="*" runat="server"
+                            Display="Static" ErrorMessage="*Required Field" runat="server"
                             ID="vUserName" /></td>
                 </tr>
                 <tr>
@@ -22,18 +22,18 @@
                         <input id="txtUserPass" type="password" runat="server" /></td>
                     <td>
                         <asp:RequiredFieldValidator ControlToValidate="txtUserPass"
-                            Display="Static" ErrorMessage="*" runat="server"
+                            Display="Static" ErrorMessage="*Required field" runat="server"
                             ID="vUserPass" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Persistent Cookie:</td>
+                    <td>Remember me:</td>
                     <td>
                         <asp:CheckBox ID="chkPersistCookie" runat="server" AutoPostBack="false" /></td>
                     <td></td>
                 </tr>
             </table>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
             <p></p>
             <asp:Label ID="lblMsg" ForeColor="red" Font-Name="Verdana" Font-Size="10" runat="server" />
 
