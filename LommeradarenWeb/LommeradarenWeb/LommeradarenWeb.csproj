@@ -81,7 +81,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\bat_cat.jpg" />
+    <Content Include="Assets\header-bg.png" />
+    <Content Include="Assets\logo.png" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
