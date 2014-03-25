@@ -11,11 +11,12 @@
 </head>
 <body style="background-image: url(/Assets/header-bg.png); background-repeat: repeat-x; width: 800px; margin: 0 auto">
     <form id="form1" runat="server">
-        <div style="height: 149px">
+        <div style="height: 156px">
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Assets/logo.png" />
         </div>
-        <div style="height: 37px">
+        <div style="height: 30px">
             <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table">
+                <StaticMenuItemStyle ItemSpacing="15px" />
                 <Items>
                     <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"/>
                     <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
