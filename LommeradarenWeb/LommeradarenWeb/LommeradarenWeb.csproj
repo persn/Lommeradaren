@@ -45,6 +45,7 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -68,7 +69,8 @@
     <Content Include="Assets\bat_cat.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Maps\Maps.aspx" />
-    <Content Include="Maps\MapScript.js" />
+    <Content Include="Maps\Maps.css" />
+    <Content Include="Maps\mapscript.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
