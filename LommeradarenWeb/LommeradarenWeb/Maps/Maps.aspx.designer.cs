@@ -13,12 +13,12 @@ namespace LommeradarenWeb {
     public partial class Maps {
         
         /// <summary>
-        /// Image1 control.
+        /// ShipsAvailableLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.Label ShipsAvailableLbl;
     }
 }
