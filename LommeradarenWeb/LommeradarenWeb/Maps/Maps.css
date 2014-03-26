@@ -12,10 +12,6 @@ body {
     height: 100%;
 }
 
-.infobox-wrapper {
-    display: none;
-}
-
 #infobox {
     border: 2px solid black;
     margin-top: 8px;
