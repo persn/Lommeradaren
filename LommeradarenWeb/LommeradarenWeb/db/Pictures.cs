@@ -22,6 +22,7 @@ namespace LommeradarenWeb.db
         public Nullable<System.DateTime> Timestamp { get; set; }
         public byte[] Picture { get; set; }
         public string PictureName { get; set; }
+        public string FileName { get; set; }
     
         public virtual PointOfInterest PointOfInterest { get; set; }
         public virtual Users Users { get; set; }

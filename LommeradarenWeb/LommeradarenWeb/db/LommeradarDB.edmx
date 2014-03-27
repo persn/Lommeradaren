@@ -12,11 +12,12 @@
           <Property Name="PictureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserUserID" Type="int" Nullable="false" />
           <Property Name="PointOfInterestPOI_ID" Type="int" Nullable="false" />
-          <Property Name="Picture" Type="varbinary(max)" />
+          <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
           <Property Name="Latitude" Type="float" />
           <Property Name="Longitude" Type="float" />
           <Property Name="Timestamp" Type="datetime" />
           <Property Name="PictureName" Type="varchar" MaxLength="100" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="PointOfInterest">
           <Key>
@@ -90,8 +91,9 @@
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PointOfInterest" Relationship="Self.FK_PointOfInterestPicture" FromRole="Pictures" ToRole="PointOfInterest" />
           <NavigationProperty Name="Users" Relationship="Self.FK_UserPicture" FromRole="Pictures" ToRole="Users" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="PictureName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PointOfInterest">
           <Key>
@@ -160,6 +162,7 @@
           <EntitySetMapping Name="Pictures">
             <EntityTypeMapping TypeName="LommeradarDBModel.Pictures">
               <MappingFragment StoreEntitySet="Pictures">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="PictureName" ColumnName="PictureName" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="PictureID" ColumnName="PictureID" />

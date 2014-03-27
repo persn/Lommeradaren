@@ -159,6 +159,9 @@
     <Compile Include="users\Gallery.aspx.designer.cs">
       <DependentUpon>Gallery.aspx</DependentUpon>
     </Compile>
+    <Compile Include="users\GalleryHandler.ashx.cs">
+      <DependentUpon>GalleryHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="users\UserInfo.aspx.cs">
       <DependentUpon>UserInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,6 +192,7 @@
     <Content Include="Master1.Master" />
     <None Include="Properties\PublishProfiles\LommeradarenWeb.pubxml" />
     <Content Include="users\Web.config" />
+    <Content Include="users\GalleryHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

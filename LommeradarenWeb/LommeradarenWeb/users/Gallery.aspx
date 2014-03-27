@@ -4,14 +4,6 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Gallery_Placeholder
-        
-    </h1>
-    <% List<string> pics = getPics();%>
-    <% foreach (string s in pics){%>
-    <% Response.Write("<img runat\"server\" src=" + s + ">"); %>
-    <% } %>
-
-
-    
+    <asp:Table runat="server" ID="imageTable">
+    </asp:Table>
 </asp:Content>
