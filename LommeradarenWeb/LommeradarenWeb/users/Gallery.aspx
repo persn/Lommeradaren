@@ -4,6 +4,12 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Table runat="server" ID="imageTable">
-    </asp:Table>
+    <div>
+        <h3>Gallery
+        </h3>
+    </div>
+    <div>
+        <asp:Table runat="server" ID="imageTable">
+        </asp:Table>
+    </div>
 </asp:Content>
