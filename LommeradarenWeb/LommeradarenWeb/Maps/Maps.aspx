@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Maps.aspx.cs" Inherits="LommeradarenWeb.Maps" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="/styling/contentdisplay.css" rel="stylesheet" type="text/css" />
     <title>Lommeradaren Maps</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link href="Maps.css" rel="stylesheet" type="text/css" />
