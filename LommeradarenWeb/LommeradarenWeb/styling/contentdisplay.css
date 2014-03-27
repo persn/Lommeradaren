@@ -1,0 +1,27 @@
+﻿.header{
+    background-image: url("/Assets/fadearrowbg.png");
+    background-size: 100%;
+}
+
+.headerlabels{
+    color: whitesmoke;
+}
+
+.content{
+    background-image: url("/Assets/toptab.png");
+    background-size: cover;
+    margin: 0 auto;
+}
+
+.menubuttons{
+    padding: 7px;
+    width: 70px;
+}
+
+.menubuttons:hover{
+    background-image: url("/Assets/toptab.png");
+    background-size: cover;
+    margin: 0 auto;
+    height: 30px;
+    width: 70px;
+}

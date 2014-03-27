@@ -1,40 +1,51 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="LommeradarenWeb.Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="/styling/contentdisplay.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-            <h3>Login Page
-            </h3>
-            <table>
-                <tr>
-                    <td>Username:</td>
-                    <td>
-                        <input id="txtUserName" type="text" runat="server" /></td>
-                    <td>
-                        <asp:RequiredFieldValidator ControlToValidate="txtUserName"
-                            Display="Static" ErrorMessage="*Required Field" runat="server"
-                            ID="vUserName" /></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td>
-                        <input id="txtUserPass" type="password" runat="server" /></td>
-                    <td>
-                        <asp:RequiredFieldValidator ControlToValidate="txtUserPass"
-                            Display="Static" ErrorMessage="*Required field" runat="server"
-                            ID="vUserPass" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Remember me:</td>
-                    <td>
-                        <asp:CheckBox ID="chkPersistCookie" runat="server" AutoPostBack="false" /></td>
-                    <td></td>
-                </tr>
-            </table>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
-            <p></p>
-            <asp:Label ID="lblMsg" ForeColor="red" Font-Name="Verdana" Font-Size="10" runat="server" />
-
+    <div class="header">
+        <h3 class="headerlabels">Login Page</h3>
+    </div>
+    <div class="content">
+    <asp:Table ID="Table1" runat="server" BorderStyle="None">
+        <asp:TableRow>
+            <asp:TableCell>
+                <asp:Label ID="Label1" runat="server" Text="Username:"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell>
+                <input id="txtUserName" type="text" runat="server" />
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:RequiredFieldValidator ControlToValidate="txtUserName"
+                    Display="Static" ErrorMessage="*Required Field" runat="server"
+                    ID="vUserName" />
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <asp:Label ID="Label2" runat="server" Text="Password:"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell>
+                <input id="txtUserPass" type="password" runat="server" />
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:RequiredFieldValidator ControlToValidate="txtUserPass"
+                    Display="Static" ErrorMessage="*Required field" runat="server"
+                    ID="vUserPass" />
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <asp:Label ID="Label3" runat="server" Text="Remember Me:"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:CheckBox ID="chkPersistCookie" runat="server" AutoPostBack="false" />
+            </asp:TableCell>
+        </asp:TableRow>
+    </asp:Table>
+    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
+    <br /><br />
+    <asp:Label ID="lblMsg" ForeColor="red" Font-Name="Verdana" Font-Size="10" runat="server" />
+    </div>
 </asp:Content>
