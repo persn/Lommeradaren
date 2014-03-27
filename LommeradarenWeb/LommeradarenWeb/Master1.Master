@@ -7,18 +7,19 @@
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
+        <link href="/styling/contentdisplay.css" rel="stylesheet" type="text/css" />
     </asp:ContentPlaceHolder>
 </head>
 <body style="background-image: url(/Assets/header-bg.png); background-repeat: repeat-x; width: 800px; margin: 0 auto">
     <form id="form1" runat="server">
-        <div style="height: 156px">
+        <div style="height: 149px">
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Assets/logo.png" />
         </div>
         <div style="height: 30px">
-            <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table">
-                <StaticMenuItemStyle ItemSpacing="15px" />
+            <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table" style="margin-bottom: 0px">
+                <StaticMenuItemStyle ItemSpacing="15px" CssClass="menubuttons"/>
                 <Items>
-                    <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home"/>
+                    <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home" />
                     <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
                     <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery"/>
                     <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account"/>

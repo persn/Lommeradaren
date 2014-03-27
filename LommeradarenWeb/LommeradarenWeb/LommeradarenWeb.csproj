@@ -74,8 +74,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\fadearrowbg.png" />
     <Content Include="Assets\header-bg.png" />
     <Content Include="Assets\logo.png" />
+    <Content Include="Assets\toptab.png" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -84,6 +86,7 @@
     <Content Include="Maps\Maps.aspx" />
     <Content Include="Maps\Maps.css" />
     <Content Include="Maps\mapscript.js" />
+    <Content Include="styling\contentdisplay.css" />
     <Content Include="users\UserInfo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>

@@ -4,7 +4,8 @@
 */
 var loc = new google.maps.LatLng(63.4385841, 12.1828);
 var markers = [];
-var infoboxes = [];
+
+google.maps.event.addDomListener(window, 'load', initialize);
 
 function initialize() {
 
@@ -23,25 +24,15 @@ function initialize() {
         marker["speed"] = jsonArray[i].speed;
         marker["positionTime"] = jsonArray[i].positionTime;
         marker["webpage"] = jsonArray[i].webpage;
+
+        var infobox = assembleInfoWindow();
+        attachListenerToMarker(map,marker,infobox);
+
         markers.push(marker);
-
-        var infobox = assembleInfoWindow(marker.getTitle(), marker.getPosition().lat(), marker.getPosition().lng(), marker.elevation, marker.imo, marker.mmsi, marker.speed, marker.positionTime, marker.webpage);
-
-        google.maps.event.addListener(marker, 'click', function () {
-            console.log(this.getTitle());
-            infobox.setContent(assembleInfoWindowContent(this.getTitle(), this.getPosition().lat(), this.getPosition().lng(), this.elevation, this.imo, this.mmsi, this.speed, this.positionTime, this.webpage));
-            infobox.open(map, this);
-            //map.panTo(loc);
-        });
-
     }
-
-    var marker = markers[5];
 
     var markerCluster = new MarkerClusterer(map, markers);
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);
 
 /**
 * Creates a marker on GoogleMap
@@ -61,7 +52,7 @@ function assembleMarker(googleMap,title,lat,lng,rotation,url) {
     return newMarker;
 }
 
-function assembleInfoWindow(title, lat, lng, elevation, imo, mmsi, speed, positionTime, url) {
+function assembleInfoWindow() {
     var newInfobox = new InfoBox({
         disableAutoPan: false,
         zIndex: null,
@@ -73,7 +64,6 @@ function assembleInfoWindow(title, lat, lng, elevation, imo, mmsi, speed, positi
             paddingLeft: "12px"
         },
         closeBoxMargin: "12px 4px 2px 2px",
-        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
         infoBoxClearance: new google.maps.Size(1, 1)
     });
     return newInfobox;
@@ -92,4 +82,13 @@ function assembleInfoWindowContent(title, lat, lng, elevation, imo, mmsi, speed,
     + '<p><b>Website:</b> <a href="' + url +'">' + title +'</a></p>'
     + '</div></div></div>'
     return infoContent;
+}
+
+function attachListenerToMarker(map,marker,infobox) {
+    google.maps.event.addListener(marker, 'click', function () {
+        console.log(this.getTitle());
+        infobox.setContent(assembleInfoWindowContent(this.getTitle(), this.getPosition().lat(), this.getPosition().lng(), this.elevation, this.imo, this.mmsi, this.speed, this.positionTime, this.webpage));
+        infobox.open(map, this);
+        //map.panTo(loc);
+    });
 }
