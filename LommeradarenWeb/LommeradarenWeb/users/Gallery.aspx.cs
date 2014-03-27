@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 
 namespace LommeradarenWeb.users
@@ -29,28 +30,65 @@ namespace LommeradarenWeb.users
 
         public void fillTable()
         {
-            foreach (string[] s in getImages())
+            TableRow row = new TableRow();
+            
+            for (int i = 0; i < images.Count(); i++)
             {
-                TableRow row = new TableRow();
                 TableCell cell1 = new TableCell();
-                TableCell cell2 = new TableCell();
                 Label label = new Label();
-                Image img = new Image();
-                label.Text = s[1];
-                row.Cells.Add(cell1);
+                ImageButton img = new ImageButton();
+                img.ImageUrl = "GalleryHandler.ashx?id=" + images[i][0];
+                img.Height = 150;
+                img.ID = images[i][0];
+                img.Click += new ImageClickEventHandler(onImageClick);
+                cell1.Controls.Add(img);
+                cell1.Controls.Add(new LiteralControl("<br/>"));
+                label.Text = images[i][1];
                 cell1.Controls.Add(label);
-                row.Cells.Add(cell2);
-                img.ImageUrl= "\\GalleryHandler.ashx?id=" + s[0];
-                cell2.Controls.Add(img);
-                imageTable.Rows.Add(row);
+                row.Cells.Add(cell1);
             }
-
+            imageTable.Rows.Add(row);
         }
 
-        public List<string[]> getImages()
+        public void onImageClick(object sender, EventArgs e)
         {
-            return images;
+            if (!infoTable.Visible)
+            {
+                infoTable.Visible = true;
+            }
+            ImageButton img = (ImageButton)sender;
+            BigImage.ImageUrl = img.ImageUrl;
+            if (BigImage.Height.Value > BigImage.Width.Value)
+            {
+                BigImage.Height = 300;
+            }
+            else
+            {
+                BigImage.Width = 600;
+            }
         }
 
+        protected void DeleteImageButton_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(BigImage.ImageUrl[BigImage.ImageUrl.Length - 1].ToString());
+            try
+            {
+                Pictures pic = (from Pictures in entities.Pictures where Pictures.PictureID == id select Pictures).First();
+                entities.Pictures.Remove(pic);
+                entities.SaveChanges();
+            }
+            catch
+            {
+                return;
+            }
+            
+            Response.Redirect("Gallery.aspx");
+            
+        }
+
+        protected void ViewLargeImageButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(BigImage.ImageUrl);
+        }
     }
 }
