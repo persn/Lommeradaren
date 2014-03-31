@@ -148,6 +148,9 @@
     <Compile Include="Maps\Maps.aspx.designer.cs">
       <DependentUpon>Maps.aspx</DependentUpon>
     </Compile>
+    <Compile Include="mobile\Handler1.ashx.cs">
+      <DependentUpon>Handler1.ashx</DependentUpon>
+    </Compile>
     <Compile Include="mobile\MobileLogin.aspx.cs">
       <DependentUpon>MobileLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -204,6 +207,7 @@
     </Content>
     <Content Include="packages.config" />
     <Content Include="Master1.Master" />
+    <Content Include="mobile\Handler1.ashx" />
     <None Include="Properties\PublishProfiles\LommeradarenWeb.pubxml" />
     <Content Include="users\Web.config" />
     <Content Include="users\GalleryHandler.ashx" />
