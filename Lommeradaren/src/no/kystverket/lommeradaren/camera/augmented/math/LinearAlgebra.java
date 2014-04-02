@@ -58,6 +58,8 @@ public class LinearAlgebra {
 		Matrix.translateM(drawMatrix, 0, x, y, z);
 		rotatePointOfInterest(drawMatrix, 0, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
+		
+		
 		pointOfInterest.draw(drawMatrix);
 	}
 
