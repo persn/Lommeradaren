@@ -58,6 +58,7 @@ public class Triangle {
 
 	private final FloatBuffer vertexBuffer;
 	// private final int mProgram;
+	private Program mProgram;
 	private int mPositionHandle;
 	private int mColorHandle;
 	private int mMVPMatrixHandle;
@@ -108,7 +109,20 @@ public class Triangle {
 		// GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment
 		// shader to program
 		// GLES20.glLinkProgram(mProgram); // create OpenGL program executables
+		Program p = new MarkerProgram();
+		p.init();
+		mProgram = p;
 
+		// get handle to fragment shader's vColor member
+		mColorHandle = GLES20.glGetUniformLocation(mProgram.getHandle(),
+				"vColor");
+		MarkerRenderer.checkGlError("glGetUniformLocation");
+
+		// get handle to shape's transformation matrix
+		mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram.getHandle(),
+				"uMVPMatrix");
+
+		MarkerRenderer.checkGlError("glGetUniformLocation");
 	}
 
 	/**
@@ -118,12 +132,13 @@ public class Triangle {
 	 *            - The Model View Project matrix in which to draw this shape.
 	 */
 
-	public void draw(float[] mvpMatrix, Program mProgram) {
+	public void draw(float[] mvpMatrix) {
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram.getHandle());
 
 		// get handle to vertex shader's vPosition member
-		mPositionHandle = GLES20.glGetAttribLocation(mProgram.getHandle(), "vPosition");
+		mPositionHandle = GLES20.glGetAttribLocation(mProgram.getHandle(),
+				"vPosition");
 
 		// Enable a handle to the triangle vertices
 		GLES20.glEnableVertexAttribArray(mPositionHandle);
@@ -132,17 +147,8 @@ public class Triangle {
 		GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
 				GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
 
-		// get handle to fragment shader's vColor member
-		mColorHandle = GLES20.glGetUniformLocation(mProgram.getHandle(), "vColor");
-		MarkerRenderer.checkGlError("glGetUniformLocation");
-
 		// Set color for drawing the triangle
 		GLES20.glUniform4fv(mColorHandle, 1, color, 0);
-
-		// get handle to shape's transformation matrix
-		mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram.getHandle(), "uMVPMatrix");
-		
-		MarkerRenderer.checkGlError("glGetUniformLocation");
 
 		// Apply the projection and view transformation
 		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);

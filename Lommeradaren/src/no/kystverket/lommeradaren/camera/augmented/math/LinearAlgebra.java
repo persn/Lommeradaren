@@ -53,7 +53,7 @@ public class LinearAlgebra {
 	}
 
 	public void drawPointOfInterest(Triangle pointOfInterest, float x, float y,
-			float z, Program p) {
+			float z) {
 		float[] drawMatrix = new float[16];
 		Matrix.setIdentityM(drawMatrix, 0);
 		Matrix.translateM(drawMatrix, 0, x, y, z);
@@ -61,7 +61,7 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		
 		
-		pointOfInterest.draw(drawMatrix,p);
+		pointOfInterest.draw(drawMatrix);
 	}
 
 	public void drawText(GLText glText, String text, float posX, float posY, float posZ) {
