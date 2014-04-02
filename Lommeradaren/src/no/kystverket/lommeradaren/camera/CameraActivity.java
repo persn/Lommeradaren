@@ -33,7 +33,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
-	private CustomGoogleMapFragment gMap;
+//	private CustomGoogleMapFragment gMap;
 	private SensorManager mSensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -51,9 +51,9 @@ public class CameraActivity extends Activity implements SensorEventListener {
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
-				.findFragmentById(R.id.fragment1));
-		this.gMap.toggleMiniMapSettings();
+//		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
+//				.findFragmentById(R.id.fragment1));
+//		this.gMap.toggleMiniMapSettings();
 	}
 
 	@Override
@@ -95,8 +95,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		if (sensorHandler.handleEvent(evt)) {
 			float[] orientation = sensorHandler.getOrientation();
 			mGLView.getSensorData(orientation.clone());
-			this.gMap
-					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
+//			this.gMap
+//					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
 	}
 

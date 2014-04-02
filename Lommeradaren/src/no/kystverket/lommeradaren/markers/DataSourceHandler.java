@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 /**
  * 
  * @author Per Olav Flaten
@@ -21,14 +19,14 @@ public class DataSourceHandler {
 	private DataSource dataSource;
 	private List<POI> pointOfInterests;
 	private TextHandler textHandler;
-
+	private boolean readyToRead;
+	
 	private String lat;
 	private String lng;
 	private String alt;
 	private String radius;
 
-	public DataSourceHandler(DataSource newDataSource, String newLat,
-			String newLng, String newAlt) {
+	public DataSourceHandler(DataSource newDataSource) {
 		this.textHandler = new TextHandler();
 		this.dataSource = newDataSource;
 	}
@@ -79,6 +77,10 @@ public class DataSourceHandler {
 		});
 		thread.start();
 	}
+	
+	public boolean isReadyToRead(){
+		return this.readyToRead;
+	}
 
 	/**
 	 * Extracts all JSON-objects from a JSON array stored in a URL.
@@ -89,6 +91,7 @@ public class DataSourceHandler {
 		try {
 			JSONObject json = new JSONObject(rawData);
 			if (json.getString("status").equals("OK")) {
+				this.readyToRead = true;
 				this.pointOfInterests = new ArrayList<POI>();
 				JSONArray jsonArray = json.getJSONArray("results");
 				for (int i = 0; i < jsonArray.length(); i++) {
@@ -96,6 +99,8 @@ public class DataSourceHandler {
 							.add(extractPOIFromDataSource(jsonArray
 									.getJSONObject(i)));
 				}
+			}else{
+				this.readyToRead = false;
 			}
 		} catch (JSONException jsonE) {
 			jsonE.printStackTrace();

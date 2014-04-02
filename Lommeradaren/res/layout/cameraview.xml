@@ -35,7 +35,7 @@
 
         <fragment
             android:id="@+id/fragment1"
-            android:name="no.kystverket.lommeradaren.maps.CustomGoogleMapFragment"
+            android:name="no.kystverket.lommeradaren.maps.MiniMapFragment"
             android:layout_width="148dp"
             android:layout_height="142dp"
             android:layout_column="0"

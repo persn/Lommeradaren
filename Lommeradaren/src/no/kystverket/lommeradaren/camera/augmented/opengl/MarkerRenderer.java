@@ -87,10 +87,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		this.linAlg.drawText(glText, "North", 0, 0, -50);
-		this.linAlg.drawText(glText, "South", 0, 0, 50);
-		this.linAlg.drawText(glText, "East", 50, 0, 0);
-		this.linAlg.drawText(glText, "West", -50, 0, 0);
+//		this.linAlg.drawText(glText, "North", 0, 0, -50);
+//		this.linAlg.drawText(glText, "South", 0, 0, 50);
+//		this.linAlg.drawText(glText, "East", 50, 0, 0);
+//		this.linAlg.drawText(glText, "West", -50, 0, 0);
 		
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];

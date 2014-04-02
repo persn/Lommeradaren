@@ -53,10 +53,7 @@ public class CustomGoogleMapFragment extends Fragment {
 
 		String datasource[] = getString(R.string.datasource_url).split("\\|");
 		this.datasourceHandler = new DataSourceHandler(new DataSource(
-				datasource[0], datasource[1]),
-				this.currentLocation.getLatitude(),
-				this.currentLocation.getLongtitude(),
-				this.currentLocation.getAltitude());
+				datasource[0], datasource[1]));
 
 		this.handler = new Handler();
 		this.updateMarkersThread = new MarkerRefresh();
@@ -130,8 +127,7 @@ public class CustomGoogleMapFragment extends Fragment {
 	 */
 	public void updateBearing(float bearing) {
 		if (this.gMap.getMyLocation() != null) {
-			LatLng location;
-			location = new LatLng(this.gMap.getMyLocation().getLatitude(),
+			LatLng location = new LatLng(this.gMap.getMyLocation().getLatitude(),
 					this.gMap.getMyLocation().getLongitude());
 			CameraPosition currentPlace = new CameraPosition.Builder()
 					.target(location).bearing(bearing).zoom(this.zoom).build();
