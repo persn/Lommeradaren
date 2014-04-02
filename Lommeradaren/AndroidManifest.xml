@@ -42,6 +42,10 @@
         </activity>
         <activity android:name=".photo.gallery.GalleryActivity" >
         </activity>
+        <activity android:name=".user.UserActivity">  
+        </activity>
+        <activity android:name=".user.WebActivity">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
