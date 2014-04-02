@@ -64,7 +64,7 @@ public class LinearAlgebra {
 		pointOfInterest.draw(drawMatrix);
 	}
 
-	public void drawText(GLText glText, String text, float posX, float posY, float posZ) {
+	public void drawText(GLText glText, float[] color, String text, float posX, float posY, float posZ) {
 		float degRot = (float) Math.toDegrees(Math.atan2((double) posX,
 				(double) -posZ));
 		float[] drawMatrix = new float[16];
@@ -78,6 +78,7 @@ public class LinearAlgebra {
 		Matrix.rotateM(rotationMatrixTest, 0, -degRot, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, drawMatrix, 0, rotationMatrixTest, 0);
 
+		glText.drawMarker(128, 128, color, drawMatrix);
 		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
 		glText.drawC(text, 0, 0, 0, 0, -0, 0);
 		glText.end();

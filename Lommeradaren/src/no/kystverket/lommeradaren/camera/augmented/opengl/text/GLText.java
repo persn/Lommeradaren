@@ -1,12 +1,18 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl.text;
 
+import java.io.IOException;
+
+import no.kystverket.lommeradaren.R;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 public class GLText {
 
@@ -48,6 +54,7 @@ public class GLText {
 	float fontDescent; // Font Descent (Below Baseline; Pixels)
 
 	int textureId; // Font Texture ID [NOTE: Public for Testing Purposes Only!]
+	int boatTextureId;
 	int textureSize; // Texture Size for Font (Square) [NOTE: Public for Testing
 						// Purposes Only!]
 	TextureRegion textureRgn; // Full Texture Region
@@ -94,6 +101,7 @@ public class GLText {
 		fontDescent = 0.0f;
 
 		textureId = -1;
+		boatTextureId = -1;
 		textureSize = 0;
 
 		charWidthMax = 0;
@@ -240,7 +248,20 @@ public class GLText {
 
 		// save the bitmap in a texture
 		textureId = TextureHelper.loadTexture(bitmap);
-
+		Log.d("bitmapID", ""+textureId);
+		
+		
+		Bitmap boatBitmap;
+		try {
+			boatBitmap = BitmapFactory.decodeStream(assets.open("boaticon.png"));
+			boatTextureId = TextureHelper.loadTexture(boatBitmap);
+			Log.d("boatBitmap", ""+boatTextureId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		// setup the array of character texture regions
 		x = 0; // Initialize X
 		y = 0; // Initialize Y
@@ -296,15 +317,16 @@ public class GLText {
 		GLES20.glEnableVertexAttribArray(mColorHandle);
 
 		GLES20.glActiveTexture(GLES20.GL_TEXTURE0); // Set the active texture
-													// unit to texture unit 0
+		// unit to texture unit 0
 
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId); // Bind the
-																// texture to
-																// this unit
+		// texture to
+		// this unit
 
 		// Tell the texture uniform sampler to use this texture in the shader by
 		// binding to texture unit 0
 		GLES20.glUniform1i(mTextureUniformHandle, 0);
+		
 	}
 
 	public void end() {
@@ -520,6 +542,36 @@ public class GLText {
 		Matrix.setIdentityM(idMatrix, 0);
 		batch.drawSprite(width - (textureSize / 2), height - (textureSize / 2),
 				textureSize, textureSize, textureRgn, idMatrix); // Draw
+		batch.endBatch(); // End Batch
+	}
+	
+	public void drawMarker(int width, int height, float[] color, float[] vpMatrix) {
+		GLES20.glUseProgram(mProgram.getHandle()); // specify the program to use
+
+		// set color TODO: only alpha component works, text is always black #BUG
+		//float[] color = { 1, 1, 1, 1 };
+		GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+		GLES20.glEnableVertexAttribArray(mColorHandle);
+
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE1); // Set the active texture
+		// unit to texture unit 0
+
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, boatTextureId); // Bind the
+		// texture to
+		// this unit
+
+		// Tell the texture uniform sampler to use this texture in the shader by
+		// binding to texture unit 0
+		GLES20.glUniform1i(mTextureUniformHandle, 1);
+		
+		int textureSize = 4;
+		TextureRegion rgn = new TextureRegion(textureSize, textureSize, 0, 0, textureSize, textureSize);
+
+		batch.beginBatch(vpMatrix); // Begin Batch (Bind Texture)
+		float[] idMatrix = new float[16];
+		Matrix.setIdentityM(idMatrix, 0);
+		batch.drawSprite(0, 3,
+				textureSize, textureSize, rgn, idMatrix); // Draw
 		batch.endBatch(); // End Batch
 	}
 }
