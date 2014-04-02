@@ -12,5 +12,11 @@
     <string name="string_map_type_satellite">Satellite</string>
     <string name="string_choose_map_type">Choose Map Type</string>
     <string name="string_go_to_screen">Go To Screen</string>
+    <string name="user_name">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login_screen">Login Screen:</string>
+    <string name="login">Login</string>
+    <string name="web_login_url">http://10.201.84.118/mobile/MobileLogin.aspx</string>
+    <string name="web_picture_upload_url">http://10.201.84.118/users/UploadHandler.ashx?</string>
 
 </resources>

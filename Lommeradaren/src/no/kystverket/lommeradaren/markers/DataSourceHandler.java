@@ -96,8 +96,6 @@ public class DataSourceHandler {
 						.getJSONObject(i)));
 			}
 		} catch (JSONException jsonE) {
-			Log.d("no.kystverket.lommeradaren",
-					"DataSourceReader.java extractAllPOI");
 			jsonE.printStackTrace();
 		}
 	}
@@ -125,8 +123,6 @@ public class DataSourceHandler {
 			pointOfInterest = new POI(id, title, lat, lng, alt, distance,
 					hasPage, webpage, positionTime);
 		} catch (JSONException jsonE) {
-			Log.e("no.kystverket.lommeradaren",
-					"DataSourceHandler.java extractPOIFromDataSource");
 			jsonE.printStackTrace();
 		}
 		return pointOfInterest;

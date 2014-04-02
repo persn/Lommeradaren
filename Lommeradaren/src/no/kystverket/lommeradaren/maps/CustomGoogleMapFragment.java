@@ -36,6 +36,7 @@ public class CustomGoogleMapFragment extends Fragment {
 	private LocationHandler currentLocation;
 	private DataSourceCollection dataSourceCollection;
 	private float zoom;
+	private boolean bigmap = true;
 
 	private Handler handler;
 	private Runnable updateMarkersThread;
@@ -53,7 +54,7 @@ public class CustomGoogleMapFragment extends Fragment {
 				this.currentLocation.getLongtitude(),
 				this.currentLocation.getAltitude());
 		this.handler = new Handler();
-		this.updateMarkersThread = initMarkerRefreshThread();
+		this.updateMarkersThread = new MarkerRefresh();
 	}
 
 	@Override
@@ -135,6 +136,7 @@ public class CustomGoogleMapFragment extends Fragment {
 		this.gMap.getUiSettings().setMyLocationButtonEnabled(false);
 		this.gMap.getUiSettings().setZoomControlsEnabled(false);
 		this.gMap.getUiSettings().setAllGesturesEnabled(false);
+		this.bigmap = false;
 	}
 
 	/**
@@ -161,6 +163,7 @@ public class CustomGoogleMapFragment extends Fragment {
 		float widthInPixels = size.x;
 		float metersPerPixel = EQUATOR_LENGTH_METER / 256;
 		float zoomLevel = 1;
+		//TODO --- 50000 refers to 50km, the constant number should be replaced when user adjusted radius is implemented.
 		while ((metersPerPixel * widthInPixels) > 50000) {
 			metersPerPixel /= 2;
 			zoomLevel++;
@@ -208,46 +211,41 @@ public class CustomGoogleMapFragment extends Fragment {
 		this.handler.removeCallbacks(this.updateMarkersThread);
 	}
 
-	/**
-	 * Creates a thread for updating markers, with their locations.
-	 * 
-	 * @return
-	 */
-	private Runnable initMarkerRefreshThread() {
-		Runnable runnable = new Runnable() {
+	private class MarkerRefresh implements Runnable {
+		
+		@Override
+		public void run() {
+			gMap.clear();
 
-			@Override
-			public void run() {
-				gMap.clear();
+			// Make sure the marker data associated with the Augmented
+			// Reality Engine is up to date as well.
+			MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
+					.findViewById(R.id.marker_surface_view);
+			if (markerView != null) {
+				markerView.setDataSourceCollection(dataSourceCollection);
+				markerView.setCurrentLocation(currentLocation);
+			}
 
-				// Make sure the marker data associated with the Augmented
-				// Reality Engine is up to date as well.
-				MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
-						.findViewById(R.id.marker_surface_view);
-				if (markerView != null) {
-					markerView.setDataSourceCollection(dataSourceCollection);
-					markerView.setCurrentLocation(currentLocation);
-				}
-
-				for (int i = 0; i < dataSourceCollection
-						.getDataSourceListSize(); i++) {
+			for (int i = 0; i < dataSourceCollection.getDataSourceListSize(); i++) {
+				if(bigmap){
+					dataSourceCollection.getDataSourceHandler(i).refreshData(
+							"63.4395831", "10.4007685", "0.0", "50000");
+				}else{
 					dataSourceCollection.getDataSourceHandler(i).refreshData(
 							currentLocation.getLatitude(),
 							currentLocation.getLongtitude(),
 							currentLocation.getAltitude(), "50");
-					for (int j = 0; j < dataSourceCollection
-							.getPOIArrayLength(i); j++) {
-						POI poi = dataSourceCollection.getPOI(i, j);
-						gMap.addMarker(new MarkerOptions().position(
-								new LatLng(poi.getLat(), poi.getLng())).title(
-								poi.getName()));
-					}
+				}	
+				
+				for (int j = 0; j < dataSourceCollection.getPOIArrayLength(i); j++) {
+					POI poi = dataSourceCollection.getPOI(i, j);
+					gMap.addMarker(new MarkerOptions().position(
+							new LatLng(poi.getLat(), poi.getLng())).title(
+							poi.getName()));
 				}
-				handler.postDelayed(this, 5000);
-
 			}
-		};
-		return runnable;
+			handler.postDelayed(this, 5000);
+		}
 	}
 
 }

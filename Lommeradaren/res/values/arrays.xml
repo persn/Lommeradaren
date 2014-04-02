@@ -7,7 +7,7 @@
         <item>Satellite</item>
     </string-array>
     <string-array name="string_array_datasources">
-        <item >Kystverket|http://test.shiprep.no/shiprepwebuisys/api/NearbyShips</item>
+        <item >Kystverket|http://www.shiprep.no/ShipRepWebUI/api/NearbyShips</item>
     </string-array>
 
 </resources>
