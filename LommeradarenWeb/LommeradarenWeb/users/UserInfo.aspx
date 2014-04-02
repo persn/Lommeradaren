@@ -6,6 +6,9 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="header">
+        <h3 class="headerlabels">Account Management</h3>
+    </div>
+    <div class="header">
         <asp:Label ID="userStatusHeaderLabel" runat="server" Text="<b>Status:</b>" CssClass="headerlabels" />
     </div>
     <div id="userStatus" class="content">

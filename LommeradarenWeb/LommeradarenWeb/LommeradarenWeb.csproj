@@ -81,6 +81,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
+    <Content Include="mobile\MobileLogin.aspx" />
     <Content Include="Newuser.aspx" />
     <Content Include="users\Gallery.aspx" />
     <Content Include="Maps\Maps.aspx" />
@@ -147,6 +148,16 @@
     <Compile Include="Maps\Maps.aspx.designer.cs">
       <DependentUpon>Maps.aspx</DependentUpon>
     </Compile>
+    <Compile Include="mobile\Handler1.ashx.cs">
+      <DependentUpon>Handler1.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile\MobileLogin.aspx.cs">
+      <DependentUpon>MobileLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mobile\MobileLogin.aspx.designer.cs">
+      <DependentUpon>MobileLogin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Newuser.aspx.cs">
       <DependentUpon>Newuser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -161,6 +172,12 @@
     </Compile>
     <Compile Include="users\Gallery.aspx.designer.cs">
       <DependentUpon>Gallery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="users\GalleryHandler.ashx.cs">
+      <DependentUpon>GalleryHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="users\UploadHandler.ashx.cs">
+      <DependentUpon>UploadHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="users\UserInfo.aspx.cs">
       <DependentUpon>UserInfo.aspx</DependentUpon>
@@ -190,8 +207,11 @@
     </Content>
     <Content Include="packages.config" />
     <Content Include="Master1.Master" />
+    <Content Include="mobile\Handler1.ashx" />
     <None Include="Properties\PublishProfiles\LommeradarenWeb.pubxml" />
     <Content Include="users\Web.config" />
+    <Content Include="users\GalleryHandler.ashx" />
+    <Content Include="users\UploadHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

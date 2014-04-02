@@ -7,135 +7,99 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LommeradarenWeb.users {
+namespace LommeradarenWeb {
     
     
-    public partial class Gallery {
+    public partial class MobileLogin {
         
         /// <summary>
-        /// Panel1 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// imageTable control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table imageTable;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// infoTable control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table infoTable;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// BigImage control.
+        /// txtUserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image BigImage;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtUserName;
         
         /// <summary>
-        /// LatitudeLabel control.
+        /// vUserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LatitudeLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vUserName;
         
         /// <summary>
-        /// LongitudeLabel control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LongitudeLabel;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// ElevationLabel control.
+        /// txtUserPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ElevationLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtUserPass;
         
         /// <summary>
-        /// ImoLabel control.
+        /// vUserPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ImoLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vUserPass;
         
         /// <summary>
-        /// MMSILabel control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label MMSILabel;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// SpeedLabel control.
+        /// lblMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SpeedLabel;
-        
-        /// <summary>
-        /// PositionTimeLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PositionTimeLabel;
-        
-        /// <summary>
-        /// WebsiteLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label WebsiteLabel;
-        
-        /// <summary>
-        /// DeleteImageButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DeleteImageButton;
-        
-        /// <summary>
-        /// ViewLargeImageButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ViewLargeImageButton;
+        protected global::System.Web.UI.WebControls.Label lblMsg;
     }
 }

@@ -7,7 +7,6 @@
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
-        <link href="/styling/contentdisplay.css" rel="stylesheet" type="text/css" />
     </asp:ContentPlaceHolder>
 </head>
 <body style="background-image: url(/Assets/header-bg.png); background-repeat: repeat-x; width: 800px; margin: 0 auto">

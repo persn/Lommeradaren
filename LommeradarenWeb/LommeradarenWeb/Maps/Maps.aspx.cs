@@ -38,7 +38,7 @@ namespace LommeradarenWeb
         [WebMethod(EnableSession = true)]
         public static string GetRawData()
         {
-            return new WebClient().DownloadString("http://test.shiprep.no/shiprepwebuisys/api/NearbyShips?latitude=63.4395831&longitude=10.4007685&altitude=0.0&radius=50000");
+            return new WebClient().DownloadString("http://www.shiprep.no/ShipRepWebUI/api/NearbyShips?latitude=63.4395831&longitude=10.4007685&altitude=0.0&radius=50000");
         }
 
     }
