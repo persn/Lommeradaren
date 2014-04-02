@@ -30,7 +30,5 @@ public class DataSource {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	//ADD CUSTOM EQUALS AND COMPARETO IF NEEDED
 
 }

@@ -28,11 +28,9 @@ public class DataSourceHandler {
 	private String radius;
 
 	public DataSourceHandler(DataSource newDataSource, String newLat,
-			String newLng, String newAlt, String newRadius) {
+			String newLng, String newAlt) {
 		this.textHandler = new TextHandler();
 		this.dataSource = newDataSource;
-
-		this.refreshData(newLat, newLng, newAlt, newRadius);
 	}
 
 	public String getDataSourceName() {
@@ -90,6 +88,7 @@ public class DataSourceHandler {
 		this.pointOfInterests = new ArrayList<POI>();
 		try {
 			JSONObject json = new JSONObject(rawData);
+			Log.d("JSON STATUS", json.getString("status"));
 			JSONArray jsonArray = json.getJSONArray("results");
 			for (int i = 0; i < jsonArray.length(); i++) {
 				this.pointOfInterests.add(extractPOIFromDataSource(jsonArray
