@@ -21,7 +21,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerRenderer;
-import no.kystverket.lommeradaren.camera.augmented.opengl.text.BatchTextProgram;
 import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
 import android.opengl.GLES20;
 
@@ -129,7 +128,7 @@ public class Triangle {
 		GLES20.glUseProgram(mProgram.getHandle());
 
 		// get handle to vertex shader's vPosition member
-		//mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+		mPositionHandle = GLES20.glGetAttribLocation(mProgram.getHandle(), "vPosition");
 
 		// Enable a handle to the triangle vertices
 		GLES20.glEnableVertexAttribArray(mPositionHandle);
@@ -140,12 +139,14 @@ public class Triangle {
 
 		// get handle to fragment shader's vColor member
 		mColorHandle = GLES20.glGetUniformLocation(mProgram.getHandle(), "vColor");
+		MarkerRenderer.checkGlError("glGetUniformLocation");
 
 		// Set color for drawing the triangle
 		GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 
 		// get handle to shape's transformation matrix
 		mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram.getHandle(), "uMVPMatrix");
+		
 		MarkerRenderer.checkGlError("glGetUniformLocation");
 
 		// Apply the projection and view transformation

@@ -72,7 +72,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glText = new GLText(context.getAssets());
-		glText.load("Roboto-Regular.ttf", 28, 2, 2);
+		glText.load("Roboto-Regular.ttf", 32, 2, 2);
 		glText.setScale(0.05f);
 
 		this.initiateTriangles();
@@ -89,7 +89,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawText(glText, "South", 0, 0, 50);
 		this.linAlg.drawText(glText, "East", 50, 0, 0);
 		this.linAlg.drawText(glText, "West", -50, 0, 0);
-
+		
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];
 			float y = markerWrapper.getCartesianCoordinates()[1];
