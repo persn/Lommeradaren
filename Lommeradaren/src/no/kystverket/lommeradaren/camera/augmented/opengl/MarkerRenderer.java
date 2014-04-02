@@ -75,6 +75,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glText = new GLText(context.getAssets());
 		glText.load("Roboto-Regular.ttf", 32, 2, 2);
+
 		glText.setScale(0.05f);
 
 		this.initiateTriangles();
@@ -87,24 +88,29 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		this.linAlg.drawText(glText, "North", 0, 0, -50);
-		this.linAlg.drawText(glText, "South", 0, 0, 50);
-		this.linAlg.drawText(glText, "East", 50, 0, 0);
-		this.linAlg.drawText(glText, "West", -50, 0, 0);
-		
-		for (MarkerWrapper markerWrapper : markerWrappers) {
-			float x = markerWrapper.getCartesianCoordinates()[0];
-			float y = markerWrapper.getCartesianCoordinates()[1];
-			float z = markerWrapper.getCartesianCoordinates()[2];
-			Triangle pointOfInterest = markerWrapper.getTriangle();
-			markerWrapper.setScreenCoordinates(this.linAlg
-					.findPointOfInterestScreenPosition(
-							markerWrapper.getCartesianCoordinates(),
-							this.screenWidth, this.screenHeight));
-			this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
-		}
+		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
+		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
+		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
+		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
-		this.drawAllMarkers();
+		this.linAlg.drawText(glText, color1, "North", 0, 0, -50);
+		this.linAlg.drawText(glText, color2, "South", 0, 0, 50);
+		this.linAlg.drawText(glText, color3, "East", 50, 0, 0);
+		this.linAlg.drawText(glText, color4, "West", -50, 0, 0);
+
+		// for (MarkerWrapper markerWrapper : markerWrappers) {
+		// float x = markerWrapper.getCartesianCoordinates()[0];
+		// float y = markerWrapper.getCartesianCoordinates()[1];
+		// float z = markerWrapper.getCartesianCoordinates()[2];
+		// Triangle pointOfInterest = markerWrapper.getTriangle();
+		// markerWrapper.setScreenCoordinates(this.linAlg
+		// .findPointOfInterestScreenPosition(
+		// markerWrapper.getCartesianCoordinates(),
+		// this.screenWidth, this.screenHeight));
+		// this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
+		// }
+		//
+		// this.drawAllMarkers();
 	}
 
 	@Override
