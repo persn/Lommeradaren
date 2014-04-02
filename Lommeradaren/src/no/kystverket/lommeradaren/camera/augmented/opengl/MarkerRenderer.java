@@ -123,6 +123,15 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public static void checkGlError(String glOperation) {
+//		try{
+//			int error;
+//			while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+//				Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
+//						+ error);
+//			}
+//		}catch(RuntimeException e){
+//			e.printStackTrace();
+//		}
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "

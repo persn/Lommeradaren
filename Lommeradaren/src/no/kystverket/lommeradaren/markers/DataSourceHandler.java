@@ -82,17 +82,20 @@ public class DataSourceHandler {
 
 	/**
 	 * Extracts all JSON-objects from a JSON array stored in a URL.
+	 * 
 	 * @param rawData
 	 */
 	private void extractAllPOI(String rawData) {
-		this.pointOfInterests = new ArrayList<POI>();
 		try {
 			JSONObject json = new JSONObject(rawData);
-			Log.d("JSON STATUS", json.getString("status"));
-			JSONArray jsonArray = json.getJSONArray("results");
-			for (int i = 0; i < jsonArray.length(); i++) {
-				this.pointOfInterests.add(extractPOIFromDataSource(jsonArray
-						.getJSONObject(i)));
+			if (json.getString("status").equals("OK")) {
+				this.pointOfInterests = new ArrayList<POI>();
+				JSONArray jsonArray = json.getJSONArray("results");
+				for (int i = 0; i < jsonArray.length(); i++) {
+					this.pointOfInterests
+							.add(extractPOIFromDataSource(jsonArray
+									.getJSONObject(i)));
+				}
 			}
 		} catch (JSONException jsonE) {
 			jsonE.printStackTrace();
@@ -101,6 +104,7 @@ public class DataSourceHandler {
 
 	/**
 	 * Extracts all information from a JSON-object.
+	 * 
 	 * @param currentJSON
 	 * @return
 	 */

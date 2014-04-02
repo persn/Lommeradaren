@@ -50,13 +50,14 @@ public class CustomGoogleMapFragment extends Fragment {
 
 		this.currentLocation = new LocationHandler(getActivity()
 				.getApplicationContext());
-		
+
 		String datasource[] = getString(R.string.datasource_url).split("\\|");
-		this.datasourceHandler = new DataSourceHandler(new DataSource(datasource[0],datasource[1]),
+		this.datasourceHandler = new DataSourceHandler(new DataSource(
+				datasource[0], datasource[1]),
 				this.currentLocation.getLatitude(),
 				this.currentLocation.getLongtitude(),
 				this.currentLocation.getAltitude());
-		
+
 		this.handler = new Handler();
 		this.updateMarkersThread = new MarkerRefresh();
 	}
@@ -71,10 +72,11 @@ public class CustomGoogleMapFragment extends Fragment {
 		this.gMapView = (MapView) inflatedView.findViewById(R.id.map);
 		this.gMapView.onCreate(bundle);
 		setUpMapIfNeeded(inflatedView);
-		
-		this.gClusterManager = new ClusterManager<MapMarker>(getActivity(),this.gMap);
+
+		this.gClusterManager = new ClusterManager<MapMarker>(getActivity(),
+				this.gMap);
 		this.gMap.setOnCameraChangeListener(this.gClusterManager);
-		//this.gMap.setOnMarkerClickListener(this.gClusterManager);
+		// this.gMap.setOnMarkerClickListener(this.gClusterManager);
 
 		return inflatedView;
 	}
@@ -154,9 +156,9 @@ public class CustomGoogleMapFragment extends Fragment {
 	 * 
 	 * @return
 	 */
-//	public DataSourceCollection getDataSourceCollection() {
-//		return this.dataSourceCollection;
-//	}
+	// public DataSourceCollection getDataSourceCollection() {
+	// return this.dataSourceCollection;
+	// }
 
 	/**
 	 * http://stackoverflow.com/questions/6002563/android-how-do-i-set-the-zoom-
@@ -171,7 +173,8 @@ public class CustomGoogleMapFragment extends Fragment {
 		float widthInPixels = size.x;
 		float metersPerPixel = EQUATOR_LENGTH_METER / 256;
 		float zoomLevel = 1;
-		//TODO --- 50000 refers to 50km, the constant number should be replaced when user adjusted radius is implemented.
+		// TODO --- 50000 refers to 50km, the constant number should be replaced
+		// when user adjusted radius is implemented.
 		while ((metersPerPixel * widthInPixels) > 50000) {
 			metersPerPixel /= 2;
 			zoomLevel++;
@@ -220,7 +223,7 @@ public class CustomGoogleMapFragment extends Fragment {
 	}
 
 	private class MarkerRefresh implements Runnable {
-		
+
 		@Override
 		public void run() {
 			//gMap.clear();
@@ -234,25 +237,26 @@ public class CustomGoogleMapFragment extends Fragment {
 				markerView.setCurrentLocation(currentLocation);
 			}
 
-				if(bigmap){
-					datasourceHandler.refreshData(
-							"63.4395831", "10.4007685", "0.0", "50000");
-				}else{
-					datasourceHandler.refreshData(
-							currentLocation.getLatitude(),
-							currentLocation.getLongtitude(),
-							currentLocation.getAltitude(), "50");
-				}	
-				
-//				if(dataSourceCollection.getPOIArrayLength(i) > 0);				
-				
-				for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
-					POI poi = datasourceHandler.getPOI(i);
-					gClusterManager.addItem(new MapMarker(poi.getLat(),poi.getLng()));
-//					gMap.addMarker(new MarkerOptions().position(
-//							new LatLng(poi.getLat(), poi.getLng())).title(
-//							poi.getName()));
+			if (bigmap) {
+				datasourceHandler.refreshData("63.4395831", "10.4007685",
+						"0.0", "50000");
+			} else {
+				datasourceHandler.refreshData(currentLocation.getLatitude(),
+						currentLocation.getLongtitude(),
+						currentLocation.getAltitude(), "50");
 			}
+
+			// if(dataSourceCollection.getPOIArrayLength(i) > 0);
+
+			for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
+				POI poi = datasourceHandler.getPOI(i);
+				gClusterManager.addItem(new MapMarker(poi.getLat(), poi
+						.getLng()));
+				// gMap.addMarker(new MarkerOptions().position(
+				// new LatLng(poi.getLat(), poi.getLng())).title(
+				// poi.getName()));
+			}
+			//updateBearing(0);
 			handler.postDelayed(this, (1000 * 10));
 		}
 	}
