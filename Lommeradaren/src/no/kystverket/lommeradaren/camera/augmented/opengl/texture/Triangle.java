@@ -58,7 +58,6 @@ public class Triangle {
 
 	private final FloatBuffer vertexBuffer;
 	// private final int mProgram;
-	private Program mProgram;
 	private int mPositionHandle;
 	private int mColorHandle;
 	private int mMVPMatrixHandle;
@@ -81,10 +80,6 @@ public class Triangle {
 	 * Sets up the drawing object data for use in an OpenGL ES context.
 	 */
 	public Triangle(float[] color) {
-
-		Program program = new MarkerProgram();
-		program.init();
-		mProgram = program;
 
 		this.color = color;
 		// initialize vertex byte buffer for shape coordinates
@@ -123,7 +118,7 @@ public class Triangle {
 	 *            - The Model View Project matrix in which to draw this shape.
 	 */
 
-	public void draw(float[] mvpMatrix) {
+	public void draw(float[] mvpMatrix, Program mProgram) {
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram.getHandle());
 

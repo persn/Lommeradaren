@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
 import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
+import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
 import android.opengl.Matrix;
 import android.os.SystemClock;
@@ -52,7 +53,7 @@ public class LinearAlgebra {
 	}
 
 	public void drawPointOfInterest(Triangle pointOfInterest, float x, float y,
-			float z) {
+			float z, Program p) {
 		float[] drawMatrix = new float[16];
 		Matrix.setIdentityM(drawMatrix, 0);
 		Matrix.translateM(drawMatrix, 0, x, y, z);
@@ -60,7 +61,7 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		
 		
-		pointOfInterest.draw(drawMatrix);
+		pointOfInterest.draw(drawMatrix,p);
 	}
 
 	public void drawText(GLText glText, String text, float posX, float posY, float posZ) {

@@ -8,6 +8,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
 import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
+import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
+import no.kystverket.lommeradaren.camera.augmented.opengl.texture.MarkerProgram;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
 import no.kystverket.lommeradaren.markers.DataSourceCollection;
 import no.kystverket.lommeradaren.markers.LocationHandler;
@@ -90,6 +92,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawText(glText, "East", 50, 0, 0);
 		this.linAlg.drawText(glText, "West", -50, 0, 0);
 		
+		Program p = new MarkerProgram();
+		p.init();
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];
 			float y = markerWrapper.getCartesianCoordinates()[1];
@@ -99,7 +103,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 					.findPointOfInterestScreenPosition(
 							markerWrapper.getCartesianCoordinates(),
 							this.screenWidth, this.screenHeight));
-			this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
+			this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z,p);
 		}
 
 		this.drawAllMarkers();
