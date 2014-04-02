@@ -2,7 +2,8 @@ package no.kystverket.lommeradaren.maps;
 
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
-import no.kystverket.lommeradaren.markers.DataSourceCollection;
+import no.kystverket.lommeradaren.markers.DataSource;
+import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
 import android.app.Fragment;
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 /**
  * A custom android Fragment component, to implement GoogleMaps with our own
@@ -32,9 +33,10 @@ public class CustomGoogleMapFragment extends Fragment {
 
 	private MapView gMapView;
 	private GoogleMap gMap;
+	private ClusterManager<MapMarker> gClusterManager;
 	private Bundle bundle;
 	private LocationHandler currentLocation;
-	private DataSourceCollection dataSourceCollection;
+	private DataSourceHandler datasourceHandler;
 	private float zoom;
 	private boolean bigmap = true;
 
@@ -48,11 +50,14 @@ public class CustomGoogleMapFragment extends Fragment {
 
 		this.currentLocation = new LocationHandler(getActivity()
 				.getApplicationContext());
-		this.dataSourceCollection = new DataSourceCollection(getResources()
-				.getStringArray(R.array.string_array_datasources),
+
+		String datasource[] = getString(R.string.datasource_url).split("\\|");
+		this.datasourceHandler = new DataSourceHandler(new DataSource(
+				datasource[0], datasource[1]),
 				this.currentLocation.getLatitude(),
 				this.currentLocation.getLongtitude(),
 				this.currentLocation.getAltitude());
+
 		this.handler = new Handler();
 		this.updateMarkersThread = new MarkerRefresh();
 	}
@@ -67,6 +72,11 @@ public class CustomGoogleMapFragment extends Fragment {
 		this.gMapView = (MapView) inflatedView.findViewById(R.id.map);
 		this.gMapView.onCreate(bundle);
 		setUpMapIfNeeded(inflatedView);
+
+		this.gClusterManager = new ClusterManager<MapMarker>(getActivity(),
+				this.gMap);
+		this.gMap.setOnCameraChangeListener(this.gClusterManager);
+		// this.gMap.setOnMarkerClickListener(this.gClusterManager);
 
 		return inflatedView;
 	}
@@ -146,9 +156,9 @@ public class CustomGoogleMapFragment extends Fragment {
 	 * 
 	 * @return
 	 */
-	public DataSourceCollection getDataSourceCollection() {
-		return this.dataSourceCollection;
-	}
+	// public DataSourceCollection getDataSourceCollection() {
+	// return this.dataSourceCollection;
+	// }
 
 	/**
 	 * http://stackoverflow.com/questions/6002563/android-how-do-i-set-the-zoom-
@@ -163,7 +173,8 @@ public class CustomGoogleMapFragment extends Fragment {
 		float widthInPixels = size.x;
 		float metersPerPixel = EQUATOR_LENGTH_METER / 256;
 		float zoomLevel = 1;
-		//TODO --- 50000 refers to 50km, the constant number should be replaced when user adjusted radius is implemented.
+		// TODO --- 50000 refers to 50km, the constant number should be replaced
+		// when user adjusted radius is implemented.
 		while ((metersPerPixel * widthInPixels) > 50000) {
 			metersPerPixel /= 2;
 			zoomLevel++;
@@ -212,39 +223,41 @@ public class CustomGoogleMapFragment extends Fragment {
 	}
 
 	private class MarkerRefresh implements Runnable {
-		
+
 		@Override
 		public void run() {
-			gMap.clear();
+			//gMap.clear();
 
 			// Make sure the marker data associated with the Augmented
 			// Reality Engine is up to date as well.
 			MarkerSurfaceView markerView = (MarkerSurfaceView) getActivity()
 					.findViewById(R.id.marker_surface_view);
 			if (markerView != null) {
-				markerView.setDataSourceCollection(dataSourceCollection);
+				markerView.setDataSourceHandler(datasourceHandler);
 				markerView.setCurrentLocation(currentLocation);
 			}
 
-			for (int i = 0; i < dataSourceCollection.getDataSourceListSize(); i++) {
-				if(bigmap){
-					dataSourceCollection.getDataSourceHandler(i).refreshData(
-							"63.4395831", "10.4007685", "0.0", "50000");
-				}else{
-					dataSourceCollection.getDataSourceHandler(i).refreshData(
-							currentLocation.getLatitude(),
-							currentLocation.getLongtitude(),
-							currentLocation.getAltitude(), "50");
-				}	
-				
-				for (int j = 0; j < dataSourceCollection.getPOIArrayLength(i); j++) {
-					POI poi = dataSourceCollection.getPOI(i, j);
-					gMap.addMarker(new MarkerOptions().position(
-							new LatLng(poi.getLat(), poi.getLng())).title(
-							poi.getName()));
-				}
+			if (bigmap) {
+				datasourceHandler.refreshData("63.4395831", "10.4007685",
+						"0.0", "50000");
+			} else {
+				datasourceHandler.refreshData(currentLocation.getLatitude(),
+						currentLocation.getLongtitude(),
+						currentLocation.getAltitude(), "50");
 			}
-			handler.postDelayed(this, 5000);
+
+			// if(dataSourceCollection.getPOIArrayLength(i) > 0);
+
+			for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
+				POI poi = datasourceHandler.getPOI(i);
+				gClusterManager.addItem(new MapMarker(poi.getLat(), poi
+						.getLng()));
+				// gMap.addMarker(new MarkerOptions().position(
+				// new LatLng(poi.getLat(), poi.getLng())).title(
+				// poi.getName()));
+			}
+			//updateBearing(0);
+			handler.postDelayed(this, (1000 * 10));
 		}
 	}
 

@@ -1,6 +1,6 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
-import no.kystverket.lommeradaren.markers.DataSourceCollection;
+import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -56,9 +56,9 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		return true;
 	}
 
-	public void setDataSourceCollection(
-			DataSourceCollection dataSourceCollection) {
-		this.mRenderer.setDataSourceCollection(dataSourceCollection);
+	public void setDataSourceHandler(
+			DataSourceHandler dataSourceHandler) {
+		this.mRenderer.setDataSourceHandler(dataSourceHandler);
 	}
 
 	public void setCurrentLocation(LocationHandler currentLocation) {

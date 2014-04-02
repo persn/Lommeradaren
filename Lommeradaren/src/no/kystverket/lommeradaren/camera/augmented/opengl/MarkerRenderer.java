@@ -11,7 +11,7 @@ import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
 import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.MarkerProgram;
 import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
-import no.kystverket.lommeradaren.markers.DataSourceCollection;
+import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
 import android.content.Context;
@@ -28,7 +28,7 @@ import android.util.Log;
  */
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
-	private DataSourceCollection datasourceCollection;
+	private DataSourceHandler datasourceHandler;
 	private LocationHandler locationHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
@@ -127,6 +127,15 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public static void checkGlError(String glOperation) {
+//		try{
+//			int error;
+//			while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+//				Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
+//						+ error);
+//			}
+//		}catch(RuntimeException e){
+//			e.printStackTrace();
+//		}
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
@@ -135,9 +144,9 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		}
 	}
 
-	public void setDataSourceCollection(
-			DataSourceCollection dataSourceCollection) {
-		this.datasourceCollection = dataSourceCollection;
+	public void setDataSourceHandler(
+			DataSourceHandler datasourceHandler) {
+		this.datasourceHandler = datasourceHandler;
 	}
 
 	public void setLocationHandler(LocationHandler locationHandler) {
@@ -167,12 +176,9 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private void drawAllMarkers() {
-		if (this.datasourceCollection != null) {
-			for (int i = 0; i < this.datasourceCollection
-					.getDataSourceListSize(); i++) {
-				for (int j = 0; j < this.datasourceCollection
-						.getPOIArrayLength(i); j++) {
-					POI poi = this.datasourceCollection.getPOI(i, j);
+		if (this.datasourceHandler != null) {
+				for (int i = 0; i < this.datasourceHandler.getPointOfInterestsSize(); i++) {
+					POI poi = this.datasourceHandler.getPOI(i);
 					// Log.d("ShipName",this.datasourceCollection.getPOI(i,
 					// j).getName());
 					// Log.d("DistanceAltitude","" +
@@ -186,7 +192,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 					// (float)poi.getLng()));
 				}
 			}
-		}
 	}
 
 	/**
