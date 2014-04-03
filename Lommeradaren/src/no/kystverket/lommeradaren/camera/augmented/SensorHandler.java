@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 /**
  * 
@@ -36,7 +37,7 @@ public class SensorHandler {
 				float orientationMatrix[] = new float[3];
 				orientationMatrix = SensorManager.getOrientation(rotationMatrix,
 						orientationMatrix);
-				orientation = interpolate(orientationMatrix);
+				orientation = orientationMatrix;//interpolate(orientationMatrix); TODO: add back interpolation
 				return true;
 			} else {
 				return false;
