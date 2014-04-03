@@ -4,8 +4,8 @@ import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
-import no.kystverket.lommeradaren.maps.CustomGoogleMapFragment;
 import no.kystverket.lommeradaren.maps.MapActivity;
+import no.kystverket.lommeradaren.maps.MiniMapFragment;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,7 +33,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
-//	private CustomGoogleMapFragment gMap;
+	private MiniMapFragment gMap;
 	private SensorManager mSensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -51,9 +51,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-//		this.gMap = ((CustomGoogleMapFragment) getFragmentManager()
-//				.findFragmentById(R.id.fragment1));
-//		this.gMap.toggleMiniMapSettings();
+		this.gMap = ((MiniMapFragment) getFragmentManager()
+				.findFragmentById(R.id.mini_map_fragment));
 	}
 
 	@Override
@@ -95,8 +94,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		if (sensorHandler.handleEvent(evt)) {
 			float[] orientation = sensorHandler.getOrientation();
 			mGLView.getSensorData(orientation.clone());
-//			this.gMap
-//					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
+			this.gMap
+					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
 	}
 

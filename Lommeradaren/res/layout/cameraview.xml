@@ -34,7 +34,7 @@
         android:columnCount="2" >
 
         <fragment
-            android:id="@+id/fragment1"
+            android:id="@+id/mini_map_fragment"
             android:name="no.kystverket.lommeradaren.maps.MiniMapFragment"
             android:layout_width="148dp"
             android:layout_height="142dp"

@@ -2,10 +2,8 @@ package no.kystverket.lommeradaren.maps;
 
 import android.graphics.Point;
 import android.location.Location;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -15,11 +13,11 @@ public class MiniMapFragment extends BaseMapFragment {
 
 	@Override
 	public void adjustMap() {
-		//Update UI
+		// Update UI
 		this.getGoogleMap().getUiSettings().setMyLocationButtonEnabled(false);
 		this.getGoogleMap().getUiSettings().setZoomControlsEnabled(false);
 		this.getGoogleMap().getUiSettings().setAllGesturesEnabled(false);
-		
+
 		this.getGoogleMap().setOnMapClickListener(null);
 		setOnLocationChangeListener();
 	}
@@ -27,10 +25,9 @@ public class MiniMapFragment extends BaseMapFragment {
 	@Override
 	public void getMarkerData() {
 		Location location = this.getGoogleMap().getMyLocation();
-		if(location != null){
+		if (location != null) {
 			this.getDataSourceHandler().refreshData(
-					"" + location.getLatitude(),
-					"" + location.getLongitude(),
+					"" + location.getLatitude(), "" + location.getLongitude(),
 					"" + location.getAltitude(), "50");
 		}
 	}
@@ -45,7 +42,21 @@ public class MiniMapFragment extends BaseMapFragment {
 	public void clearMarkers() {
 		this.getGoogleMap().clear();
 	}
-	
+
+	public void updateBearing(float bearing) {
+		if (this.getGoogleMap().getMyLocation() != null) {
+			LatLng location = new LatLng(this.getGoogleMap().getMyLocation()
+					.getLatitude(), this.getGoogleMap().getMyLocation()
+					.getLongitude());
+			CameraPosition currentPlace = new CameraPosition.Builder()
+					.target(location).bearing(bearing)
+					.zoom(this.getGoogleMap().getCameraPosition().zoom).build();
+			this.getGoogleMap().moveCamera(
+					CameraUpdateFactory.newCameraPosition(currentPlace));
+
+		}
+	}
+
 	private float calculateRelativeZoomDistance() {
 		final float EQUATOR_LENGTH_METER = 40075016.6856f;
 		Point size = new Point();
@@ -61,19 +72,24 @@ public class MiniMapFragment extends BaseMapFragment {
 		}
 		return zoomLevel;
 	}
-	
-	private void setOnLocationChangeListener(){
-		this.getGoogleMap().setOnMyLocationChangeListener(new OnMyLocationChangeListener(){
 
-			@Override
-			public void onMyLocationChange(Location newLocation) {
-				LatLng location = new LatLng(newLocation.getLatitude(),newLocation.getLongitude());
-				CameraPosition currentPlace = new CameraPosition.Builder()
-						.target(location).zoom(calculateRelativeZoomDistance()).build();
-				getGoogleMap().moveCamera(CameraUpdateFactory.newCameraPosition(currentPlace));
-			}
-			
-		});
+	private void setOnLocationChangeListener() {
+		this.getGoogleMap().setOnMyLocationChangeListener(
+				new OnMyLocationChangeListener() {
+
+					@Override
+					public void onMyLocationChange(Location newLocation) {
+						LatLng location = new LatLng(newLocation.getLatitude(),
+								newLocation.getLongitude());
+						CameraPosition currentPlace = new CameraPosition.Builder()
+								.target(location)
+								.zoom(calculateRelativeZoomDistance()).build();
+						getGoogleMap().moveCamera(
+								CameraUpdateFactory
+										.newCameraPosition(currentPlace));
+					}
+
+				});
 	}
 
 }
