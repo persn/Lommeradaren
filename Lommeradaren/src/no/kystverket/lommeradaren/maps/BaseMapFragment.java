@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
 
 public abstract class BaseMapFragment extends Fragment {
 
@@ -27,7 +29,7 @@ public abstract class BaseMapFragment extends Fragment {
 
 	private Handler handler;
 	private Runnable updateMarkersThread;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public abstract class BaseMapFragment extends Fragment {
 		this.handler = new Handler();
 		this.updateMarkersThread = new MarkerRefresh();
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -50,52 +52,54 @@ public abstract class BaseMapFragment extends Fragment {
 		this.gMapView = (MapView) inflatedView.findViewById(R.id.map);
 		this.gMapView.onCreate(savedInstanceState);
 		setUpMapIfNeeded(inflatedView);
-		
+
 		this.adjustMap();
 
 		return inflatedView;
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		this.gMapView.onResume();
 		getActivity().runOnUiThread(this.updateMarkersThread);
 	}
-	
+
 	@Override
 	public void onPause() {
 		this.handler.removeCallbacks(this.updateMarkersThread);
 		this.gMapView.onPause();
 		super.onPause();
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		this.gMapView.onDestroy();
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
 		this.gMapView.onLowMemory();
 	}
-	
+
 	public abstract void adjustMap();
-	
+
+	public abstract void clearMarkers();
+
 	public abstract void getMarkerData();
-	
+
 	public abstract void addMarker(double lat, double lng);
-	
-	public GoogleMap getGoogleMap(){
+
+	public GoogleMap getGoogleMap() {
 		return this.gMap;
 	}
-	
-	public DataSourceHandler getDataSourceHandler(){
+
+	public DataSourceHandler getDataSourceHandler() {
 		return this.datasourceHandler;
 	}
-	
+
 	private void setUpMapIfNeeded(View inflatedView) {
 		if (gMap == null) {
 			gMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();
@@ -104,33 +108,35 @@ public abstract class BaseMapFragment extends Fragment {
 			}
 		}
 	}
-	
-	private int getRefreshTimer(){
-//		if(this.firstMarkerLoad){
+
+	private int getRefreshTimer() {
+		if (this.firstMarkerLoad) {
 			return 1000 * 5;
-//		}else{
-//			return 1000 * 60 * 10;
-//		}
-		
+		} else {
+			return 1000 * 60 * 10;
+		}
+
 	}
-	
+
 	private class MarkerRefresh implements Runnable {
 
 		@Override
 		public void run() {
 			getMarkerData();
-			if(datasourceHandler.isReadyToRead()){
-				gMap.clear();
+			if (datasourceHandler.isReadyToRead()) {
+				clearMarkers();
 				for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
 					POI poi = datasourceHandler.getPOI(i);
-					addMarker(poi.getLat(),poi.getLng());
+					addMarker(poi.getLat(), poi.getLng());
 				}
-				//TODO --- Replace toast with a Label in GUI
-				Toast.makeText(getActivity(), "Ships has been loaded.", Toast.LENGTH_SHORT).show();
+				// TODO --- Replace toast with a Label in GUI
+				Toast.makeText(getActivity(), "Ships has been loaded.",
+						Toast.LENGTH_SHORT).show();
 				firstMarkerLoad = false;
+
 			}
 			handler.postDelayed(this, getRefreshTimer());
-		}	
+		}
 	}
-	
+
 }

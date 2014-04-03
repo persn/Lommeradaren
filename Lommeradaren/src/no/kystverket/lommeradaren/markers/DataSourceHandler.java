@@ -20,7 +20,7 @@ public class DataSourceHandler {
 	private List<POI> pointOfInterests;
 	private TextHandler textHandler;
 	private boolean readyToRead;
-	
+
 	private String lat;
 	private String lng;
 	private String alt;
@@ -77,8 +77,8 @@ public class DataSourceHandler {
 		});
 		thread.start();
 	}
-	
-	public boolean isReadyToRead(){
+
+	public boolean isReadyToRead() {
 		return this.readyToRead;
 	}
 
@@ -99,7 +99,7 @@ public class DataSourceHandler {
 							.add(extractPOIFromDataSource(jsonArray
 									.getJSONObject(i)));
 				}
-			}else{
+			} else {
 				this.readyToRead = false;
 			}
 		} catch (JSONException jsonE) {
