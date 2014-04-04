@@ -52,6 +52,18 @@ public class PhotoHandler {
 		return photos;
 	}
 
+	public boolean deleteImage(Photo img) {
+		File imgFile = new File(
+				Environment
+						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+						+ "/" + imageFolder + "/" + img.getImgName());
+		boolean res = imgFile.delete();
+		if (res) {
+			pictures.remove(img);
+		}
+		return res;
+	}
+
 	public Bitmap getLargeImage(String name, int length, int height) {
 		return decodeSampledBitmapFromUrl(
 				Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
@@ -80,7 +92,7 @@ public class PhotoHandler {
 			final int heightRatio = Math.round((float) height
 					/ (float) reqHeight);
 			final int widthRatio = Math.round((float) width / (float) reqWidth);
-			if(heightRatio > widthRatio){
+			if (heightRatio > widthRatio) {
 				inSampleSize = heightRatio;
 			} else {
 				inSampleSize = widthRatio;
@@ -108,7 +120,8 @@ public class PhotoHandler {
 		BitmapFactory.decodeResource(res, resId, options);
 
 		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth,	reqHeight);
+		options.inSampleSize = calculateInSampleSize(options, reqWidth,
+				reqHeight);
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeResource(res, resId, options);

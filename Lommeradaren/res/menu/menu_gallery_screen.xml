@@ -7,6 +7,13 @@
             <item android:id="@+id/sub_menu_gallery_user" android:title="@string/string_gallery"/>
         </menu>
     </item>
+    <item android:id="@+id/menu_gallery_image_info" android:title="@string/view_image_info"></item>
+    <item android:id="@+id/menu_gallery_delete_image" android:title="@string/delete_image">
+        <menu>
+            <item android:id="@+id/sub_menu_gallery_delete_confirm" android:title="@string/ok"/>
+            <item android:id="@+id/sub_menu_gallery_delete_cancel" android:title="@string/cancel"/>
+        </menu>
+    </item>
     
 
 </menu>

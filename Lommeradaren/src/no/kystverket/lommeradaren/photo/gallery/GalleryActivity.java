@@ -143,8 +143,19 @@ public class GalleryActivity extends Activity implements
 			return true;
 		case R.id.sub_menu_gallery_user:
 			return false;// Not yet implemented
+		case R.id.menu_gallery_image_info:
+			return false;
+		case R.id.sub_menu_gallery_delete_confirm:
+			deleteImage();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void deleteImage(){
+		pHandler.deleteImage(pictures.get(selectedPosition));
+		pictures = pHandler.getPictures();
+		gallery.setAdapter(new ImageAdapter(this, pictures));
 	}
 
 	@Override
