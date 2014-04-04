@@ -1,8 +1,6 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
-import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
-import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
-import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
+import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
@@ -52,19 +50,7 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mTempMatrix, 0);
 	}
 
-	public void drawPointOfInterest(Triangle pointOfInterest, float x, float y,
-			float z) {
-		float[] drawMatrix = new float[16];
-		Matrix.setIdentityM(drawMatrix, 0);
-		Matrix.translateM(drawMatrix, 0, x, y, z);
-		rotatePointOfInterest(drawMatrix, 0, 0, 1, 0);
-		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
-		
-		
-		pointOfInterest.draw(drawMatrix);
-	}
-
-	public void drawText(GLText glText, float[] color, String text, float posX, float posY, float posZ) {
+	public void drawMarker(GLText glText, float[] color, String text, String dist, float posX, float posY, float posZ) {
 		float degRot = (float) Math.toDegrees(Math.atan2((double) posX,
 				(double) -posZ));
 		float[] drawMatrix = new float[16];
@@ -81,6 +67,7 @@ public class LinearAlgebra {
 		glText.drawMarker(128, 128, color, drawMatrix);
 		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
 		glText.drawC(text, 0, 0, 0, 0, -0, 0);
+		glText.drawC(dist, 0, -2, 0, 0, -0, 0);
 		glText.end();
 	}
 

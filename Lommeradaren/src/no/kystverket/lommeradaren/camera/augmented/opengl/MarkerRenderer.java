@@ -7,10 +7,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
-import no.kystverket.lommeradaren.camera.augmented.opengl.text.GLText;
-import no.kystverket.lommeradaren.camera.augmented.opengl.text.Program;
-import no.kystverket.lommeradaren.camera.augmented.opengl.texture.MarkerProgram;
-import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
+import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
@@ -76,8 +73,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		glText.load("Roboto-Regular.ttf", 32, 2, 2);
 
 		glText.setScale(0.05f);
-
-//		this.initiateTriangles();
 	}
 
 	@Override
@@ -92,17 +87,17 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
 		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
-//		this.linAlg.drawText(glText, color1, "North", 0, 0, -50);
-//		this.linAlg.drawText(glText, color2, "South", 0, 0, 50);
-//		this.linAlg.drawText(glText, color3, "East", 50, 0, 0);
-//		this.linAlg.drawText(glText, color4, "West", -50, 0, 0);
+		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
+		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
+		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
+		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
 
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];
 			float y = markerWrapper.getCartesianCoordinates()[1];
 			float z = markerWrapper.getCartesianCoordinates()[2];
 			markerWrapper.setScreenCoordinates(this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(),this.screenWidth, this.screenHeight));
-			this.linAlg.drawText(glText, color3, "POI", x, y, z);
+			this.linAlg.drawMarker(glText, color3, "POI", "50m", x, y, z);
 		}
 
 		this.drawAllMarkers();
@@ -175,51 +170,4 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			}
 		}
 	}
-
-	/**
-	 * Used for debugging 3D positioning until POI drawing is implemented
-	 * 
-	 * @deprecated
-	 */
-//	private void initiateTriangles() {
-//		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
-//		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
-//		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
-//		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
-//		float[] color5 = { 1.0f, 1.0f, 0.0f, 1.0f }; // yellow
-//		float[] color6 = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
-//
-//		float[] cartesian1 = { -50, 0, 0 };
-//		float[] cartesian2 = { 50, 0, 0 };
-//		float[] cartesian3 = { 0, 0, -50 };
-//		float[] cartesian4 = { 0, 0, 50 };
-//		float[] cartesian5 = { 0, -50, 0 };
-//		float[] cartesian6 = { 0, 50, 0 };
-
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color1),
-//				"RedTriangle", cartesian1, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian1,
-//								this.screenWidth, this.screenHeight)));
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color2),
-//				"GreenTriangle", cartesian2, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian2,
-//								this.screenWidth, this.screenHeight)));
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color3),
-//				"BlueTriangle", cartesian3, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian3,
-//								this.screenWidth, this.screenHeight)));
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color4),
-//				"PurpleTriangle", cartesian4, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian4,
-//								this.screenWidth, this.screenHeight)));
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color5),
-//				"YellowTriangle", cartesian5, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian5,
-//								this.screenWidth, this.screenHeight)));
-//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color6),
-//				"WhiteTriangle", cartesian6, this.linAlg
-//						.findPointOfInterestScreenPosition(cartesian6,
-//								this.screenWidth, this.screenHeight)));
-//	}
-
 }

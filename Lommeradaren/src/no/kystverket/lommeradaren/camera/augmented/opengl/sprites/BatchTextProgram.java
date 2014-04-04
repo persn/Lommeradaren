@@ -1,4 +1,4 @@
-package no.kystverket.lommeradaren.camera.augmented.opengl.text;
+package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 
 public class BatchTextProgram extends Program {

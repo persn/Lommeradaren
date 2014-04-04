@@ -1,4 +1,4 @@
-package no.kystverket.lommeradaren.camera.augmented.opengl.text;
+package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 import android.content.Context;
 import android.graphics.Bitmap;
