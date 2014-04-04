@@ -30,7 +30,7 @@ public class MiniMapFragment extends BaseMapFragment {
 	public void getMarkerData() {
 		Location location = this.getGoogleMap().getMyLocation();
 		if (location != null) {
-			this.getDataSourceHandler().refreshData("" + location.getLatitude(), "" + location.getLongitude(),"" + location.getAltitude(), "50");
+			this.getDataSourceHandler().refreshData("" + location.getLatitude(), "" + location.getLongitude(),"" + location.getAltitude(), "20");
 		}
 	}
 
@@ -42,7 +42,7 @@ public class MiniMapFragment extends BaseMapFragment {
 
 	@Override
 	public void clearMapMarkers() {
-		this.markerDataCallback.onMarkerDataUpdated(getDataSourceHandler());
+		this.markerDataCallback.onMarkerDataUpdated(getDataSourceHandler(), getGoogleMap().getMyLocation());
 		this.getGoogleMap().clear();
 	}
 	
@@ -75,7 +75,7 @@ public class MiniMapFragment extends BaseMapFragment {
 		if (this.isFirstMarkerLoad()) {
 			return 1000 * 5;
 		} else {
-			return 1000 * 60 * 2;
+			return 1000 * 30;
 		}
 	}
 
@@ -115,7 +115,7 @@ public class MiniMapFragment extends BaseMapFragment {
 	}
 	
 	public interface OnMarkerDataUpdatedListener{
-		public void onMarkerDataUpdated(DataSourceHandler datasourceHandler);
+		public void onMarkerDataUpdated(DataSourceHandler datasourceHandler, Location myLocation);
 	}
 
 }

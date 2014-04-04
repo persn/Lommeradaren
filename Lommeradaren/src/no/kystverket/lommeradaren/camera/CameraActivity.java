@@ -3,7 +3,6 @@ package no.kystverket.lommeradaren.camera;
 import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
-import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerRenderer;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.maps.MiniMapFragment;
@@ -17,6 +16,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -148,8 +148,8 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 	}
 	
 	@Override
-	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler) {
-		this.mGLView.setDataSourceHandler(datasourceHandler);
+	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler, Location myLocation) {
+		this.mGLView.set3DMarkerData(datasourceHandler, myLocation);
 	}
 
 	/**

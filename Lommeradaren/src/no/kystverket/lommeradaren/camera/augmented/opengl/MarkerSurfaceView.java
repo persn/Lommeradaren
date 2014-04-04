@@ -1,11 +1,11 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
-import no.kystverket.lommeradaren.markers.LocationHandler;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.PixelFormat;
+import android.location.Location;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -56,8 +56,8 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		return true;
 	}
 
-	public void setDataSourceHandler(DataSourceHandler dataSourceHandler) {
-		this.mRenderer.setDataSourceHandler(dataSourceHandler);
+	public void set3DMarkerData(DataSourceHandler dataSourceHandler, Location myLocation) {
+		this.mRenderer.set3DMarkerList(dataSourceHandler, myLocation);
 	}
 
 //	public void setCurrentLocation(DataSourceHandler datasourceHandler) {
@@ -79,7 +79,7 @@ public class MarkerSurfaceView extends GLSurfaceView {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							Toast.makeText(getContext(),
-									markerCluster[which].getTag(),
+									markerCluster[which].getTag()[0],
 									Toast.LENGTH_SHORT).show();
 						}
 					});
@@ -91,7 +91,7 @@ public class MarkerSurfaceView extends GLSurfaceView {
 			MarkerWrapper[] markerCluster) {
 		CharSequence[] options = new CharSequence[markerCluster.length];
 		for (int i = 0; i < options.length; i++) {
-			options[i] = markerCluster[i].getTag();
+			options[i] = markerCluster[i].getTag()[0];
 		}
 		return options;
 	}

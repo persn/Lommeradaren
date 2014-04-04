@@ -7,11 +7,12 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import no.kystverket.lommeradaren.camera.augmented.math.LinearAlgebra;
+import no.kystverket.lommeradaren.camera.augmented.math.RelativePosition;
 import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
-import no.kystverket.lommeradaren.markers.LocationHandler;
 import no.kystverket.lommeradaren.markers.POI;
 import android.content.Context;
+import android.location.Location;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -25,7 +26,7 @@ import android.util.Log;
  */
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
-	private DataSourceHandler datasourceHandler;
+//	private DataSourceHandler datasourceHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
@@ -87,20 +88,20 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
 		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
-		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
-		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
-		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
-		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
+//		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
+//		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
+//		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
+//		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
 
-		for (MarkerWrapper markerWrapper : markerWrappers) {
-			float x = markerWrapper.getCartesianCoordinates()[0];
-			float y = markerWrapper.getCartesianCoordinates()[1];
-			float z = markerWrapper.getCartesianCoordinates()[2];
-			markerWrapper.setScreenCoordinates(this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(),this.screenWidth, this.screenHeight));
-			this.linAlg.drawMarker(glText, color3, "POI", "50m", x, y, z);
+		for (MarkerWrapper markerWrapper : this.markerWrappers) {
+			Log.d("MarkerName",markerWrapper.getTag()[0]);
+			Log.d("MarkerLat", "" + markerWrapper.getCartesianCoordinates()[0]);
+			Log.d("MarkerLng", "" + markerWrapper.getCartesianCoordinates()[1]);
+			Log.d("MarkerAlt", "" + markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
 		}
 
-		this.drawAllMarkers();
+//		this.drawAllMarkers();
 	}
 
 	@Override
@@ -124,10 +125,27 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			throw new RuntimeException(glOperation + ": glError " + error);
 		}
 	}
-
-	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
-		this.datasourceHandler = datasourceHandler;
+	
+	public synchronized void set3DMarkerList(DataSourceHandler dataSourceHandler, Location myLocation){
+		this.markerWrappers = new ArrayList<MarkerWrapper>();
+		for(int i=0;i<dataSourceHandler.getPointOfInterestsSize();i++){
+			POI poi = dataSourceHandler.getPOI(i);
+			String[] tag = {poi.getName(),poi.getDistance() + " km"};
+			float[] cartesianCoordinates = {
+					RelativePosition.getDifference((float)myLocation.getLatitude(), (float)poi.getLat()),
+					RelativePosition.getAltitudeDifference((float)myLocation.getAltitude(), (float)poi.getAlt()),
+					RelativePosition.getDifference((float)myLocation.getLongitude(), (float)poi.getLng())
+					};
+			int[] screenCoordinates = this.linAlg.findPointOfInterestScreenPosition(cartesianCoordinates, this.screenWidth, this.screenHeight);
+			MarkerWrapper markerWrapper = new MarkerWrapper(poi,tag,cartesianCoordinates,screenCoordinates);
+			this.markerWrappers.add(markerWrapper);
+		}
+		
 	}
+
+//	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
+//		this.datasourceHandler = datasourceHandler;
+//	}
 
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
@@ -152,10 +170,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private void drawAllMarkers() {
-		if (this.datasourceHandler != null) {
-			for (int i = 0; i < this.datasourceHandler
-					.getPointOfInterestsSize(); i++) {
-				POI poi = this.datasourceHandler.getPOI(i);
+//		if (this.datasourceHandler != null) {
+//			for (int i = 0; i < this.datasourceHandler
+//					.getPointOfInterestsSize(); i++) {
+//				POI poi = this.datasourceHandler.getPOI(i);
 				// Log.d("ShipName",this.datasourceCollection.getPOI(i,
 				// j).getName());
 				// Log.d("DistanceAltitude","" +
@@ -167,7 +185,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 				// Log.d("DistanceLongitude","" +
 				// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
 				// (float)poi.getLng()));
-			}
-		}
+//			}
+//		}
 	}
 }
