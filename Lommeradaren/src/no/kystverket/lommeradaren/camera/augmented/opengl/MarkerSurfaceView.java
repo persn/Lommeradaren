@@ -56,13 +56,12 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		return true;
 	}
 
-	public void setDataSourceHandler(
-			DataSourceHandler dataSourceHandler) {
+	public void setDataSourceHandler(DataSourceHandler dataSourceHandler) {
 		this.mRenderer.setDataSourceHandler(dataSourceHandler);
 	}
 
-//	public void setCurrentLocation(LocationHandler currentLocation) {
-//		this.mRenderer.setLocationHandler(currentLocation);
+//	public void setCurrentLocation(DataSourceHandler datasourceHandler) {
+//		this.mRenderer.setDataSourceHandler(datasourceHandler);
 //	}
 
 	public void setRendererScreenSize(int width, int height) {

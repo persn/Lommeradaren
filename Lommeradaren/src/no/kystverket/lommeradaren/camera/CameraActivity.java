@@ -3,9 +3,12 @@ package no.kystverket.lommeradaren.camera;
 import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
+import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerRenderer;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.maps.MiniMapFragment;
+import no.kystverket.lommeradaren.maps.MiniMapFragment.OnMarkerDataUpdatedListener;
+import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +32,7 @@ import com.google.android.gms.maps.MapView;
  * @author Per Olav Flaten
  * 
  */
-public class CameraActivity extends Activity implements SensorEventListener {
+public class CameraActivity extends Activity implements SensorEventListener, OnMarkerDataUpdatedListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
@@ -94,8 +97,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		if (sensorHandler.handleEvent(evt)) {
 			float[] orientation = sensorHandler.getOrientation();
 			mGLView.getSensorData(orientation.clone());
-			this.gMap
-					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
+			this.gMap.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
 	}
 
@@ -143,6 +145,11 @@ public class CameraActivity extends Activity implements SensorEventListener {
 			return false;// Not yet implemented
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler) {
+		this.mGLView.setDataSourceHandler(datasourceHandler);
 	}
 
 	/**
