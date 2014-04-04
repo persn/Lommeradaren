@@ -1,7 +1,6 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
 import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
-import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.Program;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
@@ -51,7 +50,7 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mTempMatrix, 0);
 	}
 
-	public void drawMarker(GLText glText, float[] color, String text, float posX, float posY, float posZ) {
+	public void drawMarker(GLText glText, float[] color, String text, String dist, float posX, float posY, float posZ) {
 		float degRot = (float) Math.toDegrees(Math.atan2((double) posX,
 				(double) -posZ));
 		float[] drawMatrix = new float[16];
@@ -68,6 +67,7 @@ public class LinearAlgebra {
 		glText.drawMarker(128, 128, color, drawMatrix);
 		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
 		glText.drawC(text, 0, 0, 0, 0, -0, 0);
+		glText.drawC(dist, 0, -2, 0, 0, -0, 0);
 		glText.end();
 	}
 

@@ -88,17 +88,17 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
 		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
-		this.linAlg.drawMarker(glText, color1, "North", 0, 0, -50);
-		this.linAlg.drawMarker(glText, color2, "South", 0, 0, 50);
-		this.linAlg.drawMarker(glText, color3, "East", 50, 0, 0);
-		this.linAlg.drawMarker(glText, color4, "West", -50, 0, 0);
+		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
+		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
+		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
+		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
 
 		for (MarkerWrapper markerWrapper : markerWrappers) {
 			float x = markerWrapper.getCartesianCoordinates()[0];
 			float y = markerWrapper.getCartesianCoordinates()[1];
 			float z = markerWrapper.getCartesianCoordinates()[2];
 			markerWrapper.setScreenCoordinates(this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(),this.screenWidth, this.screenHeight));
-			this.linAlg.drawMarker(glText, color3, "POI", x, y, z);
+			this.linAlg.drawMarker(glText, color3, "POI", "50m", x, y, z);
 		}
 
 		this.drawAllMarkers();
