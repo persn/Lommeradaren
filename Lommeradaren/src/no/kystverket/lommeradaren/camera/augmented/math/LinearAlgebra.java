@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
 import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
+import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
@@ -63,12 +64,17 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		Matrix.rotateM(rotationMatrixTest, 0, -degRot, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, drawMatrix, 0, rotationMatrixTest, 0);
-
+		
+		GLES20.glEnable(GLES20.GL_BLEND);
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+		
 		glText.drawMarker(128, 128, color, drawMatrix);
 		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
 		glText.drawC(text, 0, 0, 0, 0, -0, 0);
 		glText.drawC(dist, 0, -2, 0, 0, -0, 0);
 		glText.end();
+		
+		GLES20.glDisable(GLES20.GL_BLEND); 
 	}
 
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
