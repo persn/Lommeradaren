@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MiniMapFragment extends BaseMapFragment {
 
 	@Override
-	public void adjustMap() {
+	public void setMapSettings() {
 		// Update UI
 		this.getGoogleMap().getUiSettings().setMyLocationButtonEnabled(false);
 		this.getGoogleMap().getUiSettings().setZoomControlsEnabled(false);
@@ -33,13 +33,13 @@ public class MiniMapFragment extends BaseMapFragment {
 	}
 
 	@Override
-	public void addMarker(double lat, double lng) {
+	public void addMapMarker(double lat, double lng) {
 		this.getGoogleMap().addMarker(
 				new MarkerOptions().position(new LatLng(lat, lng)));
 	}
 
 	@Override
-	public void clearMarkers() {
+	public void clearMapMarkers() {
 		this.getGoogleMap().clear();
 	}
 
@@ -53,7 +53,15 @@ public class MiniMapFragment extends BaseMapFragment {
 					.zoom(this.getGoogleMap().getCameraPosition().zoom).build();
 			this.getGoogleMap().moveCamera(
 					CameraUpdateFactory.newCameraPosition(currentPlace));
-
+		}
+	}
+	
+	@Override
+	public int getRefreshTimer(){
+		if (this.isFirstMarkerLoad()) {
+			return 1000 * 5;
+		} else {
+			return 1000 * 60 * 10;
 		}
 	}
 

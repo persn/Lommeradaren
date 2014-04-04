@@ -29,7 +29,7 @@ import android.util.Log;
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private DataSourceHandler datasourceHandler;
-	private LocationHandler locationHandler;
+	// private LocationHandler locationHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
@@ -78,7 +78,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 		glText.setScale(0.05f);
 
-		this.initiateTriangles();
+//		this.initiateTriangles();
 	}
 
 	@Override
@@ -93,24 +93,20 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
 		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
-		this.linAlg.drawText(glText, color1, "North", 0, 0, -50);
-		this.linAlg.drawText(glText, color2, "South", 0, 0, 50);
-		this.linAlg.drawText(glText, color3, "East", 50, 0, 0);
-		this.linAlg.drawText(glText, color4, "West", -50, 0, 0);
+//		this.linAlg.drawText(glText, color1, "North", 0, 0, -50);
+//		this.linAlg.drawText(glText, color2, "South", 0, 0, 50);
+//		this.linAlg.drawText(glText, color3, "East", 50, 0, 0);
+//		this.linAlg.drawText(glText, color4, "West", -50, 0, 0);
 
-		// for (MarkerWrapper markerWrapper : markerWrappers) {
-		// float x = markerWrapper.getCartesianCoordinates()[0];
-		// float y = markerWrapper.getCartesianCoordinates()[1];
-		// float z = markerWrapper.getCartesianCoordinates()[2];
-		// Triangle pointOfInterest = markerWrapper.getTriangle();
-		// markerWrapper.setScreenCoordinates(this.linAlg
-		// .findPointOfInterestScreenPosition(
-		// markerWrapper.getCartesianCoordinates(),
-		// this.screenWidth, this.screenHeight));
-		// this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
-		// }
-		//
-		// this.drawAllMarkers();
+		for (MarkerWrapper markerWrapper : markerWrappers) {
+			float x = markerWrapper.getCartesianCoordinates()[0];
+			float y = markerWrapper.getCartesianCoordinates()[1];
+			float z = markerWrapper.getCartesianCoordinates()[2];
+			markerWrapper.setScreenCoordinates(this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(),this.screenWidth, this.screenHeight));
+			this.linAlg.drawText(glText, color3, "POI", x, y, z);
+		}
+
+		this.drawAllMarkers();
 	}
 
 	@Override
@@ -127,15 +123,15 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public static void checkGlError(String glOperation) {
-//		try{
-//			int error;
-//			while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-//				Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
-//						+ error);
-//			}
-//		}catch(RuntimeException e){
-//			e.printStackTrace();
-//		}
+		// try{
+		// int error;
+		// while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+		// Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
+		// + error);
+		// }
+		// }catch(RuntimeException e){
+		// e.printStackTrace();
+		// }
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
@@ -144,14 +140,13 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		}
 	}
 
-	public void setDataSourceHandler(
-			DataSourceHandler datasourceHandler) {
+	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
 		this.datasourceHandler = datasourceHandler;
 	}
 
-	public void setLocationHandler(LocationHandler locationHandler) {
-		this.locationHandler = locationHandler;
-	}
+	// public void setLocationHandler(LocationHandler locationHandler) {
+	// this.locationHandler = locationHandler;
+	// }
 
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
@@ -177,21 +172,22 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private void drawAllMarkers() {
 		if (this.datasourceHandler != null) {
-				for (int i = 0; i < this.datasourceHandler.getPointOfInterestsSize(); i++) {
-					POI poi = this.datasourceHandler.getPOI(i);
-					// Log.d("ShipName",this.datasourceCollection.getPOI(i,
-					// j).getName());
-					// Log.d("DistanceAltitude","" +
-					// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
-					// (float)poi.getAlt()));
-					// Log.d("DistanceLatitude","" +
-					// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
-					// (float)poi.getLat()));
-					// Log.d("DistanceLongitude","" +
-					// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
-					// (float)poi.getLng()));
-				}
+			for (int i = 0; i < this.datasourceHandler
+					.getPointOfInterestsSize(); i++) {
+				POI poi = this.datasourceHandler.getPOI(i);
+				// Log.d("ShipName",this.datasourceCollection.getPOI(i,
+				// j).getName());
+				// Log.d("DistanceAltitude","" +
+				// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
+				// (float)poi.getAlt()));
+				// Log.d("DistanceLatitude","" +
+				// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
+				// (float)poi.getLat()));
+				// Log.d("DistanceLongitude","" +
+				// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
+				// (float)poi.getLng()));
 			}
+		}
 	}
 
 	/**
@@ -199,45 +195,45 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	 * 
 	 * @deprecated
 	 */
-	private void initiateTriangles() {
-		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
-		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
-		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
-		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
-		float[] color5 = { 1.0f, 1.0f, 0.0f, 1.0f }; // yellow
-		float[] color6 = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
+//	private void initiateTriangles() {
+//		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
+//		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
+//		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
+//		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
+//		float[] color5 = { 1.0f, 1.0f, 0.0f, 1.0f }; // yellow
+//		float[] color6 = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
+//
+//		float[] cartesian1 = { -50, 0, 0 };
+//		float[] cartesian2 = { 50, 0, 0 };
+//		float[] cartesian3 = { 0, 0, -50 };
+//		float[] cartesian4 = { 0, 0, 50 };
+//		float[] cartesian5 = { 0, -50, 0 };
+//		float[] cartesian6 = { 0, 50, 0 };
 
-		float[] cartesian1 = { -50, 0, 0 };
-		float[] cartesian2 = { 50, 0, 0 };
-		float[] cartesian3 = { 0, 0, -50 };
-		float[] cartesian4 = { 0, 0, 50 };
-		float[] cartesian5 = { 0, -50, 0 };
-		float[] cartesian6 = { 0, 50, 0 };
-
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color1),
-				"RedTriangle", cartesian1, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian1,
-								this.screenWidth, this.screenHeight)));
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color2),
-				"GreenTriangle", cartesian2, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian2,
-								this.screenWidth, this.screenHeight)));
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color3),
-				"BlueTriangle", cartesian3, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian3,
-								this.screenWidth, this.screenHeight)));
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color4),
-				"PurpleTriangle", cartesian4, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian4,
-								this.screenWidth, this.screenHeight)));
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color5),
-				"YellowTriangle", cartesian5, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian5,
-								this.screenWidth, this.screenHeight)));
-		this.markerWrappers.add(new MarkerWrapper(new Triangle(color6),
-				"WhiteTriangle", cartesian6, this.linAlg
-						.findPointOfInterestScreenPosition(cartesian6,
-								this.screenWidth, this.screenHeight)));
-	}
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color1),
+//				"RedTriangle", cartesian1, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian1,
+//								this.screenWidth, this.screenHeight)));
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color2),
+//				"GreenTriangle", cartesian2, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian2,
+//								this.screenWidth, this.screenHeight)));
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color3),
+//				"BlueTriangle", cartesian3, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian3,
+//								this.screenWidth, this.screenHeight)));
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color4),
+//				"PurpleTriangle", cartesian4, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian4,
+//								this.screenWidth, this.screenHeight)));
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color5),
+//				"YellowTriangle", cartesian5, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian5,
+//								this.screenWidth, this.screenHeight)));
+//		this.markerWrappers.add(new MarkerWrapper(new Triangle(color6),
+//				"WhiteTriangle", cartesian6, this.linAlg
+//						.findPointOfInterestScreenPosition(cartesian6,
+//								this.screenWidth, this.screenHeight)));
+//	}
 
 }
