@@ -9,7 +9,7 @@ public class BigMapFragment extends BaseMapFragment {
 	private ClusterManager<MapMarker> gClusterManager;
 
 	@Override
-	public void adjustMap() {
+	public void setMapSettings() {
 		this.gClusterManager = new ClusterManager<MapMarker>(getActivity(),
 				this.getGoogleMap());
 		this.getGoogleMap().setOnCameraChangeListener(this.gClusterManager);
@@ -27,12 +27,21 @@ public class BigMapFragment extends BaseMapFragment {
 	}
 
 	@Override
-	public void addMarker(double lat, double lng) {
+	public void addMapMarker(double lat, double lng) {
 		this.gClusterManager.addItem(new MapMarker(lat, lng));
 	}
 
 	@Override
-	public void clearMarkers() {
+	public void clearMapMarkers() {
 		this.gClusterManager.clearItems();
+	}
+	
+	@Override
+	public int getRefreshTimer() {
+		if (this.isFirstMarkerLoad()) {
+			return 1000 * 5;
+		} else {
+			return 1000 * 60 * 10;
+		}
 	}
 }

@@ -26,7 +26,7 @@ import android.util.Log;
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private DataSourceHandler datasourceHandler;
-	private LocationHandler locationHandler;
+	// private LocationHandler locationHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
@@ -93,19 +93,15 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.drawMarker(glText, color3, "East", 50, 0, 0);
 		this.linAlg.drawMarker(glText, color4, "West", -50, 0, 0);
 
-		// for (MarkerWrapper markerWrapper : markerWrappers) {
-		// float x = markerWrapper.getCartesianCoordinates()[0];
-		// float y = markerWrapper.getCartesianCoordinates()[1];
-		// float z = markerWrapper.getCartesianCoordinates()[2];
-		// Triangle pointOfInterest = markerWrapper.getTriangle();
-		// markerWrapper.setScreenCoordinates(this.linAlg
-		// .findPointOfInterestScreenPosition(
-		// markerWrapper.getCartesianCoordinates(),
-		// this.screenWidth, this.screenHeight));
-		// this.linAlg.drawPointOfInterest(pointOfInterest, x, y, z);
-		// }
-		//
-		// this.drawAllMarkers();
+		for (MarkerWrapper markerWrapper : markerWrappers) {
+			float x = markerWrapper.getCartesianCoordinates()[0];
+			float y = markerWrapper.getCartesianCoordinates()[1];
+			float z = markerWrapper.getCartesianCoordinates()[2];
+			markerWrapper.setScreenCoordinates(this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(),this.screenWidth, this.screenHeight));
+			this.linAlg.drawMarker(glText, color3, "POI", x, y, z);
+		}
+
+		this.drawAllMarkers();
 	}
 
 	@Override
@@ -123,14 +119,14 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	public static void checkGlError(String glOperation) {
 //		try{
-//			int error;
-//			while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-//				Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
-//						+ error);
-//			}
-//		}catch(RuntimeException e){
-//			e.printStackTrace();
+//		int error;
+//		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+//			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
+//					+ error);
 //		}
+//	}catch(RuntimeException e){
+//		e.printStackTrace();
+//	}
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
@@ -139,14 +135,13 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		}
 	}
 
-	public void setDataSourceHandler(
-			DataSourceHandler datasourceHandler) {
+	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
 		this.datasourceHandler = datasourceHandler;
 	}
 
-	public void setLocationHandler(LocationHandler locationHandler) {
-		this.locationHandler = locationHandler;
-	}
+	// public void setLocationHandler(LocationHandler locationHandler) {
+	// this.locationHandler = locationHandler;
+	// }
 
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
@@ -172,21 +167,21 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private void drawAllMarkers() {
 		if (this.datasourceHandler != null) {
-				for (int i = 0; i < this.datasourceHandler.getPointOfInterestsSize(); i++) {
-					POI poi = this.datasourceHandler.getPOI(i);
-					// Log.d("ShipName",this.datasourceCollection.getPOI(i,
-					// j).getName());
-					// Log.d("DistanceAltitude","" +
-					// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
-					// (float)poi.getAlt()));
-					// Log.d("DistanceLatitude","" +
-					// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
-					// (float)poi.getLat()));
-					// Log.d("DistanceLongitude","" +
-					// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
-					// (float)poi.getLng()));
-				}
+			for (int i = 0; i < this.datasourceHandler
+					.getPointOfInterestsSize(); i++) {
+				POI poi = this.datasourceHandler.getPOI(i);
+				// Log.d("ShipName",this.datasourceCollection.getPOI(i,
+				// j).getName());
+				// Log.d("DistanceAltitude","" +
+				// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
+				// (float)poi.getAlt()));
+				// Log.d("DistanceLatitude","" +
+				// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
+				// (float)poi.getLat()));
+				// Log.d("DistanceLongitude","" +
+				// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
+				// (float)poi.getLng()));
 			}
+		}
 	}
-
 }

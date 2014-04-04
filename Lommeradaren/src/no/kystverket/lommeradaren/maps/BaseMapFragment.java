@@ -50,7 +50,7 @@ public abstract class BaseMapFragment extends Fragment {
 		this.gMapView.onCreate(savedInstanceState);
 		setUpMapIfNeeded(inflatedView);
 
-		this.adjustMap();
+		this.setMapSettings();
 
 		return inflatedView;
 	}
@@ -81,14 +81,20 @@ public abstract class BaseMapFragment extends Fragment {
 		this.gMapView.onLowMemory();
 	}
 
-	public abstract void adjustMap();
+	public abstract void setMapSettings();
 
-	public abstract void clearMarkers();
+	public abstract void clearMapMarkers();
 
 	public abstract void getMarkerData();
 
-	public abstract void addMarker(double lat, double lng);
-
+	public abstract void addMapMarker(double lat, double lng);
+	
+	public abstract int getRefreshTimer();
+	
+	public boolean isFirstMarkerLoad(){
+		return this.firstMarkerLoad;
+	}
+	
 	public GoogleMap getGoogleMap() {
 		return this.gMap;
 	}
@@ -106,25 +112,16 @@ public abstract class BaseMapFragment extends Fragment {
 		}
 	}
 
-	private int getRefreshTimer() {
-		if (this.firstMarkerLoad) {
-			return 1000 * 5;
-		} else {
-			return 1000 * 60 * 10;
-		}
-
-	}
-
 	private class MarkerRefresh implements Runnable {
 
 		@Override
 		public void run() {
 			getMarkerData();
 			if (datasourceHandler.isReadyToRead()) {
-				clearMarkers();
+				clearMapMarkers();
 				for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
 					POI poi = datasourceHandler.getPOI(i);
-					addMarker(poi.getLat(), poi.getLng());
+					addMapMarker(poi.getLat(), poi.getLng());
 				}
 				// TODO --- Replace toast with a Label in GUI
 				Toast.makeText(getActivity(), "Ships has been loaded.",
