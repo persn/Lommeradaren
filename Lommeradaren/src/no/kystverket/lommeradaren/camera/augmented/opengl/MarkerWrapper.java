@@ -1,7 +1,5 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
-import no.kystverket.lommeradaren.camera.augmented.opengl.texture.Triangle;
-
 public class MarkerWrapper {
 
 	//POI here
