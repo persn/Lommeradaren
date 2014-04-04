@@ -23,5 +23,6 @@
     <string name="delete_image">Delete Image</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="last_marker_update">Last update: ---</string>
 
 </resources>

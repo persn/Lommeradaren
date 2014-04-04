@@ -29,6 +29,8 @@ public class DataSourceHandler {
 	public DataSourceHandler(DataSource newDataSource) {
 		this.textHandler = new TextHandler();
 		this.dataSource = newDataSource;
+		
+		this.readyToRead = false; //Default value false, since data must have been loaded and initated before ready to read.
 	}
 
 	public String getDataSourceName() {

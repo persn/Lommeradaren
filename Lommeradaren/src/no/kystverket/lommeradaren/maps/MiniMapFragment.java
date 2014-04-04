@@ -1,5 +1,7 @@
 package no.kystverket.lommeradaren.maps;
 
+import no.kystverket.lommeradaren.markers.DataSourceHandler;
+import android.app.Activity;
 import android.graphics.Point;
 import android.location.Location;
 
@@ -11,6 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MiniMapFragment extends BaseMapFragment {
 
+	private OnMarkerDataUpdatedListener markerDataCallback;
+	
 	@Override
 	public void setMapSettings() {
 		// Update UI
@@ -26,9 +30,7 @@ public class MiniMapFragment extends BaseMapFragment {
 	public void getMarkerData() {
 		Location location = this.getGoogleMap().getMyLocation();
 		if (location != null) {
-			this.getDataSourceHandler().refreshData(
-					"" + location.getLatitude(), "" + location.getLongitude(),
-					"" + location.getAltitude(), "50");
+			this.getDataSourceHandler().refreshData("" + location.getLatitude(), "" + location.getLongitude(),"" + location.getAltitude(), "50");
 		}
 	}
 
@@ -40,7 +42,19 @@ public class MiniMapFragment extends BaseMapFragment {
 
 	@Override
 	public void clearMapMarkers() {
+		this.markerDataCallback.onMarkerDataUpdated(getDataSourceHandler());
 		this.getGoogleMap().clear();
+	}
+	
+	@Override
+	public void onAttach(Activity activity){
+		super.onAttach(activity);
+		
+		try{
+			this.markerDataCallback = (OnMarkerDataUpdatedListener)activity;
+		}catch(ClassCastException e){
+			e.printStackTrace();
+		}
 	}
 
 	public void updateBearing(float bearing) {
@@ -61,7 +75,7 @@ public class MiniMapFragment extends BaseMapFragment {
 		if (this.isFirstMarkerLoad()) {
 			return 1000 * 5;
 		} else {
-			return 1000 * 60 * 10;
+			return 1000 * 60 * 2;
 		}
 	}
 
@@ -98,6 +112,10 @@ public class MiniMapFragment extends BaseMapFragment {
 					}
 
 				});
+	}
+	
+	public interface OnMarkerDataUpdatedListener{
+		public void onMarkerDataUpdated(DataSourceHandler datasourceHandler);
 	}
 
 }

@@ -26,7 +26,6 @@ import android.util.Log;
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private DataSourceHandler datasourceHandler;
-	// private LocationHandler locationHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
@@ -118,15 +117,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public static void checkGlError(String glOperation) {
-//		try{
-//		int error;
-//		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-//			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
-//					+ error);
-//		}
-//	}catch(RuntimeException e){
-//		e.printStackTrace();
-//	}
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
@@ -138,10 +128,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
 		this.datasourceHandler = datasourceHandler;
 	}
-
-	// public void setLocationHandler(LocationHandler locationHandler) {
-	// this.locationHandler = locationHandler;
-	// }
 
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
