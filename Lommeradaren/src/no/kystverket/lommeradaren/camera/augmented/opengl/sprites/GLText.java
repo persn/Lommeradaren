@@ -1,15 +1,13 @@
-package no.kystverket.lommeradaren.camera.augmented.opengl.text;
+package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 import java.io.IOException;
 
-import no.kystverket.lommeradaren.R;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package no.kystverket.lommeradaren.camera.augmented.opengl.text;
+package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 public enum AttribVariable {
 	A_Position(1, "a_Position"), A_TexCoordinate(2, "a_TexCoordinate"), A_MVPMatrixIndex(
