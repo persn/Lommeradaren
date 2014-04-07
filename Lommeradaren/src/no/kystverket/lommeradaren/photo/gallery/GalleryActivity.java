@@ -22,8 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Gallery;
-import android.widget.Gallery.LayoutParams;
+import android.widget.GridView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ import android.widget.ViewSwitcher;
  * 
  */
 public class GalleryActivity extends Activity implements
-		GestureDetector.OnGestureListener, AdapterView.OnItemSelectedListener,
+		GestureDetector.OnGestureListener, AdapterView.OnItemClickListener,
 		ViewSwitcher.ViewFactory {
 
 	private final int SWIPE_THRESHOLD = 100;
@@ -45,7 +44,7 @@ public class GalleryActivity extends Activity implements
 	private ImageSwitcher mSwitcher;
 	private TextView textSwitcher;
 	private PhotoHandler pHandler;
-	private Gallery gallery;
+	private GridView gallery;
 	private int targetW;
 	private int targetH;
 	private int selectedPosition;
@@ -71,9 +70,9 @@ public class GalleryActivity extends Activity implements
 				android.R.anim.fade_out));
 		pHandler = new PhotoHandler(getString(R.string.app_name));
 		pictures = pHandler.getPictures();
-		gallery = (Gallery) findViewById(R.id.gallery);
+		gallery = (GridView) findViewById(R.id.galleryGridView);
 		gallery.setAdapter(new ImageAdapter(this, pictures));
-		gallery.setOnItemSelectedListener(this);
+		gallery.setOnItemClickListener(this);
 		animationTime = getResources().getInteger(
 				android.R.integer.config_shortAnimTime);
 
@@ -82,12 +81,11 @@ public class GalleryActivity extends Activity implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		this.mDetector.onTouchEvent(event);
-		// Be sure to call the superclass implementation
 		return super.onTouchEvent(event);
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position,
+	public void onItemClick(AdapterView<?> parent, View v, int position,
 			long id) {
 		selectedPosition = position;
 		mSwitcher.setImageDrawable(new BitmapDrawable(getApplicationContext()
@@ -97,16 +95,10 @@ public class GalleryActivity extends Activity implements
 	}
 
 	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-	}
-
-	@Override
 	public View makeView() {
 		ImageView i = new ImageView(this);
 		i.setBackgroundColor(0xFF000000);
 		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-		i.setLayoutParams(new ImageSwitcher.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		return i;
 	}
 
