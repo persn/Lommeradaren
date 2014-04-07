@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.location.Location;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -29,6 +30,8 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		this.setRenderer(this.mRenderer);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		this.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		
+		
 	}
 
 	public void getSensorData(float[] orientation) {

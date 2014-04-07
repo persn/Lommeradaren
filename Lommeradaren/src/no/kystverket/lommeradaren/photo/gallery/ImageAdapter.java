@@ -7,8 +7,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Gallery;
-import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
 
 /**
@@ -42,8 +40,6 @@ public class ImageAdapter extends BaseAdapter {
 	    ImageView i = new ImageView(mContext);
 	    i.setImageBitmap(pictures.get(position).getImage());
 	    i.setAdjustViewBounds(true);
-	    i.setLayoutParams(new Gallery.LayoutParams(
-		    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	    return i;
 	}
 
