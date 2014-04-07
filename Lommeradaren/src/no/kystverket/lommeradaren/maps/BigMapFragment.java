@@ -23,7 +23,7 @@ public class BigMapFragment extends BaseMapFragment {
 	@Override
 	public void getMarkerData() {
 		this.getDataSourceHandler().refreshData("63.4395831", "10.4007685",
-				"0.0", "50000");
+				"0.0", "5000");
 	}
 
 	@Override

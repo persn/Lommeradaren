@@ -1,5 +1,6 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,11 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private int screenHeight;
 
 	private static final int TOUCH_RADIUS = 50;
+	
+	float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
+	float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
+	float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
+	float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
 
 	public MarkerRenderer(Context context) {
 		this.context = context;
@@ -83,25 +89,12 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
-		float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
-		float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
-		float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
-
 //		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
 //		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
 //		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
 //		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
 
-		for (MarkerWrapper markerWrapper : this.markerWrappers) {
-			Log.d("MarkerName",markerWrapper.getTag()[0]);
-			Log.d("MarkerLat", "" + markerWrapper.getCartesianCoordinates()[0]);
-			Log.d("MarkerLng", "" + markerWrapper.getCartesianCoordinates()[1]);
-			Log.d("MarkerAlt", "" + markerWrapper.getCartesianCoordinates()[2]);
-			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
-		}
-
-//		this.drawAllMarkers();
+		this.drawAllMarkers();
 	}
 
 	@Override
@@ -128,9 +121,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	
 	public synchronized void set3DMarkerList(DataSourceHandler dataSourceHandler, Location myLocation){
 		this.markerWrappers = new ArrayList<MarkerWrapper>();
+		DecimalFormat df = new DecimalFormat("0.0#");
 		for(int i=0;i<dataSourceHandler.getPointOfInterestsSize();i++){
 			POI poi = dataSourceHandler.getPOI(i);
-			String[] tag = {poi.getName(),poi.getDistance() + " km"};
+			String[] tag = {poi.getName(),df.format(poi.getDistance()) + " m"};
 			float[] cartesianCoordinates = {
 					RelativePosition.getDifference((float)myLocation.getLatitude(), (float)poi.getLat()),
 					RelativePosition.getAltitudeDifference((float)myLocation.getAltitude(), (float)poi.getAlt()),
@@ -169,23 +163,13 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		return markerCluster.toArray(new MarkerWrapper[clusterElementCount]);
 	}
 
-	private void drawAllMarkers() {
-//		if (this.datasourceHandler != null) {
-//			for (int i = 0; i < this.datasourceHandler
-//					.getPointOfInterestsSize(); i++) {
-//				POI poi = this.datasourceHandler.getPOI(i);
-				// Log.d("ShipName",this.datasourceCollection.getPOI(i,
-				// j).getName());
-				// Log.d("DistanceAltitude","" +
-				// RelativePosition.getAltitudeDifference((float)locationHandler.getLocation().getAltitude(),
-				// (float)poi.getAlt()));
-				// Log.d("DistanceLatitude","" +
-				// RelativePosition.getDifference((float)locationHandler.getLocation().getLatitude(),
-				// (float)poi.getLat()));
-				// Log.d("DistanceLongitude","" +
-				// RelativePosition.getDifference((float)locationHandler.getLocation().getLongitude(),
-				// (float)poi.getLng()));
-//			}
-//		}
+	private synchronized void drawAllMarkers() {
+		for (MarkerWrapper markerWrapper : this.markerWrappers) {
+//			Log.d("MarkerName",markerWrapper.getTag()[0]);
+//			Log.d("MarkerLat", "" + markerWrapper.getCartesianCoordinates()[0]);
+//			Log.d("MarkerLng", "" + markerWrapper.getCartesianCoordinates()[1]);
+//			Log.d("MarkerAlt", "" + markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
+		}
 	}
 }

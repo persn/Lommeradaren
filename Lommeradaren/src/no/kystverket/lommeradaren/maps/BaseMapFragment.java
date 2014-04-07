@@ -9,6 +9,7 @@ import no.kystverket.lommeradaren.markers.POI;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,8 +126,14 @@ public abstract class BaseMapFragment extends Fragment {
 			getMarkerData();
 			if (datasourceHandler.isReadyToRead()) {
 				clearMapMarkers();
+				Log.d("MyPositionLat","" + gMap.getMyLocation().getLatitude());
+				Log.d("MyPositionLng","" + gMap.getMyLocation().getLongitude());
+				Log.d("MyPositionAlt","" + gMap.getMyLocation().getAltitude());
 				for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
 					POI poi = datasourceHandler.getPOI(i);
+					Log.d(poi.getName() + "Lat","" + poi.getLat());
+					Log.d(poi.getName() + "Lng","" + poi.getLng());
+					Log.d(poi.getName() +  "Alt","" + poi.getAlt());
 					addMapMarker(poi.getLat(), poi.getLng());
 				}
 				// TODO --- Replace toast with a Label in GUI

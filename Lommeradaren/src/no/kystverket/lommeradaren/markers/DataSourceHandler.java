@@ -21,11 +21,6 @@ public class DataSourceHandler {
 	private TextHandler textHandler;
 	private boolean readyToRead;
 
-	private String lat;
-	private String lng;
-	private String alt;
-	private String radius;
-
 	public DataSourceHandler(DataSource newDataSource) {
 		this.textHandler = new TextHandler();
 		this.dataSource = newDataSource;
@@ -61,12 +56,8 @@ public class DataSourceHandler {
 	 * @param newRadius
 	 *            Given radius to search for ships from current location.
 	 */
-	public void refreshData(String newLat, String newLng, String newAlt,
-			String newRadius) {
-		this.lat = newLat;
-		this.lng = newLng;
-		this.alt = newAlt;
-		this.radius = newRadius;
+	public void refreshData(final String lat, final String lng, final String alt,
+			final String radius) {
 
 		Thread thread = new Thread(new Runnable() {
 
