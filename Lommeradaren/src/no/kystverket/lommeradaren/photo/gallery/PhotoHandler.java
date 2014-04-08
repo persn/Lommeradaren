@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.photo.gallery;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import no.kystverket.lommeradaren.photo.Photo;
@@ -8,7 +9,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -41,15 +44,35 @@ public class PhotoHandler {
 					String ext = extList[extList.length - 1];
 					// Check to see if they're jpg images
 					if (ext.equals("jpg")) {
-						photos.add(new Photo(decodeSampledBitmapFromUrl(
-						// TODO add dynamic thumbnail size instead of 90x90
-								filesInFolder[i].getPath(), 90, 90),
-								filesInFolder[i].getName()));
+						try {
+							ExifInterface exif = new ExifInterface(
+									filesInFolder[i].getPath());
+							photos.add(new Photo(decodeSampledBitmapFromUrl(
+							// TODO add dynamic thumbnail size instead of 90x90
+									filesInFolder[i].getPath(), 90, 90),
+									filesInFolder[i].getName(), exif
+											.getAttribute("UserComment")));
+							Log.d("READATTRIBUTETEST",
+									"" + exif.getAttribute("UserComment"));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
 		}
 		return photos;
+	}
+
+	public static void setExifData(String path, String data) {
+		try {
+			ExifInterface exif = new ExifInterface(path);
+			exif.setAttribute("UserComment", data);
+			exif.saveAttributes();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean deleteImage(Photo img) {

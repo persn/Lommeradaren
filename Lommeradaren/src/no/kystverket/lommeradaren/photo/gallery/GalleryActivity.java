@@ -26,6 +26,7 @@ import android.widget.GridView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 /**
@@ -136,6 +137,8 @@ public class GalleryActivity extends Activity implements
 		case R.id.sub_menu_gallery_user:
 			return false;// Not yet implemented
 		case R.id.menu_gallery_image_info:
+			Toast.makeText(getApplicationContext(), pictures.get(selectedPosition).getImgInfo(), Toast.LENGTH_SHORT).show();
+
 			return false;
 		case R.id.sub_menu_gallery_delete_confirm:
 			deleteImage();
@@ -149,6 +152,7 @@ public class GalleryActivity extends Activity implements
 		pictures = pHandler.getPictures();
 		gallery.setAdapter(new ImageAdapter(this, pictures));
 		mSwitcher.setImageDrawable(null);
+		textSwitcher.setText("");
 	}
 
 	@Override

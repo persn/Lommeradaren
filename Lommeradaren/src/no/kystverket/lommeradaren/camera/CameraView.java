@@ -1,5 +1,6 @@
 package no.kystverket.lommeradaren.camera;
 
+import no.kystverket.lommeradaren.camera.CameraController.OnPhotoTakenListener;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
@@ -45,6 +46,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public void autoFocusAndTakePicture(){
 		this.cameraController.autoFocusAndSnapPicture();
+	}
+	
+	public void registerOnPhotoTakenListener(OnPhotoTakenListener activity){
+		this.cameraController.registerListener(activity);
 	}
 
 	/**

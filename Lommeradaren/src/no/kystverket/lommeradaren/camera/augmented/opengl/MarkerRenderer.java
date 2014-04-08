@@ -146,6 +146,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.screenWidth = width;
 		this.screenHeight = height;
 	}
+	
+	public List<MarkerWrapper> getMarkerList(){
+		return markerWrappers;
+	}
 
 	public MarkerWrapper[] getMarkerCluster(float touchX, float touchY) {
 		List<MarkerWrapper> markerCluster = new ArrayList<MarkerWrapper>();

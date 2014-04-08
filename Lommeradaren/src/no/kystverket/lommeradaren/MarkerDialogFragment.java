@@ -11,6 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class MarkerDialogFragment extends DialogFragment {
 	
 	private String title = "---";
@@ -23,7 +28,7 @@ public class MarkerDialogFragment extends DialogFragment {
 	private String positionTime = "---";
 	private String website = "---";
 	
-	public void setContent(String title,String latitude,String longitude, String elevation, String imo, String mmsi, String speed, String positionTime){
+	public void setContent(String title,String latitude,String longitude, String elevation, String imo, String mmsi, String speed, String positionTime, String website){
 		this.title = title;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -32,6 +37,7 @@ public class MarkerDialogFragment extends DialogFragment {
 		this.mmsi = mmsi;
 		this.speed = speed;
 		this.positionTime = positionTime;
+		this.website = website;
 	}
 
 	@Override

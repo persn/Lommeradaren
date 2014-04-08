@@ -12,25 +12,40 @@ public class POI {
 	private double lat;
 	private double lng;
 	private double alt;
-	//private int mmsi;
+	private String mmsi;
 	private double distance;
 	private String has_detail_page;
 	private String webpage;
 	private String positionTime;
-	//private String imo;
+	private String imo;
+	private String speed;
+	private String course;
 
-	public POI(int id, String name, double lat, double lng, double alt,
+	public POI(int id, String name, double lat, double lng, double alt, String mmsi,
 			double distance, String has_detail_page, String webpage,
-			String positionTime) {
+			String positionTime, String speed, String course, String imo) {
 		this.id = id;
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 		this.alt = alt;
+		this.mmsi = mmsi;
 		this.distance = distance;
 		this.has_detail_page = has_detail_page;
 		this.webpage = webpage;
 		this.positionTime = positionTime;
+		this.speed = speed;
+		this.course = course;
+		this.imo = imo;
+		
+	}
+
+	public String getSpeed() {
+		return speed;
+	}
+
+	public String getCourse() {
+		return course;
 	}
 
 	public int getId() {
@@ -68,5 +83,14 @@ public class POI {
 	public String getPositionTime() {
 		return positionTime;
 	}
+
+	public String getMmsi() {
+		return mmsi;
+	}
+
+	public String getImo() {
+		return imo;
+	}
+	
 
 }

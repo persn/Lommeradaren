@@ -9,25 +9,25 @@ import no.kystverket.lommeradaren.markers.POI;
  */
 public class Ship extends POI {
 
-	private double speed;
+	private String speed;
 	private String lastPort;
 	private String destination;
-	private double course;
+	private String course;
 
 
 	public Ship(int id, String name, double lat, double lng, double alt,
-			int mmsi, double distance, String has_detail_page, String webpage,
-			String positionTime, String imo, double speed, String lastPort,
-			String destination, double course) {
-		super(id, name, lat, lng, alt, distance, has_detail_page,
-				webpage, positionTime);
+			String mmsi, double distance, String has_detail_page, String webpage,
+			String positionTime, String imo, String speed, String lastPort,
+			String destination, String course) {
+		super(id, name, lat, lng, alt, mmsi, distance, has_detail_page,
+				webpage, positionTime, speed, course, imo);
 		this.speed = speed;
 		this.lastPort = lastPort;
 		this.destination = destination;
 		this.course = course;
 	}
 
-	public double getSpeed() {
+	public String getSpeed() {
 		return speed;
 	}
 
@@ -39,7 +39,7 @@ public class Ship extends POI {
 		return destination;
 	}
 
-	public double getCourse() {
+	public String getCourse() {
 		return course;
 	}
 

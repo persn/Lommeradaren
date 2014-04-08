@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
 import no.kystverket.lommeradaren.MarkerDialogFragment;
+import java.util.List;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -88,11 +89,14 @@ public class MarkerSurfaceView extends GLSurfaceView {
 							((MarkerDialogFragment)newFragment).setContent(
 									markerCluster[which].getTag()[0], 
 									"" + markerCluster[which].getPOI().getLat(), 
-									"" + markerCluster[which].getPOI().getLng());
+									"" + markerCluster[which].getPOI().getLng(),
+									"" + markerCluster[which].getPOI().getAlt(),
+									markerCluster[which].getPOI().getImo(),
+									markerCluster[which].getPOI().getMmsi(),
+									markerCluster[which].getPOI().getSpeed(),
+									markerCluster[which].getPOI().getPositionTime(),
+									markerCluster[which].getPOI().getWebpage());
 							newFragment.show(fm, "marker_dialog");
-//							Toast.makeText(getContext(),
-//									markerCluster[which].getTag()[0],
-//									Toast.LENGTH_SHORT).show();
 						}
 					});
 			builder.create().show();
@@ -106,6 +110,10 @@ public class MarkerSurfaceView extends GLSurfaceView {
 			options[i] = markerCluster[i].getTag()[0];
 		}
 		return options;
+	}
+	
+	public List<MarkerWrapper> getMarkerList(){
+		return mRenderer.getMarkerList();
 	}
 
 }

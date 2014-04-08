@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.Environment;
@@ -27,6 +26,8 @@ public class CameraController {
 	private PictureCallback mPicture;
 	private String appName;
 
+	private OnPhotoTakenListener dialogCallback;
+	
 	private boolean readyToTakePicture;
 
 	private static final int MEDIA_TYPE_IMAGE = 1;
@@ -112,7 +113,21 @@ public class CameraController {
 			e.printStackTrace();
 		}
 	}
+	
+//	@Override
+//	public void onAttach(Activity activity){
+//		super.onAttach(activity);
+//		
+//		try{
+//			this.dialogCallback = (OnPhotoTakenListener)activity;
+//		}catch(ClassCastException e){
+//			e.printStackTrace();
+//		}
+//	}
 
+	public void registerListener(OnPhotoTakenListener activity){
+		this.dialogCallback = activity;
+	}
 	/**
 	 * Snap a picture of the current frame on the android unit. It is set with a
 	 * sleep and a if-check to ensure low-probability of crash if the user spam
@@ -165,6 +180,7 @@ public class CameraController {
 					FileOutputStream fos = new FileOutputStream(pictureFile);
 					fos.write(data);
 					fos.close();
+					dialogCallback.onPhotoTaken(pictureFile.getPath());
 				} catch (FileNotFoundException e) {
 					Log.d("no.kystverket",
 							"FileNotFound CameraController.java initPictureCallback 2");
@@ -229,5 +245,9 @@ public class CameraController {
 		}
 
 		return mediaFile;
+	}
+	
+	public interface OnPhotoTakenListener{
+		public void onPhotoTaken(String imgPath);
 	}
 }
