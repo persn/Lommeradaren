@@ -1,15 +1,23 @@
 package no.kystverket.lommeradaren.camera;
 
+import java.util.List;
+
 import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
+import no.kystverket.lommeradaren.camera.CameraController.OnPhotoTakenListener;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
+import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerWrapper;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.maps.MiniMapFragment;
 import no.kystverket.lommeradaren.maps.MiniMapFragment.OnMarkerDataUpdatedListener;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
+import no.kystverket.lommeradaren.markers.POI;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
+import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Sensor;
@@ -32,7 +40,8 @@ import com.google.android.gms.maps.MapView;
  * @author Per Olav Flaten
  * 
  */
-public class CameraActivity extends Activity implements SensorEventListener, OnMarkerDataUpdatedListener {
+public class CameraActivity extends Activity implements SensorEventListener,
+		OnMarkerDataUpdatedListener, OnPhotoTakenListener {
 
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
@@ -54,8 +63,8 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		this.gMap = ((MiniMapFragment) getFragmentManager()
-				.findFragmentById(R.id.mini_map_fragment));
+		this.gMap = ((MiniMapFragment) getFragmentManager().findFragmentById(
+				R.id.mini_map_fragment));
 	}
 
 	@Override
@@ -66,6 +75,7 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 		mSensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
 		initCameraView();
+		mPreview.registerOnPhotoTakenListener(this);
 	}
 
 	@Override
@@ -97,7 +107,8 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 		if (sensorHandler.handleEvent(evt)) {
 			float[] orientation = sensorHandler.getOrientation();
 			mGLView.getSensorData(orientation.clone());
-			this.gMap.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
+			this.gMap
+					.updateBearing((float) Math.toDegrees(orientation[0]) + 90);
 		}
 	}
 
@@ -146,9 +157,10 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
-	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler, Location myLocation) {
+	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler,
+			Location myLocation) {
 		this.mGLView.set3DMarkerData(datasourceHandler, myLocation);
 	}
 
@@ -160,6 +172,7 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 	 */
 	public void takePictureOnClick(View v) {
 		this.mPreview.autoFocusAndTakePicture();
+
 	}
 
 	private void initCameraView() {
@@ -168,10 +181,56 @@ public class CameraActivity extends Activity implements SensorEventListener, OnM
 		((RelativeLayout) findViewById(R.id.camera_preview_layout))
 				.addView(mPreview);
 	}
-	
-	private void setRendererScreenSize(){
+
+	private void setRendererScreenSize() {
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 		this.mGLView.setRendererScreenSize(size.x, size.y);
+	}
+
+	private void displayShipListDialog(String imgPath){
+		final List<MarkerWrapper> markers = mGLView.getMarkerList();
+		final String path = imgPath;
+		//Log.d("DISPLAYSHIPLISTDIALOG 1", "Markers size"+markers.size()+" path: "+imgPath);
+		CharSequence[] options = new CharSequence[markers.size()];
+		for(int i = 0; i<markers.size();i++){
+			options[i] = markers.get(i).getPOI().getName();
+			//Log.d("DISPLAYSHIPLISTDIALOG 2", "i: "+i+" name: "+options[i]);
+		}
+		if(markers.size() > 0){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Select Ship to associate with picture");
+			builder.setCancelable(true);
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String data = "";
+					POI p = markers.get(which).getPOI();
+					data += ("id:"+p.getId()+",");
+					data += ("lat:"+p.getLat()+",");
+					data += ("lng:"+p.getLng()+",");
+					data += ("elevation:"+p.getAlt()+",");
+					data += ("title:"+p.getName()+",");
+					data += ("distance:"+p.getDistance()+",");
+					data += ("has_detail_page:"+p.getHas_detail_page()+",");
+					data += ("webpage:"+p.getWebpage()+",");
+					data += ("mmsi+"+p.getMmsi()+",");
+					data += ("imo:"+p.getImo()+",");
+					data += ("positionTime:"+p.getPositionTime()+",");
+					data += ("speed:"+p.getSpeed()+",");
+					data += ("course:"+p.getCourse()+",");
+					PhotoHandler.setExifData(path, data);
+				}
+			});
+			builder.create().show();
+		} else {
+			PhotoHandler.setExifData(path, "no_ship_selected");
+		}
+	}
+
+	@Override
+	public void onPhotoTaken(String imgPath) {
+		displayShipListDialog(imgPath);
 	}
 }

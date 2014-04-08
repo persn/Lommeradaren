@@ -11,10 +11,12 @@ public class Photo {
 
     private Bitmap image;
     private String imgName;
+    private String imgInfo;
     
-    public Photo(Bitmap image, String imgName){
+    public Photo(Bitmap image, String imgName, String imgInfo){
 	this.image = image;
 	this.imgName = imgName;
+	this.imgInfo = imgInfo;
     }
     
     public Bitmap getImage() {
@@ -25,4 +27,7 @@ public class Photo {
         return imgName;
     }
     
+    public String getImgInfo(){
+    	return imgInfo;
+    }
 }

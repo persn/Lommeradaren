@@ -1,5 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
+import java.util.List;
+
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -97,6 +99,10 @@ public class MarkerSurfaceView extends GLSurfaceView {
 			options[i] = markerCluster[i].getTag()[0];
 		}
 		return options;
+	}
+	
+	public List<MarkerWrapper> getMarkerList(){
+		return mRenderer.getMarkerList();
 	}
 
 }

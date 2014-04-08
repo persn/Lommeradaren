@@ -117,12 +117,15 @@ public class DataSourceHandler {
 			double distance = currentJSON.getDouble("distance");
 			String hasPage = currentJSON.getString("has_detail_page");
 			String webpage = currentJSON.getString("webpage");
-			// int mmsi = currentJSON.getInt("mmsi");
-			// double speed = currentJSON.getDouble("speed");
-			// double course = currentJSON.getDouble("course");
+			
+			String imo = currentJSON.optString("imo");
+			String mmsi = currentJSON.optString("mmsi");
+			String speed = currentJSON.optString("speed");
+			String course = currentJSON.optString("course");
+			
 			String positionTime = currentJSON.getString("positionTime");
-			pointOfInterest = new POI(id, title, lat, lng, alt, distance,
-					hasPage, webpage, positionTime);
+			pointOfInterest = new POI(id, title, lat, lng, alt, mmsi, distance,
+					hasPage, webpage, positionTime, speed, course, imo);
 		} catch (JSONException jsonE) {
 			jsonE.printStackTrace();
 		}
