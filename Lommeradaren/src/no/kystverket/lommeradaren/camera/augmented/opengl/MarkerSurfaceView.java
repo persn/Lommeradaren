@@ -1,16 +1,18 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl;
 
+import no.kystverket.lommeradaren.MarkerDialogFragment;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.location.Location;
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * 
@@ -81,9 +83,16 @@ public class MarkerSurfaceView extends GLSurfaceView {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Toast.makeText(getContext(),
-									markerCluster[which].getTag()[0],
-									Toast.LENGTH_SHORT).show();
+							FragmentManager fm = ((Activity) getContext()).getFragmentManager();
+							DialogFragment newFragment = new MarkerDialogFragment();
+							((MarkerDialogFragment)newFragment).setContent(
+									markerCluster[which].getTag()[0], 
+									"" + markerCluster[which].getPOI().getLat(), 
+									"" + markerCluster[which].getPOI().getLng());
+							newFragment.show(fm, "marker_dialog");
+//							Toast.makeText(getContext(),
+//									markerCluster[which].getTag()[0],
+//									Toast.LENGTH_SHORT).show();
 						}
 					});
 			builder.create().show();

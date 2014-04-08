@@ -24,5 +24,13 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="last_marker_update">Last update: ---</string>
+    <string name="latitute">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="elevation">Elevation:</string>
+    <string name="imo">IMO:</string>
+    <string name="mmsi">MMSI:</string>
+    <string name="speed">Speed:</string>
+    <string name="position_time">Position Time:</string>
+    <string name="website">Website</string>
 
 </resources>
