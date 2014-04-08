@@ -75,7 +75,7 @@ public class MiniMapFragment extends BaseMapFragment {
 		if (this.isFirstMarkerLoad()) {
 			return 1000 * 5;
 		} else {
-			return 1000 * 30;
+			return 1000 * 60;
 		}
 	}
 

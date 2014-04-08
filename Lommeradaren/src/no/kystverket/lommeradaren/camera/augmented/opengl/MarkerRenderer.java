@@ -127,9 +127,9 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			POI poi = dataSourceHandler.getPOI(i);
 			String[] tag = {poi.getName(),df.format(poi.getDistance()) + " m"};
 			float[] cartesianCoordinates = {
-					RelativePosition.getDifference((float)myLocation.getLatitude(), (float)poi.getLat()),
+					RelativePosition.getDifference((float)myLocation.getLongitude(), (float)poi.getLng()),
 					RelativePosition.getAltitudeDifference((float)myLocation.getAltitude(), (float)poi.getAlt()),
-					RelativePosition.getDifference((float)myLocation.getLongitude(), (float)poi.getLng())
+					-RelativePosition.getDifference((float)myLocation.getLatitude(), (float)poi.getLat()),
 					};
 			int[] screenCoordinates = this.linAlg.findPointOfInterestScreenPosition(cartesianCoordinates, this.screenWidth, this.screenHeight);
 			MarkerWrapper markerWrapper = new MarkerWrapper(poi,tag,cartesianCoordinates,screenCoordinates);
@@ -167,10 +167,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private synchronized void drawAllMarkers() {
 		for (MarkerWrapper markerWrapper : this.markerWrappers) {
 //			Log.d("MarkerName",markerWrapper.getTag()[0]);
-//			Log.d("MarkerLat", "" + markerWrapper.getCartesianCoordinates()[0]);
-//			Log.d("MarkerLng", "" + markerWrapper.getCartesianCoordinates()[1]);
-//			Log.d("MarkerAlt", "" + markerWrapper.getCartesianCoordinates()[2]);
-			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], -markerWrapper.getCartesianCoordinates()[2]);
+//			Log.d("MarkerX", "" + markerWrapper.getCartesianCoordinates()[0]);
+//			Log.d("MarkerY", "" + markerWrapper.getCartesianCoordinates()[1]);
+//			Log.d("MarkerZ", "" + markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
 		}
 	}
 }
