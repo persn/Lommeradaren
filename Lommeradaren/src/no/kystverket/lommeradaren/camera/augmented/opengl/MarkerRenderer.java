@@ -46,6 +46,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
 	float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
 	float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
+	float[] color5 = { 1.0f, 1.0f, 1.0f, 1.0f }; // White
 
 	public MarkerRenderer(Context context) {
 		this.context = context;
@@ -89,10 +90,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-//		this.linAlg.drawMarker(glText, color1, "North", "50m", 0, 0, -50);
-//		this.linAlg.drawMarker(glText, color2, "South", "50m", 0, 0, 50);
-//		this.linAlg.drawMarker(glText, color3, "East", "50m", 50, 0, 0);
-//		this.linAlg.drawMarker(glText, color4, "West", "50m", -50, 0, 0);
+		this.linAlg.drawMarker(glText, color5, "North", "", 0, 10, -50);
+		this.linAlg.drawMarker(glText, color5, "South", "", 0, 10, 50);
+		this.linAlg.drawMarker(glText, color5, "East", "", 50, 10, 0);
+		this.linAlg.drawMarker(glText, color5, "West", "", -50, 10, 0);
 
 		this.drawAllMarkers();
 	}
@@ -169,7 +170,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 //			Log.d("MarkerLat", "" + markerWrapper.getCartesianCoordinates()[0]);
 //			Log.d("MarkerLng", "" + markerWrapper.getCartesianCoordinates()[1]);
 //			Log.d("MarkerAlt", "" + markerWrapper.getCartesianCoordinates()[2]);
-			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], -markerWrapper.getCartesianCoordinates()[2]);
 		}
 	}
 }
