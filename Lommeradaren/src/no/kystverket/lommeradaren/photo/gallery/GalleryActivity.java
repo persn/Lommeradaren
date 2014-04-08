@@ -148,6 +148,7 @@ public class GalleryActivity extends Activity implements
 		pHandler.deleteImage(pictures.get(selectedPosition));
 		pictures = pHandler.getPictures();
 		gallery.setAdapter(new ImageAdapter(this, pictures));
+		mSwitcher.setImageDrawable(null);
 	}
 
 	@Override
