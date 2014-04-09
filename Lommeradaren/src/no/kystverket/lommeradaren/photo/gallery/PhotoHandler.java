@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -58,8 +57,6 @@ public class PhotoHandler {
 												90),
 										filesInFolder[i].getName(), new POI(
 												info)));
-								Log.d("READATTRIBUTETEST",
-										"" + exif.getAttribute("UserComment"));
 							} else {
 								photos.add(new Photo(
 										decodeSampledBitmapFromUrl(
