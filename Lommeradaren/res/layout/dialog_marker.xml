@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_background" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_launcher" />
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" >
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -126,8 +140,47 @@
                 android:layout_alignBaseline="@+id/textView7"
                 android:layout_alignBottom="@+id/textView7"
                 android:layout_alignLeft="@+id/textView_speed" />
-
         </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView1"
+        android:gravity="left|center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/button_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/buttonbackgroundselector"
+            android:text="@string/website" 
+            android:layout_marginRight="5dp"/>
+
+        <Button
+            android:id="@+id/button_dialog_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/buttonbackgroundselector"
+            android:text="@string/ok" 
+            android:layout_marginLeft="5dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
