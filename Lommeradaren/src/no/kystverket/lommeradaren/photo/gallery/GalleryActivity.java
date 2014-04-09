@@ -137,7 +137,7 @@ public class GalleryActivity extends Activity implements
 		case R.id.sub_menu_gallery_user:
 			return false;// Not yet implemented
 		case R.id.menu_gallery_image_info:
-			Toast.makeText(getApplicationContext(), pictures.get(selectedPosition).getImgInfo(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), pictures.get(selectedPosition).getPoi().toString(), Toast.LENGTH_SHORT).show();
 
 			return false;
 		case R.id.sub_menu_gallery_delete_confirm:

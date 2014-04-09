@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import no.kystverket.lommeradaren.markers.POI;
 import no.kystverket.lommeradaren.photo.Photo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -47,13 +48,27 @@ public class PhotoHandler {
 						try {
 							ExifInterface exif = new ExifInterface(
 									filesInFolder[i].getPath());
-							photos.add(new Photo(decodeSampledBitmapFromUrl(
-							// TODO add dynamic thumbnail size instead of 90x90
-									filesInFolder[i].getPath(), 90, 90),
-									filesInFolder[i].getName(), exif
-											.getAttribute("UserComment")));
-							Log.d("READATTRIBUTETEST",
-									"" + exif.getAttribute("UserComment"));
+							String info = exif.getAttribute("UserComment");
+							if (info != null) {
+								photos.add(new Photo(
+										decodeSampledBitmapFromUrl(
+												// TODO add dynamic thumbnail
+												// size instead of 90x90
+												filesInFolder[i].getPath(), 90,
+												90),
+										filesInFolder[i].getName(), new POI(
+												info)));
+								Log.d("READATTRIBUTETEST",
+										"" + exif.getAttribute("UserComment"));
+							} else {
+								photos.add(new Photo(
+										decodeSampledBitmapFromUrl(
+												// TODO add dynamic thumbnail
+												// size instead of 90x90
+												filesInFolder[i].getPath(), 90,
+												90), filesInFolder[i].getName()));
+							}
+
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

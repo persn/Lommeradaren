@@ -207,19 +207,19 @@ public class CameraActivity extends Activity implements SensorEventListener,
 				public void onClick(DialogInterface dialog, int which) {
 					String data = "";
 					POI p = markers.get(which).getPOI();
-					data += ("id:"+p.getId()+",");
-					data += ("lat:"+p.getLat()+",");
-					data += ("lng:"+p.getLng()+",");
-					data += ("elevation:"+p.getAlt()+",");
-					data += ("title:"+p.getName()+",");
-					data += ("distance:"+p.getDistance()+",");
-					data += ("has_detail_page:"+p.getHas_detail_page()+",");
-					data += ("webpage:"+p.getWebpage()+",");
-					data += ("mmsi+"+p.getMmsi()+",");
-					data += ("imo:"+p.getImo()+",");
-					data += ("positionTime:"+p.getPositionTime()+",");
-					data += ("speed:"+p.getSpeed()+",");
-					data += ("course:"+p.getCourse()+",");
+					data += ("id;"+p.getId()+",");
+					data += ("lat;"+p.getLat()+",");
+					data += ("lng;"+p.getLng()+",");
+					data += ("elevation;"+p.getAlt()+",");
+					data += ("title;"+p.getName()+",");
+					data += ("distance;"+p.getDistance()+",");
+					data += ("has_detail_page;"+p.getHas_detail_page()+",");
+					data += ("webpage;"+p.getWebpage()+",");
+					data += ("mmsi;"+p.getMmsi()+",");
+					data += ("imo;"+p.getImo()+",");
+					data += ("positionTime;"+p.getPositionTime()+",");
+					data += ("speed;"+p.getSpeed()+",");
+					data += ("course;"+p.getCourse()+",");
 					PhotoHandler.setExifData(path, data);
 				}
 			});
