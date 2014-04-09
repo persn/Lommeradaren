@@ -1,9 +1,19 @@
 package no.kystverket.lommeradaren.maps;
 
+import no.kystverket.lommeradaren.MarkerDialogFragment;
+import no.kystverket.lommeradaren.markers.POI;
+import android.app.DialogFragment;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener;
 
+/**
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class BigMapFragment extends BaseMapFragment {
 
 	private ClusterManager<MapMarker> gClusterManager;
@@ -12,6 +22,8 @@ public class BigMapFragment extends BaseMapFragment {
 	public void setMapSettings() {
 		this.gClusterManager = new ClusterManager<MapMarker>(getActivity(),
 				this.getGoogleMap());
+		this.setOnClusterItemClicked();
+		
 		this.getGoogleMap().setOnCameraChangeListener(this.gClusterManager);
 		this.getGoogleMap().setOnMarkerClickListener(this.gClusterManager);
 
@@ -27,8 +39,8 @@ public class BigMapFragment extends BaseMapFragment {
 	}
 
 	@Override
-	public void addMapMarker(double lat, double lng) {
-		this.gClusterManager.addItem(new MapMarker(lat, lng));
+	public void addMapMarker(POI poi) {
+		this.gClusterManager.addItem(new MapMarker(poi));
 	}
 
 	@Override
@@ -43,5 +55,30 @@ public class BigMapFragment extends BaseMapFragment {
 		} else {
 			return 1000 * 60 * 10;
 		}
+	}
+	
+	private void setOnClusterItemClicked(){
+		this.gClusterManager.setOnClusterItemClickListener(new OnClusterItemClickListener<MapMarker>(){
+
+			@Override
+			public boolean onClusterItemClick(MapMarker item) {
+				if(item != null){
+					DialogFragment newFragment = new MarkerDialogFragment();
+					((MarkerDialogFragment)newFragment).setContent(
+							item.getPOI().getName(),
+							"" + item.getPOI().getLat(), 
+							"" + item.getPOI().getLng(),
+							"" + item.getPOI().getAlt(),
+							item.getPOI().getImo(),
+							item.getPOI().getMmsi(),
+							item.getPOI().getSpeed(),
+							item.getPOI().getPositionTime(),
+							item.getPOI().getWebpage());
+					newFragment.show(getFragmentManager(), "marker_dialog");
+				}
+				return false;
+			}
+			
+		});
 	}
 }

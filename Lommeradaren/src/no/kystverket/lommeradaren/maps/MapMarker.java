@@ -1,19 +1,25 @@
 package no.kystverket.lommeradaren.maps;
 
+import no.kystverket.lommeradaren.markers.POI;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
 public class MapMarker implements ClusterItem {
 	
-	private final LatLng mPosition;
+	private final POI poi;
 
-	public MapMarker(double lat, double lng){
-		this.mPosition = new LatLng(lat,lng);
+	public MapMarker(POI poi){
+		this.poi = poi;
 	}
 	
 	@Override
 	public LatLng getPosition() {
-		return mPosition;
+		return new LatLng(poi.getLat(),poi.getLng());
+	}
+	
+	public POI getPOI(){
+		return this.poi;
 	}
 
 }

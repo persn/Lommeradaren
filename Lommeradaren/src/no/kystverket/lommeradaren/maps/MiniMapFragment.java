@@ -1,6 +1,7 @@
 package no.kystverket.lommeradaren.maps;
 
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
+import no.kystverket.lommeradaren.markers.POI;
 import android.app.Activity;
 import android.graphics.Point;
 import android.location.Location;
@@ -35,9 +36,9 @@ public class MiniMapFragment extends BaseMapFragment {
 	}
 
 	@Override
-	public void addMapMarker(double lat, double lng) {
+	public void addMapMarker(POI poi) {
 		this.getGoogleMap().addMarker(
-				new MarkerOptions().position(new LatLng(lat, lng)));
+				new MarkerOptions().position(new LatLng(poi.getLat(), poi.getLng())));
 	}
 
 	@Override
