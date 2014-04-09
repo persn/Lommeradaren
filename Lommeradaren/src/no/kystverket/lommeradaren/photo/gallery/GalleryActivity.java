@@ -3,11 +3,14 @@ package no.kystverket.lommeradaren.photo.gallery;
 import java.util.ArrayList;
 
 import no.kystverket.lommeradaren.MainActivity;
+import no.kystverket.lommeradaren.MarkerDialogFragment;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.CameraActivity;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.Photo;
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -54,7 +57,7 @@ public class GalleryActivity extends Activity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		selectedPosition = -1;
 		setContentView(R.layout.gallerylayout);
 		mDetector = new GestureDetectorCompat(this, this);
 		Display display = getWindowManager().getDefaultDisplay();
@@ -86,8 +89,7 @@ public class GalleryActivity extends Activity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View v, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		selectedPosition = position;
 		mSwitcher.setImageDrawable(new BitmapDrawable(getApplicationContext()
 				.getResources(), pHandler.getLargeImage(pictures.get(position)
@@ -137,21 +139,41 @@ public class GalleryActivity extends Activity implements
 		case R.id.sub_menu_gallery_user:
 			return false;// Not yet implemented
 		case R.id.menu_gallery_image_info:
-			Toast.makeText(getApplicationContext(), pictures.get(selectedPosition).getPoi().toString(), Toast.LENGTH_SHORT).show();
-
+			if (selectedPosition != -1) {
+				showInfoDialog();
+			}
 			return false;
 		case R.id.sub_menu_gallery_delete_confirm:
-			deleteImage();
+			if (selectedPosition != -1) {
+				deleteImage();
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	private void deleteImage(){
+
+	private void showInfoDialog() {
+		FragmentManager fm = getFragmentManager();
+		DialogFragment newFragment = new MarkerDialogFragment();
+		((MarkerDialogFragment) newFragment).setContent(
+				pictures.get(selectedPosition).getPoi().getName(), ""
+						+ pictures.get(selectedPosition).getPoi().getLat(), ""
+						+ pictures.get(selectedPosition).getPoi().getLng(), ""
+						+ pictures.get(selectedPosition).getPoi().getAlt(),
+				pictures.get(selectedPosition).getPoi().getImo(),
+				pictures.get(selectedPosition).getPoi().getMmsi(), pictures
+						.get(selectedPosition).getPoi().getSpeed(), pictures
+						.get(selectedPosition).getPoi().getPositionTime(),
+				pictures.get(selectedPosition).getPoi().getWebpage());
+		newFragment.show(fm, "marker_dialog");
+	}
+
+	private void deleteImage() {
 		pHandler.deleteImage(pictures.get(selectedPosition));
 		pictures = pHandler.getPictures();
 		gallery.setAdapter(new ImageAdapter(this, pictures));
 		mSwitcher.setImageDrawable(null);
+		selectedPosition = -1;
 		textSwitcher.setText("");
 	}
 
@@ -211,7 +233,7 @@ public class GalleryActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		if (textSwitcher.getAlpha() == 1f && gallery.getAlpha() == 1f) {
