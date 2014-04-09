@@ -1,7 +1,5 @@
 package no.kystverket.lommeradaren.maps;
 
-import java.util.Date;
-
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.markers.DataSource;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
@@ -9,11 +7,9 @@ import no.kystverket.lommeradaren.markers.POI;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -94,7 +90,7 @@ public abstract class BaseMapFragment extends Fragment {
 
 	public abstract void getMarkerData();
 
-	public abstract void addMapMarker(double lat, double lng);
+	public abstract void addMapMarker(POI poi);
 	
 	public abstract int getRefreshTimer();
 	
@@ -127,8 +123,7 @@ public abstract class BaseMapFragment extends Fragment {
 			if (datasourceHandler.isReadyToRead()) {
 				clearMapMarkers();
 				for (int i = 0; i < datasourceHandler.getPointOfInterestsSize(); i++) {
-					POI poi = datasourceHandler.getPOI(i);
-					addMapMarker(poi.getLat(), poi.getLng());
+					addMapMarker(datasourceHandler.getPOI(i));
 				}
 				// TODO --- Replace toast with a Label in GUI
 				Toast.makeText(getActivity(), "such tracking\nmuch ships wow",
