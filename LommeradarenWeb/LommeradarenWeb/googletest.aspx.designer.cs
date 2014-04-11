@@ -10,25 +10,25 @@
 namespace LommeradarenWeb {
     
     
-    public partial class Login {
+    public partial class googletest {
         
         /// <summary>
-        /// GoogleLoginButton control.
+        /// loginGoogleButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoogleLoginButton;
+        protected global::System.Web.UI.WebControls.Button loginGoogleButton;
         
         /// <summary>
-        /// Table1 control.
+        /// Label0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::System.Web.UI.WebControls.Label Label0;
         
         /// <summary>
         /// Label1 control.
@@ -40,15 +40,6 @@ namespace LommeradarenWeb {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtUserName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtUserName;
-        
-        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -56,15 +47,6 @@ namespace LommeradarenWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
-        /// txtUserPass control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtUserPass;
         
         /// <summary>
         /// Label3 control.
@@ -76,30 +58,12 @@ namespace LommeradarenWeb {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// chkPersistCookie control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkPersistCookie;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// lblMsg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsg;
+        protected global::System.Web.UI.WebControls.Label Label4;
     }
 }

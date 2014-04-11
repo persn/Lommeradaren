@@ -11,17 +11,21 @@ namespace LommeradarenWeb
 {
     public partial class Login : System.Web.UI.Page
     {
+        private Authentication auth = new Authentication();
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (ValidateUser(txtUserName.Value, txtUserPass.Value))
-                FormsAuthentication.RedirectFromLoginPage(txtUserName.Value,
-                chkPersistCookie.Checked);
-            else
-                Response.Redirect("Login.aspx", true);
+            if (!txtUserName.Value.Equals("") && !txtUserPass.Equals(""))
+            {
+                if (ValidateUser(txtUserName.Value, txtUserPass.Value))
+                    FormsAuthentication.RedirectFromLoginPage(txtUserName.Value,
+                    chkPersistCookie.Checked);
+                else
+                    Response.Redirect("Login.aspx", true);
+            }
         }
         private bool ValidateUser(String userName, String passWord)
         {
@@ -39,6 +43,11 @@ namespace LommeradarenWeb
                 }
             }
             return userValid;
+        }
+
+        protected void GoogleLoginButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(auth.GetAutenticationURI().ToString());
         }
     }
 }

@@ -80,6 +80,7 @@
     <Content Include="Assets\toptab.png" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="googletest.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="mobile\MobileLogin.aspx" />
     <Content Include="Newuser.aspx" />
@@ -92,6 +93,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="db\LommeradarDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -126,6 +128,14 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleUser.cs" />
+    <Compile Include="googletest.aspx.cs">
+      <DependentUpon>googletest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="googletest.aspx.designer.cs">
+      <DependentUpon>googletest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

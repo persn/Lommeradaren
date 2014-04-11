@@ -8,6 +8,9 @@
         <h3 class="headerlabels">Login Page</h3>
     </div>
     <div class="content">
+        <div class="content">
+            <asp:Button runat="server" Text="Log In Using Google" ID="GoogleLoginButton" OnClick="GoogleLoginButton_Click" />
+        </div>
     <asp:Table ID="Table1" runat="server" BorderStyle="None">
         <asp:TableRow>
             <asp:TableCell>
@@ -16,11 +19,11 @@
             <asp:TableCell>
                 <input id="txtUserName" type="text" runat="server" />
             </asp:TableCell>
-            <asp:TableCell>
+            <%--<asp:TableCell>
                 <asp:RequiredFieldValidator ControlToValidate="txtUserName"
                     Display="Static" ErrorMessage="*Required Field" runat="server"
                     ID="vUserName" />
-            </asp:TableCell>
+            </asp:TableCell>--%>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>
@@ -29,11 +32,11 @@
             <asp:TableCell>
                 <input id="txtUserPass" type="password" runat="server" />
             </asp:TableCell>
-            <asp:TableCell>
+            <%--<asp:TableCell>
                 <asp:RequiredFieldValidator ControlToValidate="txtUserPass"
                     Display="Static" ErrorMessage="*Required field" runat="server"
                     ID="vUserPass" />
-            </asp:TableCell>
+            </asp:TableCell>--%>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>
