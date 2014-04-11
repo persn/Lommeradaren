@@ -77,10 +77,10 @@ public class MainActivity extends Activity {
 		return super.onKeyDown(keycode, e);
 	}
 	
-	public void rawr(View v){
-		startActivity(new Intent(this.getApplicationContext(),
-				GoogleClientActivity.class));
-		finish();
-	}
+//	public void rawr(View v){
+//		startActivity(new Intent(this.getApplicationContext(),
+//				GoogleClientActivity.class));
+//		finish();
+//	}
 	
 }
