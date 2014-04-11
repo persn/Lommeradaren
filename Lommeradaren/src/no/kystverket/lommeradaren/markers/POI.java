@@ -1,6 +1,5 @@
 package no.kystverket.lommeradaren.markers;
 
-import android.util.Log;
 
 /**
  * 
@@ -46,10 +45,8 @@ public class POI {
 	public POI(String info) {
 		String[] set = info.split(",");
 		for (int i = 0; i < set.length; i++) {
-			Log.d("POI(String) Constructor", set[i]);
 			String[] data = set[i].split(";");
 			if(data.length > 1){
-				Log.d("POI(String Constructor", "data[0]"+data[0]+" data[1]: "+data[1]);
 				if (data[0].equals("id")) {
 					this.id = Integer.parseInt(data[1]);
 				} else if (data[0].equals("title")) {
