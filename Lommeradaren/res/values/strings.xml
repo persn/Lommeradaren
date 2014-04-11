@@ -33,5 +33,9 @@
     <string name="position_time">Position Time:</string>
     <string name="website">Website</string>
     <string name="hide_action_bar">Hide Action Bar</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="log_out_google">Log out from Google</string>
+    <string name="revoke_google">Revoke Google Account from this app</string>
+    <string name="user_account">User</string>
 
 </resources>

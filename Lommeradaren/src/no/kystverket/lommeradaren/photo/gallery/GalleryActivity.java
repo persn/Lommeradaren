@@ -2,13 +2,10 @@ package no.kystverket.lommeradaren.photo.gallery;
 
 import java.util.ArrayList;
 
-import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.MarkerDialogFragment;
 import no.kystverket.lommeradaren.R;
-import no.kystverket.lommeradaren.camera.CameraActivity;
-import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.Photo;
-import android.app.ActionBar;
+import no.kystverket.lommeradaren.user.GoogleClientActivity;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -20,7 +17,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -85,7 +81,8 @@ public class GalleryActivity extends Activity implements
 				android.R.integer.config_shortAnimTime);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setTitle("Signed in as:");
+		getActionBar().setSubtitle("Flodhesten Flode");
 		
 		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
 		this.renderActionBarBtn.setVisibility(View.GONE);
@@ -141,6 +138,9 @@ public class GalleryActivity extends Activity implements
 			getActionBar().hide();
 			this.renderActionBarBtn.setVisibility(View.VISIBLE);
 			return true;
+		case R.id.sign_in_google:
+			startActivityForResult(new Intent(this.getApplicationContext(), GoogleClientActivity.class), 0);
+		return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
