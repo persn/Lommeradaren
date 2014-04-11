@@ -40,28 +40,31 @@
         </activity>
         <activity
             android:name=".maps.MapActivity"
-            android:parentActivityName="MainActivity"
+            android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
+            android:launchMode="singleTop"
             android:theme="@android:style/Theme.Holo" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+                android:value="no.kystverket.lommeradaren.MainActivity" />
         </activity>
         <activity
             android:name=".camera.CameraActivity"
-            android:parentActivityName="MainActivity"
+            android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+                android:value="no.kystverket.lommeradaren.MainActivity" />
         </activity>
         <activity
             android:name=".photo.gallery.GalleryActivity"
-            android:parentActivityName="MainActivity"
+            android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
+            android:launchMode="singleTop"
             android:theme="@android:style/Theme.Holo" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+                android:value="no.kystverket.lommeradaren.MainActivity" />
         </activity>
         <activity android:name=".user.GoogleClientActivity" >
         </activity>
