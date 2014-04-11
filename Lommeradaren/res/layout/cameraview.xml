@@ -52,4 +52,13 @@
         android:background="@drawable/camerabutton_selector"
         android:onClick="takePictureOnClick" />
 
+    <ImageButton
+        android:id="@+id/btn_galscrn_render_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn_choosemaptype"
+        android:onClick="renderActionBarOnClick"
+        android:src="@drawable/bubble_red" />
+
 </RelativeLayout>

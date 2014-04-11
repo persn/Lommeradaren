@@ -14,6 +14,13 @@
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="rawr"
+        android:text="TestLogin" />
+
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
@@ -23,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
-        android:weightSum="4" >
+        android:weightSum="3" >
 
         <Button
             android:id="@+id/mainmenuCameraButton"
@@ -67,7 +74,7 @@
             android:onClick="galleryOnClick"
             android:text="@string/string_gallery" />
 
-        <Button
+    <!--     <Button
             android:id="@+id/button4"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
@@ -79,18 +86,9 @@
             android:layout_weight="1"
             android:background="@drawable/buttonbackgroundselector"
             android:onClick="goToUserScreenOnClick"
-            android:text="@string/string_user_account" />
+            android:text="@string/string_user_account" /> -->
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_website"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="227dp"
-        android:text="RAWR" 
-        android:onClick="rawr" />
 
 </RelativeLayout>

@@ -32,5 +32,6 @@
     <string name="speed">Speed:</string>
     <string name="position_time">Position Time:</string>
     <string name="website">Website</string>
+    <string name="hide_action_bar">Hide Action Bar</string>
 
 </resources>

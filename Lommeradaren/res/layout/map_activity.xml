@@ -11,5 +11,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
+
+    <ImageButton
+        android:id="@+id/btn_mapscrn_render_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="renderActionBarOnClick" />
     
 </RelativeLayout>

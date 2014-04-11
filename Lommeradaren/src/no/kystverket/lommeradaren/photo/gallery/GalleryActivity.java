@@ -8,6 +8,7 @@ import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.CameraActivity;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.Photo;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -15,17 +16,20 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +53,7 @@ public class GalleryActivity extends Activity implements
 	private TextView textSwitcher;
 	private PhotoHandler pHandler;
 	private GridView gallery;
+	private ImageButton renderActionBarBtn;
 	private int targetW;
 	private int targetH;
 	private int selectedPosition;
@@ -80,6 +85,11 @@ public class GalleryActivity extends Activity implements
 		animationTime = getResources().getInteger(
 				android.R.integer.config_shortAnimTime);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		
+		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
+		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -106,50 +116,36 @@ public class GalleryActivity extends Activity implements
 	}
 
 	@Override
-	public boolean onKeyDown(int keycode, KeyEvent e) {
-		switch (keycode) {
-		case KeyEvent.KEYCODE_BACK:
-			startActivity(new Intent(this.getApplicationContext(),
-					MainActivity.class));
-			finish();
-			return true;
-		}
-		return super.onKeyDown(keycode, e);
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_gallery_screen, menu);
-		return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_gallery_screen, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.sub_menu_gallery_camera:
-			startActivity(new Intent(this.getApplicationContext(),
-					CameraActivity.class));
-			finish();
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
-		case R.id.sub_menu_gallery_map:
-			startActivity(new Intent(this.getApplicationContext(),
-					MapActivity.class));
-			finish();
-			return true;
-		case R.id.sub_menu_gallery_user:
-			return false;// Not yet implemented
 		case R.id.menu_gallery_image_info:
 			if (selectedPosition != -1) {
 				showInfoDialog();
 			}
-			return false;
-		case R.id.sub_menu_gallery_delete_confirm:
+			return true;
+		case R.id.menu_gallery_delete_image:
 			if (selectedPosition != -1) {
 				deleteImage();
 			}
 			return true;
+		case R.id.menu_hide_bar:
+			getActionBar().hide();
+			this.renderActionBarBtn.setVisibility(View.VISIBLE);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	private void showInfoDialog() {
@@ -249,6 +245,11 @@ public class GalleryActivity extends Activity implements
 
 		}
 		return false;
+	}
+	
+	public void renderActionBarOnClick(View view){
+		getActionBar().show();
+		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
 
 	public void onSwipeRight() {

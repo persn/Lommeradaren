@@ -15,6 +15,7 @@ import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.POI;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,10 +27,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -46,6 +50,8 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	private MarkerSurfaceView mGLView;
 	private CameraView mPreview;
 	private MiniMapFragment gMap;
+	private ImageButton renderActionBarBtn;
+
 	private SensorManager mSensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -65,6 +71,12 @@ public class CameraActivity extends Activity implements SensorEventListener,
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		this.gMap = ((MiniMapFragment) getFragmentManager().findFragmentById(
 				R.id.mini_map_fragment));
+
+		getActionBar().hide();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(false);
+
+		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
 	}
 
 	@Override
@@ -86,11 +98,6 @@ public class CameraActivity extends Activity implements SensorEventListener,
 			return true;
 		case KeyEvent.KEYCODE_FOCUS:
 			this.mPreview.autoFocusAndTakePicture();
-			return true;
-		case KeyEvent.KEYCODE_BACK:
-			startActivity(new Intent(this.getApplicationContext(),
-					MainActivity.class));
-			finish();
 			return true;
 		}
 		return super.onKeyDown(keycode, e);
@@ -119,43 +126,41 @@ public class CameraActivity extends Activity implements SensorEventListener,
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_camera_screen, menu);
-		return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_camera_screen, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.sub_menu_camera_normal:
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		case R.id.sub_item_normal_map:
 			((MapView) findViewById(R.id.map)).getMap().setMapType(
 					GoogleMap.MAP_TYPE_NORMAL);
 			return true;
-		case R.id.sub_menu_camera_terrain:
+		case R.id.sub_item_terrain_map:
 			((MapView) findViewById(R.id.map)).getMap().setMapType(
 					GoogleMap.MAP_TYPE_TERRAIN);
 			return true;
-		case R.id.sub_menu_camera_hybrid:
+		case R.id.sub_item_hybrid_map:
 			((MapView) findViewById(R.id.map)).getMap().setMapType(
 					GoogleMap.MAP_TYPE_HYBRID);
 			return true;
-		case R.id.sub_menu_camera_satellite:
+		case R.id.sub_item_satellite_map:
 			((MapView) findViewById(R.id.map)).getMap().setMapType(
 					GoogleMap.MAP_TYPE_SATELLITE);
 			return true;
-		case R.id.sub_menu_camera_map:
-			startActivity(new Intent(this.getApplicationContext(),
-					MapActivity.class));
-			finish();
+		case R.id.menu_hide_bar:
+			getActionBar().hide();
+			this.renderActionBarBtn.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.sub_menu_camera_gallery:
-			startActivity(new Intent(this.getApplicationContext(),
-					GalleryActivity.class));
-			finish();
-			return true;
-		case R.id.sub_menu_map_user:
-			return false;// Not yet implemented
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	@Override
@@ -188,16 +193,14 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		this.mGLView.setRendererScreenSize(size.x, size.y);
 	}
 
-	private void displayShipListDialog(String imgPath){
+	private void displayShipListDialog(String imgPath) {
 		final List<MarkerWrapper> markers = mGLView.getMarkerList();
 		final String path = imgPath;
-		//Log.d("DISPLAYSHIPLISTDIALOG 1", "Markers size"+markers.size()+" path: "+imgPath);
 		CharSequence[] options = new CharSequence[markers.size()];
-		for(int i = 0; i<markers.size();i++){
+		for (int i = 0; i < markers.size(); i++) {
 			options[i] = markers.get(i).getPOI().getName();
-			//Log.d("DISPLAYSHIPLISTDIALOG 2", "i: "+i+" name: "+options[i]);
 		}
-		if(markers.size() > 0){
+		if (markers.size() > 0) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Select Ship to associate with picture");
 			builder.setCancelable(true);
@@ -207,19 +210,19 @@ public class CameraActivity extends Activity implements SensorEventListener,
 				public void onClick(DialogInterface dialog, int which) {
 					String data = "";
 					POI p = markers.get(which).getPOI();
-					data += ("id;"+p.getId()+",");
-					data += ("lat;"+p.getLat()+",");
-					data += ("lng;"+p.getLng()+",");
-					data += ("elevation;"+p.getAlt()+",");
-					data += ("title;"+p.getName()+",");
-					data += ("distance;"+p.getDistance()+",");
-					data += ("has_detail_page;"+p.getHas_detail_page()+",");
-					data += ("webpage;"+p.getWebpage()+",");
-					data += ("mmsi;"+p.getMmsi()+",");
-					data += ("imo;"+p.getImo()+",");
-					data += ("positionTime;"+p.getPositionTime()+",");
-					data += ("speed;"+p.getSpeed()+",");
-					data += ("course;"+p.getCourse()+",");
+					data += ("id;" + p.getId() + ",");
+					data += ("lat;" + p.getLat() + ",");
+					data += ("lng;" + p.getLng() + ",");
+					data += ("elevation;" + p.getAlt() + ",");
+					data += ("title;" + p.getName() + ",");
+					data += ("distance;" + p.getDistance() + ",");
+					data += ("has_detail_page;" + p.getHas_detail_page() + ",");
+					data += ("webpage;" + p.getWebpage() + ",");
+					data += ("mmsi;" + p.getMmsi() + ",");
+					data += ("imo;" + p.getImo() + ",");
+					data += ("positionTime;" + p.getPositionTime() + ",");
+					data += ("speed;" + p.getSpeed() + ",");
+					data += ("course;" + p.getCourse() + ",");
 					PhotoHandler.setExifData(path, data);
 				}
 			});
@@ -232,5 +235,10 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	@Override
 	public void onPhotoTaken(String imgPath) {
 		displayShipListDialog(imgPath);
+	}
+
+	public void renderActionBarOnClick(View view) {
+		getActionBar().show();
+		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
 }

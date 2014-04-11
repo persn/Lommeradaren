@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_gallery_go_to_screen" android:title="@string/string_go_to_screen">
-        <menu>
-            <item android:id="@+id/sub_menu_gallery_camera" android:title="@string/string_camera"/>
-            <item android:id="@+id/sub_menu_gallery_map" android:title="@string/string_map"/>
-            <item android:id="@+id/sub_menu_gallery_user" android:title="@string/string_gallery"/>
-        </menu>
-    </item>
-    <item android:id="@+id/menu_gallery_image_info" android:title="@string/view_image_info"></item>
-    <item android:id="@+id/menu_gallery_delete_image" android:title="@string/delete_image">
-        <menu>
-            <item android:id="@+id/sub_menu_gallery_delete_confirm" android:title="@string/ok"/>
-            <item android:id="@+id/sub_menu_gallery_delete_cancel" android:title="@string/cancel"/>
-        </menu>
-    </item>
-    
+
+    <item
+        android:id="@+id/menu_gallery_image_info"
+        android:icon="@drawable/bubble_blue"
+        android:showAsAction="ifRoom"
+        android:title="@string/view_image_info"/>
+    <item
+        android:id="@+id/menu_gallery_delete_image"
+        android:icon="@drawable/bubble_purple"
+        android:showAsAction="ifRoom"
+        android:title="@string/delete_image"/>
+    <item
+        android:id="@+id/menu_hide_bar"
+        android:icon="@drawable/bubble_green"
+        android:showAsAction="ifRoom"
+        android:title="@string/hide_action_bar"/>
 
 </menu>
