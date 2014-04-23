@@ -7,25 +7,7 @@ namespace LommeradarenWeb
 {
     public class GoogleUser
     {
-        public string access_token, token_type, id_token, aud, iss, email_verified, at_hash, azp, email, sub;
-        public int expires_in, exp, iat;
-
-        public GoogleUser(gLoginInfo gli, gLoginClaims glc)
-        {
-            this.access_token = gli.access_token;
-            this.token_type = gli.token_type;
-            this.id_token = gli.id_token;
-            this.expires_in = gli.expires_in;
-            this.aud = glc.aud;
-            this.iss = glc.iss;
-            this.email_verified = glc.email_verified;
-            this.at_hash = glc.at_hash;
-            this.azp = glc.azp;
-            this.email = glc.email;
-            this.sub = glc.sub;
-            this.exp = glc.exp;
-            this.iat = glc.iat;
-        }
+        public string id, displayName;
     }
     public class gLoginInfo
     {

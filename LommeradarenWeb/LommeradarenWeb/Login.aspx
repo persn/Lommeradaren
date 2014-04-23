@@ -8,9 +8,6 @@
         <h3 class="headerlabels">Login Page</h3>
     </div>
     <div class="content">
-        <div class="content">
-            <asp:Button runat="server" Text="Log In Using Google" ID="GoogleLoginButton" OnClick="GoogleLoginButton_Click" />
-        </div>
     <asp:Table ID="Table1" runat="server" BorderStyle="None">
         <asp:TableRow>
             <asp:TableCell>
@@ -51,4 +48,9 @@
     <br /><br />
     <asp:Label ID="lblMsg" ForeColor="red" Font-Name="Verdana" Font-Size="10" runat="server" />
     </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+    <div class="content">
+            <asp:Button runat="server" Text="Log In Using Google" ID="GoogleLoginButton" OnClick="GoogleLoginButton_Click" />
+        </div>
 </asp:Content>

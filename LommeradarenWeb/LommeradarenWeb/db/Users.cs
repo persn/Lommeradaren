@@ -23,6 +23,7 @@ namespace LommeradarenWeb.db
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
         public string UserName { get; set; }
+        public string UserGoogleId { get; set; }
     
         public virtual ICollection<Pictures> Pictures { get; set; }
     }

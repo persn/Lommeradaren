@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LommeradarenWeb.db;
+using System.Web.Security;
 
 namespace LommeradarenWeb
 {
@@ -14,21 +16,42 @@ namespace LommeradarenWeb
         {
             if (Context.Request.QueryString.Count > 0)
             {
-                String code = Context.Request.QueryString["code"];
-                String res = auth.logintestthingy(code);
+                string code = Context.Request.QueryString["code"];
+                GoogleUser res = auth.GoogleLogin(code);
+                ValidateUser(res);
                 Label0.Text = "Response code: " + code;
                 Label1.Text = "result: " + res;
                 Label2.Text = "Authenticated: " + User.Identity.IsAuthenticated;
-                //Label3.Text = "Id token: " + ;
+                //Label3.Text = "Test: " + auth.test();
                 //Label4.Text = "Expires in: " + ;
             }
         }
-
-        protected void loginGoogleButton_Click(object sender, EventArgs e)
+        private void ValidateUser(GoogleUser glu)
         {
-            Response.Redirect(auth.GetAutenticationURI().ToString());
-        }
+            LommeradarDBEntities entities = new LommeradarDBEntities();
+            Users users = new Users();
+            try
+            {
+                var u = entities.Users.Where(user => user.UserGoogleId == glu.id);
+                if (u.Any())
+                {
+                    FormsAuthentication.RedirectFromLoginPage(glu.displayName,
+                    true);
+                }
+                else
+                {
+                    var newUser = entities.Set<Users>();
+                    newUser.Add(new Users { UserName = glu.displayName, UserGoogleId = glu.id });
+                    entities.SaveChanges();
+                    FormsAuthentication.RedirectFromLoginPage(glu.displayName,
+                    true);
+                }
 
-       
+            }
+            catch (Exception exc)
+            {
+                System.Diagnostics.Debug.WriteLine(exc.Message);
+            }
+        }
     }
 }

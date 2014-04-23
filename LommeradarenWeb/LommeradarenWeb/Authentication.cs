@@ -13,8 +13,8 @@ namespace LommeradarenWeb
         private const String client_id = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
         private const String client_secret = "ROxpdlouZOJraKkFYAyEx7qT";
         private const String redirect_url = "http://localhost:2026/googletest.aspx";
-       // private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
-       // private const String scope = "https://www.googleapis.com/auth/plus.login";
+        // private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
+        //private const String scope = "https://www.googleapis.com/auth/plus.login";
         private const String scope = "profile";
 
         public Uri GetAutenticationURI()
@@ -27,7 +27,7 @@ namespace LommeradarenWeb
             return new Uri("https://accounts.google.com/o/oauth2/auth" + "?" + string.Join("&", postData.ToArray()));
         }
 
-        public String logintestthingy(String code)
+        public GoogleUser GoogleLogin(String code)
         {
             string grant_type = "authorization_code";
             string gurl = "code=" + code + "&client_id=" + client_id +
@@ -35,7 +35,7 @@ namespace LommeradarenWeb
             return (POSTResult(gurl));
         }
 
-        private String POSTResult(string e)
+        private GoogleUser POSTResult(string gurl)
         {
             try
             {
@@ -43,31 +43,10 @@ namespace LommeradarenWeb
                 string url = "https://accounts.google.com/o/oauth2/token";
 
                 // creates the post data for the POST request
-                string postData = (e);
+                string postData = (gurl);
 
-                // create the POST request
-                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-                webRequest.Method = "POST";
-                webRequest.ContentType = "application/x-www-form-urlencoded";
-                webRequest.ContentLength = postData.Length;
+                string googleAuth = DoPostRequest(url, postData);
 
-                // POST the data
-                using (StreamWriter requestWriter2 = new StreamWriter(webRequest.GetRequestStream()))
-                {
-                    requestWriter2.Write(postData);
-                }
-
-                //This actually does the request and gets the response back
-                HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
-
-                string googleAuth;
-
-                using (StreamReader responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream()))
-                {
-                    //dumps the HTML from the response into a string variable
-                    googleAuth = responseReader.ReadToEnd();
-                }
-                
                 //process JSON array
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 gLoginInfo gli = js.Deserialize<gLoginInfo>(googleAuth);
@@ -75,16 +54,80 @@ namespace LommeradarenWeb
                 string[] tokenArray = gli.id_token.Split(new Char[] { '.' });
                 gLoginClaims glc = js.Deserialize<gLoginClaims>(base64Decode(tokenArray[1]));
 
-                GoogleUser glu = new GoogleUser(gli, glc);
+                
 
-               // return "email: "+glc.email+" email verified: "+glc.email_verified;
-                return "authResponse: "+googleAuth +"infoResponse: "+ base64Decode(tokenArray[1]);
+                string userUrl = "https://www.googleapis.com/plus/v1/people/me?access_token=" + gli.access_token;
+
+                string gUser = DoGetRequest(userUrl);
+
+                GoogleUser glu = js.Deserialize<GoogleUser>(gUser);
+
+                return glu;
+                //return "authResponse: " + googleAuth + "infoResponse: " + base64Decode(tokenArray[1]);
             }
             catch (Exception exc)
             {
                 throw new Exception("Error in Postresult: " + exc.Message);
             }
-           
+
+        }
+
+        private string DoPostRequest(string url, string data)
+        {
+            try
+            {
+            // create the POST request
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Method = "POST";
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.ContentLength = data.Length;
+
+            // POST the data
+            using (StreamWriter requestWriter2 = new StreamWriter(webRequest.GetRequestStream()))
+            {
+                requestWriter2.Write(data);
+            }
+
+            //This actually does the request and gets the response back
+            HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
+
+            string response;
+
+            using (StreamReader responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream()))
+            {
+                //dumps the HTML from the response into a string variable
+                response = responseReader.ReadToEnd();
+            }
+            return response;
+            }
+                 catch (Exception exc)
+            {
+                throw new Exception("Error in DoPostRequest: " + exc.Message);
+            }
+        }
+
+        private string DoGetRequest(string url)
+        {
+            try
+            {
+                // create the GET request
+                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
+
+                string response;
+
+                using (StreamReader responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream()))
+                {
+                    //dumps the HTML from the response into a string variable
+                    response = responseReader.ReadToEnd();
+                }
+
+                return response;
+            }
+            catch (Exception exc)
+            {
+                throw new Exception("Error in DoGetRequest: " + exc.Message);
+            }
         }
 
         private string base64Decode(string data)

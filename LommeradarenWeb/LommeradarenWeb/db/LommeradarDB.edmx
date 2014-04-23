@@ -12,10 +12,10 @@
           <Property Name="PictureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserUserID" Type="int" Nullable="false" />
           <Property Name="PointOfInterestPOI_ID" Type="int" Nullable="false" />
-          <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
           <Property Name="Latitude" Type="float" />
           <Property Name="Longitude" Type="float" />
           <Property Name="Timestamp" Type="datetime" />
+          <Property Name="Picture" Type="varbinary(max)" Nullable="false" />
           <Property Name="PictureName" Type="varchar" MaxLength="100" />
           <Property Name="FileName" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -37,6 +37,7 @@
           <Property Name="UserEmail" Type="nvarchar(max)" />
           <Property Name="UserPassword" Type="nvarchar(max)" />
           <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserGoogleId" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_PointOfInterestPicture">
           <End Role="PointOfInterest" Type="Self.PointOfInterest" Multiplicity="1" />
@@ -115,6 +116,7 @@
           <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pictures" Relationship="Self.FK_UserPicture" FromRole="Users" ToRole="Pictures" />
+          <Property Name="UserGoogleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_PointOfInterestPicture">
           <End Role="PointOfInterest" Type="Self.PointOfInterest" Multiplicity="1" />
@@ -188,6 +190,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LommeradarDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserGoogleId" ColumnName="UserGoogleId" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
                 <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
