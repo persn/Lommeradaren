@@ -29,12 +29,12 @@ import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 /**
  * 
  * @author Henrik Reitan
- * 
  */
 public class GalleryActivity extends Activity implements
 		GestureDetector.OnGestureListener, AdapterView.OnItemClickListener,
@@ -81,9 +81,10 @@ public class GalleryActivity extends Activity implements
 				android.R.integer.config_shortAnimTime);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setTitle("Signed in as:");
-		getActionBar().setSubtitle("Flodhesten Flode");
-		
+		getActionBar().setTitle("");
+		// getActionBar().setTitle("Signed in as:");
+		// getActionBar().setSubtitle("Flodhesten Flode");
+
 		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
 		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
@@ -113,7 +114,7 @@ public class GalleryActivity extends Activity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.menu.menu_gallery_screen, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -135,16 +136,46 @@ public class GalleryActivity extends Activity implements
 			}
 			return true;
 		case R.id.menu_hide_bar:
-			getActionBar().hide();
+			this.getActionBar().hide();
 			this.renderActionBarBtn.setVisibility(View.VISIBLE);
 			return true;
-		case R.id.sign_in_google:
-			startActivityForResult(new Intent(this.getApplicationContext(), GoogleClientActivity.class), 0);
-		return true;
+		case R.id.sub_menu_google_login:
+			startActivity(new Intent(this, GoogleClientActivity.class));
+			return true;
+		case R.id.sub_menu_stream_picture:
+			Intent intent = new Intent(this, GoogleClientActivity.class);
+			if (this.selectedPosition >= 0
+					&& this.selectedPosition < this.pictures.size()) {
+				intent.putExtra("picture-filename-web-upload", this.pictures
+						.get(this.selectedPosition).getImgName());
+				intent.putExtra("picture-filedata-web-upload", this.pictures
+						.get(this.selectedPosition).getPoi().toJSON());
+				startActivityForResult(intent, 100);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case 100:
+			if (resultCode == RESULT_OK) {
+				Toast.makeText(
+						getApplicationContext(),
+						this.pictures.get(this.selectedPosition).getImgName()
+								+ " transfered to web", Toast.LENGTH_SHORT)
+						.show();
+			}
+			break;
+		default:
+			Toast.makeText(getApplicationContext(), "Something went wrong",
+					Toast.LENGTH_SHORT).show();
+			break;
+		}
 	}
 
 	private void showInfoDialog() {
@@ -245,8 +276,8 @@ public class GalleryActivity extends Activity implements
 		}
 		return false;
 	}
-	
-	public void renderActionBarOnClick(View view){
+
+	public void renderActionBarOnClick(View view) {
 		getActionBar().show();
 		this.renderActionBarBtn.setVisibility(View.GONE);
 	}

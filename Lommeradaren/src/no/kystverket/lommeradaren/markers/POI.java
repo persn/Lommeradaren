@@ -1,6 +1,5 @@
 package no.kystverket.lommeradaren.markers;
 
-
 /**
  * 
  * @author Henrik Reitan
@@ -46,7 +45,7 @@ public class POI {
 		String[] set = info.split(",");
 		for (int i = 0; i < set.length; i++) {
 			String[] data = set[i].split(";");
-			if(data.length > 1){
+			if (data.length > 1) {
 				if (data[0].equals("id")) {
 					this.id = Integer.parseInt(data[1]);
 				} else if (data[0].equals("title")) {
@@ -130,7 +129,22 @@ public class POI {
 		return imo;
 	}
 
-	public String toString(){
-		return "id: "+id+" name: "+name+" lat: "+lat+" lng: "+lng+" alt: "+alt+" mmsi: "+mmsi+" distance: "+distance+" has_detail_page: "+has_detail_page+" webpage: "+webpage+" imo: "+imo+" speed: "+speed+" course: "+course;
+	public String toString() {
+		return "id: " + id + " name: " + name + " lat: " + lat + " lng: " + lng
+				+ " alt: " + alt + " mmsi: " + mmsi + " distance: " + distance
+				+ " has_detail_page: " + has_detail_page + " webpage: "
+				+ webpage + " imo: " + imo + " speed: " + speed + " course: "
+				+ course;
+	}
+
+	public String toJSON() {
+		return "{\"id\": \"" + id + "\", \"name\": \"" + name
+				+ "\", \"lat\": \"" + lat + "\", \"lng\": \"" + lng
+				+ "\", \"alt\": \"" + alt + "\", \"mmsi\": \"" + mmsi
+				+ "\", \"distance\": \"" + distance
+				+ "\", \"has_detail_page\": \"" + has_detail_page
+				+ "\", \"webpage\": \"" + webpage + "\", \"imo\": \"" + imo
+				+ "\", \"speed\": \"" + speed + "\", \"course\": \"" + course
+				+ "\"}";
 	}
 }
