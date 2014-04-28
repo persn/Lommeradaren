@@ -4,13 +4,12 @@ import no.kystverket.lommeradaren.camera.CameraActivity;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
-import no.kystverket.lommeradaren.user.GoogleClientActivity;
+import no.kystverket.lommeradaren.user.StreamPictureTask;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -66,21 +65,5 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this.getApplicationContext(),
 				MapActivity.class));
 	}
-
-	@Override
-	public boolean onKeyDown(int keycode, KeyEvent e) {
-		switch (keycode) {
-		case KeyEvent.KEYCODE_BACK:
-			finish();
-			return true;
-		}
-		return super.onKeyDown(keycode, e);
-	}
-	
-//	public void rawr(View v){
-//		startActivity(new Intent(this.getApplicationContext(),
-//				GoogleClientActivity.class));
-//		finish();
-//	}
 	
 }

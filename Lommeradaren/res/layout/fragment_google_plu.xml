@@ -3,33 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-      <com.google.android.gms.common.SignInButton
+     <!--   
+     <com.google.android.gms.common.SignInButton
           android:id="@+id/sign_in_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
           android:layout_alignParentTop="true"
-          android:enabled="false" >
+          android:enabled="false" 
+          android:onClick="loginGoogleOnClick">
 
       </com.google.android.gms.common.SignInButton>
+      
+      -->
 
       <Button
-          android:id="@+id/revoke_access_button"
+          android:id="@+id/sign_in_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
-          android:layout_alignParentTop="true"
-          android:layout_marginRight="44dp"
-          android:enabled="false"
-          android:text="Revoke" />
+          android:onClick="loginGoogleOnClick"
+          android:text="Sign in" />
 
       <Button
           android:id="@+id/sign_out_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignParentTop="true"
-          android:layout_centerHorizontal="true"
+          android:layout_alignParentLeft="true"
+          android:layout_alignRight="@+id/sign_in_button"
+          android:layout_below="@+id/sign_in_button"
           android:enabled="false"
-          android:text="Log out" />
+          android:text="Log out"
+          android:onClick="signoutGoogleOnClick" />
+
+      <Button
+          android:id="@+id/revoke_access_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignRight="@+id/sign_out_button"
+          android:layout_below="@+id/sign_out_button"
+          android:enabled="false"
+          android:text="Revoke" 
+          android:onClick="revokeGoogleOnClick"/>
     
 </RelativeLayout>

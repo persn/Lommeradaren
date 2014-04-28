@@ -14,13 +14,6 @@
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="rawr"
-        android:text="TestLogin" />
-
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"

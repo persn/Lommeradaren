@@ -23,20 +23,15 @@
         android:title="@string/user_account">
         <menu>
             <item
-                android:id="@+id/sign_in_google"
-                android:icon="@drawable/btn_gbase"
+                android:id="@+id/sub_menu_google_login"
+                android:icon="@drawable/bubble_red"
                 android:showAsAction="never"
-                android:title="@string/sign_in_google"/>
+                android:title="Login Google"/>
             <item
-                android:id="@+id/log_out_google"
-                android:icon="@drawable/btn_gbase"
+                android:id="@+id/sub_menu_stream_picture"
+                android:icon="@drawable/bubble_orange"
                 android:showAsAction="never"
-                android:title="@string/log_out_google"/>
-            <item
-                android:id="@+id/revoke_google"
-                android:icon="@drawable/btn_gbase"
-                android:showAsAction="never"
-                android:title="@string/revoke_google"/>
+                android:title="Stream Picture to Web"/>
         </menu>
     </item>
 
