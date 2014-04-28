@@ -16,13 +16,14 @@ namespace LommeradarenWeb.db
     {
         public int PictureID { get; set; }
         public int UserUserID { get; set; }
-        public int PointOfInterestPOI_ID { get; set; }
+        public Nullable<int> PointOfInterestPOI_ID { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
         public Nullable<System.DateTime> Timestamp { get; set; }
         public byte[] Picture { get; set; }
         public string PictureName { get; set; }
         public string FileName { get; set; }
+        public string ExifData { get; set; }
     
         public virtual PointOfInterest PointOfInterest { get; set; }
         public virtual Users Users { get; set; }

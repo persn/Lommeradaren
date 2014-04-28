@@ -8,9 +8,12 @@
         <h3 class="headerlabels">New User</h3>
     </div>
     <div class="content">
-        <asp:Label ID="infobox" runat="server" />
-        <br /><br />
         <asp:Table ID="Table1" runat="server" BorderStyle="None" >
+            <asp:TableRow>
+                <asp:TableCell>
+                    <asp:Label ID="infobox" runat="server" />
+                </asp:TableCell>
+            </asp:TableRow>
             <asp:TableRow>
                 <asp:TableCell>
                     <asp:Label ID="Label1" runat="server" Text="Username:"></asp:Label>

@@ -19,9 +19,9 @@ namespace LommeradarenWeb
                 string code = Context.Request.QueryString["code"];
                 GoogleUser res = auth.GoogleLogin(code);
                 ValidateUser(res);
-                Label0.Text = "Response code: " + code;
-                Label1.Text = "result: " + res;
-                Label2.Text = "Authenticated: " + User.Identity.IsAuthenticated;
+                //Label0.Text = "Response code: " + code;
+                //Label1.Text = "result: " + res;
+                //Label2.Text = "Authenticated: " + User.Identity.IsAuthenticated;
                 //Label3.Text = "Test: " + auth.test();
                 //Label4.Text = "Expires in: " + ;
             }
@@ -41,8 +41,9 @@ namespace LommeradarenWeb
                 else
                 {
                     var newUser = entities.Set<Users>();
-                    newUser.Add(new Users { UserName = glu.displayName, UserGoogleId = glu.id });
+                    newUser.Add(new Users { UserName = glu.displayName, UserGoogleId = glu.id, UserEmail = glu.getAccountEmail() });
                     entities.SaveChanges();
+                    Label0.Text = "Logged in as: " + glu.displayName + "\nemail: "+ glu.getAccountEmail();
                     FormsAuthentication.RedirectFromLoginPage(glu.displayName,
                     true);
                 }

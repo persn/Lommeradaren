@@ -13,15 +13,6 @@ namespace LommeradarenWeb {
     public partial class Newuser {
         
         /// <summary>
-        /// infobox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label infobox;
-        
-        /// <summary>
         /// Table1 control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace LommeradarenWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
+        
+        /// <summary>
+        /// infobox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label infobox;
         
         /// <summary>
         /// Label1 control.

@@ -15,16 +15,30 @@
             <asp:Image ID="Image1" runat="server" ImageUrl="~/Assets/logo.png" />
         </div>
         <div style="height: 30px">
-            <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table" Style="margin-bottom: 0px">
-                <StaticMenuItemStyle ItemSpacing="15px" CssClass="menubuttons" />
-                <Items>
-                    <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home" />
-                    <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
-                    <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery" />
-                    <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account" />
-                    <asp:MenuItem NavigateUrl="~/Newuser.aspx" Text="Register Account" Value="Register Account" />
-                </Items>
-            </asp:Menu>
+            <asp:LoginView ID="ctlRightNavbar" runat="server">
+                <AnonymousTemplate>
+                    <asp:Menu ID="AnynomusMenu" runat="server" Orientation="Horizontal" RenderingMode="Table" Style="margin-bottom: 0px">
+                        <StaticMenuItemStyle ItemSpacing="15px" CssClass="menubuttons" />
+                        <Items>
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home" />
+                            <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
+                            <asp:MenuItem NavigateUrl="~/Login.aspx" Text="Log In" Value="Login" />
+                            <asp:MenuItem NavigateUrl="~/Newuser.aspx" Text="Register Account" Value="Register Account" />
+                        </Items>
+                    </asp:Menu>
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                    <asp:Menu ID="LoggedInMenu" runat="server" Orientation="Horizontal" RenderingMode="Table" Style="margin-bottom: 0px">
+                        <StaticMenuItemStyle ItemSpacing="15px" CssClass="menubuttons" />
+                        <Items>
+                            <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home" Value="Home" />
+                            <asp:MenuItem NavigateUrl="~/Maps/Maps.aspx" Text="Map" Value="Map" />
+                            <asp:MenuItem NavigateUrl="~/users/Gallery.aspx" Text="Gallery" Value="Gallery" />
+                            <asp:MenuItem NavigateUrl="~/users/UserInfo.aspx" Text="My Account" Value="My Account" />
+                        </Items>
+                    </asp:Menu>
+                </LoggedInTemplate>
+            </asp:LoginView>
         </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

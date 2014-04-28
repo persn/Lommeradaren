@@ -16,11 +16,11 @@
             <asp:TableCell>
                 <input id="txtUserName" type="text" runat="server" />
             </asp:TableCell>
-            <%--<asp:TableCell>
+            <asp:TableCell>
                 <asp:RequiredFieldValidator ControlToValidate="txtUserName"
                     Display="Static" ErrorMessage="*Required Field" runat="server"
                     ID="vUserName" />
-            </asp:TableCell>--%>
+            </asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>
@@ -29,11 +29,11 @@
             <asp:TableCell>
                 <input id="txtUserPass" type="password" runat="server" />
             </asp:TableCell>
-            <%--<asp:TableCell>
+            <asp:TableCell>
                 <asp:RequiredFieldValidator ControlToValidate="txtUserPass"
                     Display="Static" ErrorMessage="*Required field" runat="server"
                     ID="vUserPass" />
-            </asp:TableCell>--%>
+            </asp:TableCell>
         </asp:TableRow>
         <asp:TableRow>
             <asp:TableCell>
@@ -46,11 +46,11 @@
     </asp:Table>
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
     <br /><br />
-    <asp:Label ID="lblMsg" ForeColor="red" Font-Name="Verdana" Font-Size="10" runat="server" />
+    <asp:Label ID="lblMsg" ForeColor="red" Font-Size="10" runat="server" />
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+<%--<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     <div class="content">
             <asp:Button runat="server" Text="Log In Using Google" ID="GoogleLoginButton" OnClick="GoogleLoginButton_Click" />
         </div>
-</asp:Content>
+</asp:Content>--%>

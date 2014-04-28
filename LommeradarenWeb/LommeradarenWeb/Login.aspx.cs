@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using LommeradarenWeb.db;
+using System.Diagnostics;
 
 namespace LommeradarenWeb
 {
@@ -14,7 +15,6 @@ namespace LommeradarenWeb
         private Authentication auth = new Authentication();
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -39,7 +39,7 @@ namespace LommeradarenWeb
                 }
                 catch (Exception e)
                 {
-                    
+                    Debug.WriteLine(e.Message);
                 }
             }
             return userValid;

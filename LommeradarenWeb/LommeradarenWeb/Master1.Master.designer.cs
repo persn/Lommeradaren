@@ -40,13 +40,13 @@ namespace LommeradarenWeb {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// Menu1 control.
+        /// ctlRightNavbar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu Menu1;
+        protected global::System.Web.UI.WebControls.LoginView ctlRightNavbar;
         
         /// <summary>
         /// ContentPlaceHolder1 control.

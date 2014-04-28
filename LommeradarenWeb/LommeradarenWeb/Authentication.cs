@@ -13,9 +13,10 @@ namespace LommeradarenWeb
         private const String client_id = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
         private const String client_secret = "ROxpdlouZOJraKkFYAyEx7qT";
         private const String redirect_url = "http://localhost:2026/googletest.aspx";
-        // private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
+        //private const String redirect_url = "http://10.201.84.118/googletest.aspx";
+        private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
         //private const String scope = "https://www.googleapis.com/auth/plus.login";
-        private const String scope = "profile";
+        //private const String scope = "profile";
 
         public Uri GetAutenticationURI()
         {
@@ -27,12 +28,20 @@ namespace LommeradarenWeb
             return new Uri("https://accounts.google.com/o/oauth2/auth" + "?" + string.Join("&", postData.ToArray()));
         }
 
-        public GoogleUser GoogleLogin(String code)
+        public GoogleUser GoogleLogin(string code)
         {
             string grant_type = "authorization_code";
             string gurl = "code=" + code + "&client_id=" + client_id +
             "&client_secret=" + client_secret + "&redirect_uri=" + redirect_url + "&grant_type=" + grant_type;
             return (POSTResult(gurl));
+        }
+
+        public MobileUser CheckMobileToken(string token)
+        {
+            string[] tokenArray = token.Split(new Char[] { '.' });
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            MobileUser mu = js.Deserialize<MobileUser>(base64Decode(tokenArray[1]));
+            return mu;
         }
 
         private GoogleUser POSTResult(string gurl)
@@ -59,7 +68,7 @@ namespace LommeradarenWeb
                 string userUrl = "https://www.googleapis.com/plus/v1/people/me?access_token=" + gli.access_token;
 
                 string gUser = DoGetRequest(userUrl);
-
+                System.Diagnostics.Debug.WriteLine(gUser);
                 GoogleUser glu = js.Deserialize<GoogleUser>(gUser);
 
                 return glu;
