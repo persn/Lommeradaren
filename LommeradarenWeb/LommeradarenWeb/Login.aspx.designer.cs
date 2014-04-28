@@ -40,15 +40,6 @@ namespace LommeradarenWeb {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtUserName;
         
         /// <summary>
-        /// vUserName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator vUserName;
-        
-        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -65,15 +56,6 @@ namespace LommeradarenWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtUserPass;
-        
-        /// <summary>
-        /// vUserPass control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator vUserPass;
         
         /// <summary>
         /// Label3 control.
@@ -110,5 +92,14 @@ namespace LommeradarenWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMsg;
+        
+        /// <summary>
+        /// GoogleLoginButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoogleLoginButton;
     }
 }
