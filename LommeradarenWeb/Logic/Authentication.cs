@@ -35,7 +35,6 @@ namespace LommeradarenWeb
             "&client_secret=" + client_secret + "&redirect_uri=" + redirect_url + "&grant_type=" + grant_type;
             return (POSTResult(gurl));
         }
-
         public MobileUser CheckMobileToken(string token)
         {
             string[] tokenArray = token.Split(new Char[] { '.' });

@@ -16,7 +16,6 @@ namespace LommeradarenWeb.users
     {
         public void ProcessRequest(HttpContext context)
         {
-            context.Request.SaveAs("c:\\temp\\HttpRequest.txt", true);
             string token = context.Request.QueryString["token"];
             if (!token.Equals(""))
             {
