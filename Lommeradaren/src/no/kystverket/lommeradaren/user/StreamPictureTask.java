@@ -8,8 +8,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import no.kystverket.lommeradaren.R;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -26,27 +24,29 @@ public class StreamPictureTask extends AsyncTask<Void, Void, Void> {
 	protected String mScope;
 	protected String pictureFileName;
 	protected String pictureFileData;
+	protected String url;
 
 	private String boundary = "SwA" + Long.toString(System.currentTimeMillis())
 			+ "SwA";
 	private String delimiter = "--";
 
 	public StreamPictureTask(Activity activity, String email, String scope,
-			String pictureFileName, String pictureFileData) {
+			String pictureFileName, String pictureFileData, String url) {
 		this.activity = activity;
 		this.mEmail = email;
 		this.mScope = scope;
 		this.pictureFileName = pictureFileName;
 		this.pictureFileData = pictureFileData;
+		this.url = url;
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		streamPictureToWebServer(this.pictureFileName);
+		streamPictureToWebServer(this.pictureFileName, url);
 		return null;
 	}
 
-	private void streamPictureToWebServer(String filename) {
+	private void streamPictureToWebServer(String filename, String upload_url) {
 		String token = fetchToken();
 		if (token == null) { // If no token is detected picture stream should
 								// not be attempted
@@ -55,7 +55,7 @@ public class StreamPictureTask extends AsyncTask<Void, Void, Void> {
 		try {
 			// TODO --- URL should be retrieved from project string resources
 			URL url = new URL(
-					R.string.web_picture_upload_url
+					upload_url + "token="
 							+ token);
 
 			HttpURLConnection connection = (HttpURLConnection) url
