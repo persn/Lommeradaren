@@ -40,9 +40,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("ONRESUME: ", "orientation: "+getWindowManager().getDefaultDisplay().getRotation());
 		if (getWindowManager().getDefaultDisplay().getRotation() == 0) {
-			Log.d("orientation portrait","");
 			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
 					PhotoHandler.decodeSampledBitmapFromResource(
 							getResources(),
