@@ -11,6 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:padding="10dp"
+        android:contentDescription="@string/description_unavailable"
         android:src="@drawable/ic_launcher" />
 
     <ScrollView
@@ -164,6 +165,7 @@
         android:padding="10dp" >
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button_website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,6 +175,7 @@
             android:layout_marginRight="5dp"/>
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button_dialog_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

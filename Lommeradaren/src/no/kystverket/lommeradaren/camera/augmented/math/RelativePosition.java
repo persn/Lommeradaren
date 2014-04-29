@@ -1,6 +1,5 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
-import android.util.Log;
 
 /**
  * 
@@ -10,8 +9,8 @@ import android.util.Log;
 public class RelativePosition {
 
 	private final static float FACTOR = 10000;
-	private final static float MIN_RELATIVE_DISTANCE = 15;
-	private final static float MAX_RELATIVE_DISTANCE = 70;
+//	private final static float MIN_RELATIVE_DISTANCE = 15;
+//	private final static float MAX_RELATIVE_DISTANCE = 70;
 
 	public static float getAltitudeDifference(float droidAltitude,
 			float poiAltitude) {

@@ -2,24 +2,19 @@ package no.kystverket.lommeradaren.camera;
 
 import java.util.List;
 
-import no.kystverket.lommeradaren.MainActivity;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.camera.CameraController.OnPhotoTakenListener;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerWrapper;
-import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.maps.MiniMapFragment;
 import no.kystverket.lommeradaren.maps.MiniMapFragment.OnMarkerDataUpdatedListener;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.POI;
-import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

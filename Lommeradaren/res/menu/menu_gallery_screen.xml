@@ -26,12 +26,12 @@
                 android:id="@+id/sub_menu_google_login"
                 android:icon="@drawable/bubble_red"
                 android:showAsAction="never"
-                android:title="Login Google"/>
+                android:title="@string/sign_in_google"/>
             <item
                 android:id="@+id/sub_menu_stream_picture"
                 android:icon="@drawable/bubble_orange"
                 android:showAsAction="never"
-                android:title="Stream Picture to Web"/>
+                android:title="@string/upload_picture"/>
         </menu>
     </item>
 

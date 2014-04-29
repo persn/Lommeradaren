@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import no.kystverket.lommeradaren.R;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -53,7 +55,7 @@ public class StreamPictureTask extends AsyncTask<Void, Void, Void> {
 		try {
 			// TODO --- URL should be retrieved from project string resources
 			URL url = new URL(
-					"http://10.201.84.118//mobile/uploadhandler.ashx?token="
+					R.string.web_picture_upload_url
 							+ token);
 
 			HttpURLConnection connection = (HttpURLConnection) url

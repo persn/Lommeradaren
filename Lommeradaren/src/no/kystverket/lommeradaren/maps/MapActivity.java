@@ -1,10 +1,7 @@
 package no.kystverket.lommeradaren.maps;
 
 import no.kystverket.lommeradaren.R;
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;

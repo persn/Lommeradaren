@@ -50,6 +50,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/camerabutton_selector"
+        android:contentDescription="@string/description_unavailable"
         android:onClick="takePictureOnClick" />
 
     <ImageButton
@@ -59,6 +60,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btn_choosemaptype"
         android:onClick="renderActionBarOnClick"
+        android:contentDescription="@string/description_unavailable"
         android:src="@drawable/bubble_red" />
 
 </RelativeLayout>

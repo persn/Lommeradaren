@@ -24,7 +24,7 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
           android:onClick="loginGoogleOnClick"
-          android:text="Sign in" />
+          android:text="@string/sign_in_google" />
 
       <Button
           android:id="@+id/sign_out_button"
@@ -34,7 +34,7 @@
           android:layout_alignRight="@+id/sign_in_button"
           android:layout_below="@+id/sign_in_button"
           android:enabled="false"
-          android:text="Log out"
+          android:text="@string/log_out_google"
           android:onClick="signoutGoogleOnClick" />
 
       <Button
@@ -45,7 +45,7 @@
           android:layout_alignRight="@+id/sign_out_button"
           android:layout_below="@+id/sign_out_button"
           android:enabled="false"
-          android:text="Revoke" 
+          android:text="@string/revoke_google" 
           android:onClick="revokeGoogleOnClick"/>
     
 </RelativeLayout>

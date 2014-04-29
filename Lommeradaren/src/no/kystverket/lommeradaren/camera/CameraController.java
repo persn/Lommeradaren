@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.Environment;
@@ -231,7 +233,7 @@ public class CameraController {
 			}
 		}
 
-		String timeStamp = new SimpleDateFormat("ddMMyy_HHmm")
+		String timeStamp = new SimpleDateFormat("ddMMyy_HHmmss", Locale.getDefault())
 				.format(new Date());
 		File mediaFile;
 		if (type == MEDIA_TYPE_IMAGE) {

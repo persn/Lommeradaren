@@ -1,28 +1,19 @@
 <resources>
 
     <string name="app_name">Lommeradaren</string>
-    <string name="string_take_picture">Take Picture</string>
     <string name="string_camera">Camera</string>
     <string name="string_map">Map</string>
     <string name="string_gallery">Gallery</string>
-    <string name="string_user_account">User Account</string>
     <string name="string_map_type_normal">Normal</string>
     <string name="string_map_type_terrain">Terrain</string>
     <string name="string_map_type_hybrid">Hybrid</string>
     <string name="string_map_type_satellite">Satellite</string>
     <string name="string_choose_map_type">Choose Map Type</string>
-    <string name="string_go_to_screen">Go To Screen</string>
-    <string name="user_name">Username:</string>
-    <string name="password">Password:</string>
-    <string name="login_screen">Login Screen:</string>
-    <string name="login">Login</string>
-    <string name="web_login_url">http://10.201.84.118/mobile/MobileLogin.aspx</string>
     <string name="web_picture_upload_url">http://10.201.84.118/users/UploadHandler.ashx?</string>
     <string name="datasource_url">Kystverket|http://www.shiprep.no/ShipRepWebUI/api/NearbyShips</string>
     <string name="view_image_info">View Image Info</string>
     <string name="delete_image">Delete Image</string>
     <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
     <string name="last_marker_update">Last update: ---</string>
     <string name="latitute">Latitude:</string>
     <string name="longitude">Longitude:</string>
@@ -37,5 +28,7 @@
     <string name="log_out_google">Log out from Google</string>
     <string name="revoke_google">Revoke Google Account from this app</string>
     <string name="user_account">User</string>
+    <string name="description_unavailable">No description available for this element</string>
+    <string name="upload_picture">Upload this image to web</string>
 
 </resources>

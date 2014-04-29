@@ -3,7 +3,6 @@ package no.kystverket.lommeradaren.camera.augmented.math;
 import no.kystverket.lommeradaren.camera.augmented.opengl.sprites.GLText;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.os.SystemClock;
 import android.util.Log;
 
 /**
@@ -112,21 +111,6 @@ public class LinearAlgebra {
 		Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 2, 100);
 	}
 
-	private void rotatePointOfInterest(float[] originMatrix, float angle,
-			float x, float y, float z) {
-		float[] rotationMatrixTest = new float[16];
-		// Placeholder roation to make 2D objects visible from anywhere in the
-		// system.
-		long time = SystemClock.uptimeMillis() % 4000L;
-		angle = 0.090f * ((int) time);
-		// Placeholder roation to make 2D objects visible from anywhere in the
-		// system.
-		Matrix.setIdentityM(rotationMatrixTest, 0);
-		Matrix.rotateM(rotationMatrixTest, 0, angle, x, y, z);
-		Matrix.multiplyMM(originMatrix, 0, originMatrix, 0, rotationMatrixTest,
-				0);
-	}
-
 	/**
 	 * For debugging purposes only.
 	 * 
@@ -136,6 +120,7 @@ public class LinearAlgebra {
 	 *            A 16 length float array representing a matrix
 	 * @deprecated
 	 */
+	@SuppressWarnings("unused")
 	private void logMatrix(String tag, float[] matrix) {
 		Log.d(tag + "1", "[" + matrix[0] + " " + matrix[1] + " " + matrix[2]
 				+ " " + matrix[3] + "]");
