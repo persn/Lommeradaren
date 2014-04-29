@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,11 +25,11 @@ public class MainActivity extends Activity {
 
 	private Point screenSize;
 	private ImageView backgroundImage;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
-		
+		super.onCreate(savedInstanceState);
+
 		screenSize = new Point();
 		getWindowManager().getDefaultDisplay().getSize(screenSize);
 		setContentView(R.layout.mainmenu_activity);
@@ -38,10 +40,20 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
-				PhotoHandler.decodeSampledBitmapFromResource(getResources(),
-						R.drawable.mainmenu_background, screenSize.x,
-						screenSize.y)));
+		Log.d("ONRESUME: ", "orientation: "+getWindowManager().getDefaultDisplay().getRotation());
+		if (getWindowManager().getDefaultDisplay().getRotation() == 0) {
+			Log.d("orientation portrait","");
+			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
+					PhotoHandler.decodeSampledBitmapFromResource(
+							getResources(),
+							R.drawable.mainmenu_background, screenSize.x,
+							screenSize.y)));
+		} else {
+			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
+					PhotoHandler.decodeSampledBitmapFromResource(
+							getResources(), R.drawable.mainmenu_background_land,
+							screenSize.x, screenSize.y)));
+		}
 	}
 
 	@Override
@@ -64,5 +76,5 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this.getApplicationContext(),
 				MapActivity.class));
 	}
-	
+
 }
