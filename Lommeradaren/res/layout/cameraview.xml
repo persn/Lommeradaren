@@ -7,7 +7,10 @@
     <no.kystverket.lommeradaren.camera.CameraViewTest
         android:id="@+id/camera_preview_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView
         android:id="@+id/marker_surface_view"
@@ -47,14 +50,5 @@
         android:contentDescription="@string/description_unavailable"
         android:onClick="takePictureOnClick"
         android:src="@drawable/camerabutton_selector" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="testOpenGLOnClick"
-        android:text="Button" />
 
 </RelativeLayout>

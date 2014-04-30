@@ -14,6 +14,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
@@ -22,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -58,6 +60,11 @@ public class CameraActivityTest extends Activity implements
 		this.gMap = ((MiniMapFragment) getFragmentManager().findFragmentById(
 				R.id.mini_map_fragment));
 
+		if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else{
+        	getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
 		this.getActionBar().hide();
 		this.getActionBar().setDisplayHomeAsUpEnabled(true);
 		this.getActionBar().setDisplayShowTitleEnabled(false);
@@ -170,13 +177,14 @@ public class CameraActivityTest extends Activity implements
 	}
 
 	public void renderActionBarOnClick(View view) {
+		if (Build.VERSION.SDK_INT < 16) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else{
+        	getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
 		getActionBar().show();
 		this.renderActionBarBtn.setVisibility(View.GONE);
-	}
-	
-	public void testOpenGLOnClick(View view){
-		findViewById(R.id.camera_preview_layout).setVisibility(View.INVISIBLE);
-	}
+	}	
 
 	private void setRendererScreenSize() {
 		Point size = new Point();

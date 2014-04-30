@@ -34,7 +34,7 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		this.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		
-		
+		this.setZOrderMediaOverlay(true);
 	}
 
 	public void getSensorData(float[] orientation) {
