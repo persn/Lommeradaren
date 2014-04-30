@@ -93,12 +93,14 @@ public class GoogleClientActivity extends FragmentActivity implements
 
 			if (this.pictureFileName != null
 					&& !this.pictureFileName.equals("")) {
-				//TODO --- Scope should be retrieved from xml resources
+				// TODO --- Scope should be retrieved from xml resources
 				new StreamPictureTask(
 						this,
 						Plus.AccountApi.getAccountName(mGoogleApiClient),
 						"audience:server:client_id:413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com",
-						this.pictureFileName, this.pictureFileData).execute();
+						this.pictureFileName, this.pictureFileData,
+						getResources().getString(
+								R.string.web_picture_upload_url)).execute();
 				setResult(RESULT_OK);
 				finish();
 			}

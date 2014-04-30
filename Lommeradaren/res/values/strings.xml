@@ -9,7 +9,7 @@
     <string name="string_map_type_hybrid">Hybrid</string>
     <string name="string_map_type_satellite">Satellite</string>
     <string name="string_choose_map_type">Choose Map Type</string>
-    <string name="web_picture_upload_url">http://10.201.84.118/users/UploadHandler.ashx?</string>
+    <string name="web_picture_upload_url">http://10.201.84.118/mobile/uploadhandler.ashx?</string>
     <string name="datasource_url">Kystverket|http://www.shiprep.no/ShipRepWebUI/api/NearbyShips</string>
     <string name="view_image_info">View Image Info</string>
     <string name="delete_image">Delete Image</string>
