@@ -155,7 +155,6 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-
 	}
 
 	@Override
@@ -171,7 +170,11 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	 * @param v
 	 */
 	public void takePictureOnClick(View v) {
+		//this.mPreview.snapPicture();
+		//((ImageButton) findViewById(R.id.btn_btn_take_picture)).setVisibility(View.INVISIBLE);
 		this.mPreview.autoFocusAndTakePicture();
+		//android.os.SystemClock.sleep(2000);
+		//((ImageButton) findViewById(R.id.btn_btn_take_picture)).setVisibility(View.VISIBLE);
 
 	}
 

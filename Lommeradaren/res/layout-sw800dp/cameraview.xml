@@ -6,13 +6,21 @@
 
     <no.kystverket.lommeradaren.camera.CameraViewTest
         android:id="@+id/camera_preview_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView
         android:id="@+id/marker_surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -21,9 +29,10 @@
         <fragment
             android:id="@+id/mini_map_fragment"
             android:name="no.kystverket.lommeradaren.maps.MiniMapFragment"
-            android:layout_width="198dp"
-            android:layout_height="152dp"
+            android:layout_width="347dp"
+            android:layout_height="267dp"
             android:layout_gravity="fill_horizontal" />
+
     </GridLayout>
 
     <ImageButton
@@ -33,9 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@string/description_unavailable"
         android:onClick="renderActionBarOnClick"
-        android:src="@drawable/bubble_red" />
+        android:src="@drawable/bubble_red" 
+        android:contentDescription="@string/description_unavailable"/>
 
     <ImageButton
         android:id="@+id/btn_btn_take_picture"
@@ -47,14 +56,5 @@
         android:contentDescription="@string/description_unavailable"
         android:onClick="takePictureOnClick"
         android:src="@drawable/camerabutton_selector" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="testOpenGLOnClick"
-        android:text="Button" />
 
 </RelativeLayout>

@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="19" />    
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -49,6 +49,16 @@
         </activity>
         <activity
             android:name=".camera.CameraActivity"
+            android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="no.kystverket.lommeradaren.MainActivity" />
+        </activity>
+        <activity
+            android:name=".camera.CameraActivityTest"
             android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"

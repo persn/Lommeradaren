@@ -1,6 +1,6 @@
 package no.kystverket.lommeradaren;
 
-import no.kystverket.lommeradaren.camera.CameraActivity;
+import no.kystverket.lommeradaren.camera.CameraActivityTest;
 import no.kystverket.lommeradaren.maps.MapActivity;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
 import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (getWindowManager().getDefaultDisplay().getRotation() == 0) {
+		if (screenSize.x < screenSize.y) {
 			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
 					PhotoHandler.decodeSampledBitmapFromResource(
 							getResources(),
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
 
 	public void cameraOnClick(View v) {
 		startActivity(new Intent(this.getApplicationContext(),
-				CameraActivity.class));
+				CameraActivityTest.class));
 	}
 
 	public void galleryOnClick(View v) {
