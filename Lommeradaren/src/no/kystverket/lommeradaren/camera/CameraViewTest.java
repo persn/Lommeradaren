@@ -1,14 +1,11 @@
 package no.kystverket.lommeradaren.camera;
 
 import java.io.IOException;
+import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.hardware.Camera;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -50,10 +47,12 @@ public class CameraViewTest extends SurfaceView implements SurfaceHolder.Callbac
 			e.printStackTrace();
 		}
 
-		try {
+		try {					
 			Camera.Parameters parameters = this.mCamera.getParameters();
-			Log.d("Tippelipp","Tippelipp");
-			parameters.setPreviewSize(width, height);
+			List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+			Camera.Size optimalSize = this.getOptimalPreviewSize(previewSizes, width, height);
+			parameters.setPreviewSize(optimalSize.width, optimalSize.height);
+			
 			this.mCamera.setParameters(parameters);
 			this.mCamera.setPreviewDisplay(mHolder);
 			this.mCamera.startPreview();
@@ -80,5 +79,45 @@ public class CameraViewTest extends SurfaceView implements SurfaceHolder.Callbac
 			this.mCamera = null;
 		}
 	}
+	
+	/**
+	 * http://stackoverflow.com/questions/19577299/android-camera-preview-stretched
+	 * 
+	 * @param cameraPreviewSizes
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	private Camera.Size getOptimalPreviewSize(List<Camera.Size> cameraPreviewSizes, int width, int height) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio=(double)height / width;
+
+        if (cameraPreviewSizes == null) return null;
+
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        int targetHeight = height;
+
+        for (Camera.Size size : cameraPreviewSizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - targetHeight) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - targetHeight);
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : cameraPreviewSizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+        }
+        return optimalSize;
+    }
 
 }
