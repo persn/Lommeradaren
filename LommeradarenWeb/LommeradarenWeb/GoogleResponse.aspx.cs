@@ -9,7 +9,10 @@ using Logic;
 
 namespace LommeradarenWeb
 {
-    public partial class googletest : System.Web.UI.Page
+    /// <summary>
+    /// Authenticates users based on http response from googles oauth servers
+    /// </summary>
+    public partial class GoogleResponse : System.Web.UI.Page
     {
         private UserController userAuth = new UserController();
         protected void Page_Load(object sender, EventArgs e)

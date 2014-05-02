@@ -10,19 +10,25 @@ using System.Diagnostics;
 
 namespace LommeradarenWeb
 {
+    /// <summary>
+    /// Handles logging in via username/password or googles oauth services
+    /// </summary>
     public partial class Login : System.Web.UI.Page
     {
-        private GoogleAuthentication auth = new GoogleAuthentication();
-        private UserController userAuth = new UserController();
+        private GoogleAuthentication gAuth = new GoogleAuthentication();
+        private UserController uAuth = new UserController();
 
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+        /// <summary>
+        /// Allows a user to log in using the username/password combination in the input fields
+        /// </summary>
         protected void Button1_Click(object sender, EventArgs e)
         {
             if (!txtUserName.Value.Equals("") && !txtUserPass.Equals(""))
             {
-                if (userAuth.ValidateUserLogin(txtUserName.Value, txtUserPass.Value))
+                if (uAuth.ValidateUserLogin(txtUserName.Value, txtUserPass.Value))
                     FormsAuthentication.RedirectFromLoginPage(txtUserName.Value,
                     chkPersistCookie.Checked);
                 else
@@ -30,9 +36,12 @@ namespace LommeradarenWeb
             }
         }
 
+        /// <summary>
+        /// Allows a user to log in using googles oauth service
+        /// </summary>
         protected void GoogleLoginButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(auth.GetAutenticationURI().ToString());
+            Response.Redirect(gAuth.GetAutenticationURI().ToString());
         }
     }
 }

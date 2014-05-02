@@ -7,21 +7,23 @@ using Data;
 
 namespace Logic
 {
+    /// <summary>
+    /// Contains functions for saving images to the database
+    /// </summary>
     public class UploadController
     {
         private DBConnection dataConnection = new DBConnection();
 
-        public bool isMobileUserInDB(string token, out string userEmail)
-        {
-            GoogleAuthentication gAuth = new GoogleAuthentication();
-            MobileUser mu = gAuth.CheckMobileToken(token);
-            userEmail = mu.email;
-            return dataConnection.userEmailInDB(mu.email);
-        }
+        /// <summary>
+        /// saves an image to the database
+        /// </summary>
+        /// <param name="rawData">The raw byte data for the image file</param>
+        /// <param name="exif">The json string containing our image information</param>
+        /// <param name="userEmail">Email of the user uploading the image</param>
+        /// <param name="fileName">Filename of the image</param>
         public void saveImage(byte[] rawData, string exif, string userEmail, string fileName)
         {
-            
-
+            dataConnection.saveImage(rawData, exif, userEmail, fileName);
         }
     }
 }

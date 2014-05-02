@@ -10,18 +10,27 @@ using Logic;
 
 namespace LommeradarenWeb.users
 {
+    /// <summary>
+    /// Contains functions handling our gallery page
+    /// </summary>
     public partial class Gallery : System.Web.UI.Page
     {
         private List<string[]> images;
         private int selectedBigImage;
         private GalleryController gController = new GalleryController();
 
+        /// <summary>
+        /// Reads all the images contained in the database owned by the currently logged in user and displays them on the page
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
             images = gController.getPictures(User.Identity.Name);
             fillTable();
         }
 
+        /// <summary>
+        /// Places the images from Page_Load into a scrollable field for easy overview
+        /// </summary>
         public void fillTable()
         {
             TableRow row = new TableRow();
@@ -44,6 +53,9 @@ namespace LommeradarenWeb.users
             imageTable.Rows.Add(row);
         }
 
+        /// <summary>
+        /// Shows the selected image in more detail
+        /// </summary>
         public void onImageClick(object sender, EventArgs e)
         {
             try
@@ -74,6 +86,9 @@ namespace LommeradarenWeb.users
 
         }
 
+        /// <summary>
+        /// Deletes the currently selected image
+        /// </summary>
         protected void DeleteImageButton_Click(object sender, EventArgs e)
         {
                 int id = int.Parse(BigImage.ImageUrl.Split('=')[1]);
@@ -81,10 +96,17 @@ namespace LommeradarenWeb.users
                 Response.Redirect("Gallery.aspx");
         }
 
+        /// <summary>
+        /// Returns the actual imagefile that is currently displayed in detail view
+        /// </summary>
         protected void ViewLargeImageButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(BigImage.ImageUrl);
         }
+        /// <summary>
+        /// Updates the text in the labels in detail view for the selected image based on the supplied imagedata
+        /// </summary>
+        /// <param name="imgData">Data to update the labels from</param>
         private void updateLabels(ImageData imgData)
         {
             LatitudeLabel.Text = "<b>Latitude: </b>" + imgData.lat;

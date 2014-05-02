@@ -8,15 +8,15 @@ using System.Web.Script.Serialization;
 
 namespace Logic
 {
+    /// <summary>
+    /// Contains functions to work with the google apis and oauth authentication
+    /// </summary>
     public class GoogleAuthentication
     {
         private const String client_id = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
         private const String client_secret = "ROxpdlouZOJraKkFYAyEx7qT";
-        private const String redirect_url = "http://localhost:2026/googletest.aspx";
-        //private const String redirect_url = "http://10.201.84.118/googletest.aspx";
+        private const String redirect_url = "http://localhost:2026/GoogleResponse.aspx";
         private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
-        //private const String scope = "https://www.googleapis.com/auth/plus.login";
-        //private const String scope = "profile";
 
         public Uri GetAutenticationURI()
         {
@@ -28,6 +28,11 @@ namespace Logic
             return new Uri("https://accounts.google.com/o/oauth2/auth" + "?" + string.Join("&", postData.ToArray()));
         }
 
+        /// <summary>
+        /// Creates a user based on the return code from the request from googles login servers
+        /// </summary>
+        /// <param name="code">Response code from google</param>
+        /// <returns></returns>
         public GoogleUser GoogleLogin(string code)
         {
             string grant_type = "authorization_code";
@@ -35,6 +40,12 @@ namespace Logic
             "&client_secret=" + client_secret + "&redirect_uri=" + redirect_url + "&grant_type=" + grant_type;
             return (POSTResult(gurl));
         }
+
+        /// <summary>
+        /// Decodes a json string and creates a user to work with the uploadhandler for the mobile application
+        /// </summary>
+        /// <param name="token">Json string to parse</param>
+        /// <returns></returns>
         public MobileUser CheckMobileToken(string token)
         {
             string[] tokenArray = token.Split(new Char[] { '.' });
@@ -43,6 +54,11 @@ namespace Logic
             return mu;
         }
 
+        /// <summary>
+        /// Handles login via googles oauth service
+        /// </summary>
+        /// <param name="gurl">The url to use when sending requests to google</param>
+        /// <returns></returns>
         private GoogleUser POSTResult(string gurl)
         {
             try
@@ -80,6 +96,12 @@ namespace Logic
 
         }
 
+        /// <summary>
+        /// Starts a http post request to the given url with the given data
+        /// </summary>
+        /// <param name="url">Where to send the request</param>
+        /// <param name="data">Which parameters to use</param>
+        /// <returns></returns>
         private string DoPostRequest(string url, string data)
         {
             try
@@ -114,6 +136,11 @@ namespace Logic
             }
         }
 
+        /// <summary>
+        /// Sends a http get request to the given url
+        /// </summary>
+        /// <param name="url">Where to send the request</param>
+        /// <returns></returns>
         private string DoGetRequest(string url)
         {
             try
@@ -138,6 +165,11 @@ namespace Logic
             }
         }
 
+        /// <summary>
+        /// Decodes a base64 string into a readable string
+        /// </summary>
+        /// <param name="data">Data to decode</param>
+        /// <returns></returns>
         private string base64Decode(string data)
         {
             //add padding with '=' to string to accommodate C# Base64 requirements

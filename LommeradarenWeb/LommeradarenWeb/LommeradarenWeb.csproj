@@ -80,7 +80,7 @@
     <Content Include="Assets\toptab.png" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="googletest.aspx" />
+    <Content Include="GoogleResponse.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Newuser.aspx" />
     <Content Include="users\Gallery.aspx" />
@@ -102,12 +102,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="googletest.aspx.cs">
-      <DependentUpon>googletest.aspx</DependentUpon>
+    <Compile Include="GoogleResponse.aspx.cs">
+      <DependentUpon>GoogleResponse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="googletest.aspx.designer.cs">
-      <DependentUpon>googletest.aspx</DependentUpon>
+    <Compile Include="GoogleResponse.aspx.designer.cs">
+      <DependentUpon>GoogleResponse.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

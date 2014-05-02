@@ -8,6 +8,9 @@ using Logic;
 
 namespace LommeradarenWeb
 {
+    /// <summary>
+    /// Handles creation of new user accounts
+    /// </summary>
     public partial class Newuser : System.Web.UI.Page
     {
         UserController userAuth = new UserController();
@@ -15,7 +18,9 @@ namespace LommeradarenWeb
         protected void Page_Load(object sender, EventArgs e)
         {
         }
-
+        /// <summary>
+        /// Creates a new user, or an error response if something goes wrong
+        /// </summary>
         protected void registerNewUserButton_Click(object sender, EventArgs e)
         {
             switch (userAuth.registerNewUser(usernameBox.Text, emailBox.Text, passwordBox.Text))
@@ -37,7 +42,9 @@ namespace LommeradarenWeb
                     break;
             }
         }
-
+        /// <summary>
+        /// Resets the input and output fields on the page
+        /// </summary>
         private void clear()
         {
             infobox.Text = null;

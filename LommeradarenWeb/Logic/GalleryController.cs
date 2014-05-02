@@ -9,6 +9,9 @@ using System.Web.Script.Serialization;
 
 namespace Logic
 {
+    /// <summary>
+    /// Contains functions to handle images, such as getting the raw files from the database as well as saving new ones
+    /// </summary>
     public class GalleryController
     {
         private DBConnection dataConnection = new DBConnection();
@@ -20,10 +23,20 @@ namespace Logic
             rawData = dataConnection.getPictureRawData(fileID);
             return;
         }
+        /// <summary>
+        /// returns a list of image ids and corresponding filenames for a given user
+        /// </summary>
+        /// <param name="userName">User to get pictures for</param>
+        /// <returns></returns>
         public List<string[]> getPictures(string userName)
         {
             return dataConnection.getAllUserPictures(userName);
         }
+        /// <summary>
+        /// returns the image data saved in the database
+        /// </summary>
+        /// <param name="id">Image id to grab data from</param>
+        /// <returns></returns>
         public ImageData getImageData(int id)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();

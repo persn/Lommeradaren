@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="googletest.aspx.cs" Inherits="LommeradarenWeb.googletest" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="GoogleResponse.aspx.cs" Inherits="LommeradarenWeb.GoogleResponse" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/styling/contentdisplay.css" rel="stylesheet" type="text/css" />

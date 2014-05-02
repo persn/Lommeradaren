@@ -10,7 +10,7 @@ using Logic;
 namespace LommeradarenWeb.users
 {
     /// <summary>
-    /// Summary description for UploadHandler
+    /// Handles uploading files via http requests
     /// </summary>
     public class UploadHandler : IHttpHandler
     {
@@ -20,10 +20,11 @@ namespace LommeradarenWeb.users
             if (!token.Equals(""))
             {
                 UploadController uController = new UploadController();
+                UserController usrController = new UserController();
                 string userEmail;
                 try
                 {
-                    if (context.Request.Files.Count == 2 && uController.isMobileUserInDB(token, out userEmail))
+                    if (context.Request.Files.Count == 2 && usrController.isMobileUserInDB(token, out userEmail))
                     {
                         HttpFileCollection hfc = context.Request.Files;
                         bool imgDone = false;

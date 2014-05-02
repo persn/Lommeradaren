@@ -7,7 +7,7 @@ using System.Web;
 namespace LommeradarenWeb.users
 {
     /// <summary>
-    /// Summary description for GalleryHandler
+    /// Reads an image file from the database based on fileID 
     /// </summary>
     public class GalleryHandler : IHttpHandler
     {

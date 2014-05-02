@@ -10,7 +10,7 @@
 namespace LommeradarenWeb {
     
     
-    public partial class googletest {
+    public partial class GoogleResponse {
         
         /// <summary>
         /// Label0 control.

@@ -8,18 +8,25 @@ using Logic;
 
 namespace LommeradarenWeb.users
 {
+    /// <summary>
+    /// Displays basic information about the current user as well as allowing the user to change the registered email/password
+    /// </summary>
     public partial class UserInfo : System.Web.UI.Page
     {
         private UserController userAuth = new UserController();
+
+        /// <summary>
+        /// Shows the current users username and email on their labels
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                emailLabel.Text = "Your eMail is: " + userAuth.getUserEmail(User.Identity.Name);
-                nameLabel.Text = "Logged in as: " + User.Identity.Name;
-            }
+            emailLabel.Text = "Your eMail is: " + userAuth.getUserEmail(User.Identity.Name);
+            nameLabel.Text = "Logged in as: " + User.Identity.Name;
         }
 
+        /// <summary>
+        /// blanks the inputs related to password change
+        /// </summary>
         protected void ResetPasswordFieldButton_Click(object sender, EventArgs e)
         {
             oldPasswordField.Text = null;
@@ -27,29 +34,32 @@ namespace LommeradarenWeb.users
             confirmNewPasswordField.Text = null;
         }
 
+        /// <summary>
+        /// Handles the password change
+        /// </summary>
         protected void ChangePasswordButton_Click(object sender, EventArgs e)
         {
             if (oldPasswordField.Text != null && newPasswordField != null)
             {
-                if (userAuth.veryfiPassword(oldPasswordField.Text, User.Identity.Name) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
+                if (userAuth.ValidateUserLogin(User.Identity.Name, oldPasswordField.Text) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
                 {
                     userAuth.setNewPassword(newPasswordField.Text, User.Identity.Name);
                 }
             }
         }
 
-
+        /// <summary>
+        /// resets the input fields related to email change
+        /// </summary>
         protected void ResetEmailFieldsButton_Click(object sender, EventArgs e)
-        {
-            ResetEmailFields();
-        }
-
-        private void ResetEmailFields()
         {
             newEmailField.Text = null;
             confirmNewEmailField.Text = null;
         }
 
+        /// <summary>
+        /// Handles the email change
+        /// </summary>
         protected void ChangeEmailButton_Click(object sender, EventArgs e)
         {
             if (newEmailField.Text != null && confirmNewEmailField != null)

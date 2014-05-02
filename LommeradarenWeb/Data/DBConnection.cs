@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data
 {
+    /// <summary>
+    /// Collection of simple functions to access the database via entity framework
+    /// </summary>
     public class DBConnection
     {
         private LommeradarDBEntities entities = new LommeradarDBEntities();
