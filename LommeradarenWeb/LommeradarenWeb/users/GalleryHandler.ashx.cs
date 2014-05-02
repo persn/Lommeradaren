@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using LommeradarenWeb.db;
 
 namespace LommeradarenWeb.users
 {
@@ -11,13 +11,13 @@ namespace LommeradarenWeb.users
     /// </summary>
     public class GalleryHandler : IHttpHandler
     {
-
+        private GalleryController galleryHandler = new GalleryController();
         public void ProcessRequest(HttpContext context)
         {
-            LommeradarDBEntities entities = new LommeradarDBEntities();
             int fileID = int.Parse(context.Request.QueryString["id"]);
-            string filename = (from Pictures in entities.Pictures where Pictures.PictureID == fileID select Pictures.FileName).FirstOrDefault();
-            byte[] rawData = (from Pictures in entities.Pictures where Pictures.PictureID == fileID select Pictures.Picture).FirstOrDefault();
+            string filename;
+            byte[] rawData;
+            galleryHandler.getPicture(fileID, out filename, out rawData);
             string[] split = filename.Split('.');
             string filetype = split[split.Length - 1];
             context.Response.Clear();

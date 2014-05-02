@@ -4,22 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using LommeradarenWeb.db;
+using Logic;
 
 namespace LommeradarenWeb.users
 {
     public partial class UserInfo : System.Web.UI.Page
     {
-        private Users currentUser;
-        private LommeradarDBEntities entities;
+        private UserController userAuth = new UserController();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
-                entities = new LommeradarDBEntities();
-                currentUser = (from user in entities.Users where user.UserName.Equals(User.Identity.Name) select user).First();
-                emailLabel.Text = "Your eMail is: " + currentUser.UserEmail;
-                nameLabel.Text = "Logged in as: " + currentUser.UserName;
+                emailLabel.Text = "Your eMail is: " + userAuth.getUserEmail(User.Identity.Name);
+                nameLabel.Text = "Logged in as: " + User.Identity.Name;
             }
         }
 
@@ -34,10 +31,9 @@ namespace LommeradarenWeb.users
         {
             if (oldPasswordField.Text != null && newPasswordField != null)
             {
-                if (Crypto.VerifyHashedPassword(currentUser.UserPassword, oldPasswordField.Text) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
+                if (userAuth.veryfiPassword(oldPasswordField.Text, User.Identity.Name) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
                 {
-                    currentUser.UserPassword = Crypto.HashPassword(newPasswordField.Text);
-                    entities.SaveChanges();
+                    userAuth.setNewPassword(newPasswordField.Text, User.Identity.Name);
                 }
             }
         }
@@ -60,10 +56,7 @@ namespace LommeradarenWeb.users
             {
                 if (newEmailField.Text.Equals(confirmNewEmailField.Text))
                 {
-                    currentUser.UserEmail = newEmailField.Text;
-                    entities.SaveChanges();
-                    ResetEmailFields();
-                    emailLabel.Text = "Your eMail is: " + currentUser.UserEmail;
+                    userAuth.setNewEmail(User.Identity.Name, newEmailField.Text);
                 }
             }
         }

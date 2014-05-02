@@ -6,9 +6,9 @@ using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace LommeradarenWeb
+namespace Logic
 {
-    public class Authentication
+    public class GoogleAuthentication
     {
         private const String client_id = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
         private const String client_secret = "ROxpdlouZOJraKkFYAyEx7qT";

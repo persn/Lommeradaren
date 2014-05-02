@@ -92,30 +92,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="db\LommeradarDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LommeradarDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="db\LommeradarDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LommeradarDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="db\LommeradarDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LommeradarDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="db\Pictures.cs">
-      <DependentUpon>LommeradarDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="db\PointOfInterest.cs">
-      <DependentUpon>LommeradarDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="db\Users.cs">
-      <DependentUpon>LommeradarDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -184,23 +160,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="db\LommeradarDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LommeradarDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="db\LommeradarDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LommeradarDB.edmx</DependentUpon>
-      <LastGenOutput>LommeradarDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="db\LommeradarDB.edmx.diagram">
-      <DependentUpon>LommeradarDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="db\LommeradarDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LommeradarDB.edmx</DependentUpon>
-      <LastGenOutput>LommeradarDB.cs</LastGenOutput>
-    </Content>
     <Content Include="packages.config" />
     <Content Include="Master1.Master" />
     <None Include="Properties\PublishProfiles\LommeradarenWeb.pubxml" />
@@ -218,6 +177,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{796f4996-9b0d-4ef0-80b7-451b929a0eff}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{30a83c61-087d-48fe-bbb5-e94f28d19130}</Project>
       <Name>Logic</Name>

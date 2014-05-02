@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LommeradarenWeb", "Lommerad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{30A83C61-087D-48FE-BBB5-E94F28D19130}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{796F4996-9B0D-4EF0-80B7-451B929A0EFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{30A83C61-087D-48FE-BBB5-E94F28D19130}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A83C61-087D-48FE-BBB5-E94F28D19130}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30A83C61-087D-48FE-BBB5-E94F28D19130}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796F4996-9B0D-4EF0-80B7-451B929A0EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796F4996-9B0D-4EF0-80B7-451B929A0EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796F4996-9B0D-4EF0-80B7-451B929A0EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796F4996-9B0D-4EF0-80B7-451B929A0EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
