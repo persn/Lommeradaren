@@ -52,7 +52,7 @@
             android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo" >
+            android:theme="@style/CustomActionBarTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.kystverket.lommeradaren.MainActivity" />
@@ -62,7 +62,7 @@
             android:parentActivityName="no.kystverket.lommeradaren.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo" >
+            android:theme="@style/CustomActionBarTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.kystverket.lommeradaren.MainActivity" />

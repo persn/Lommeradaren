@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <no.kystverket.lommeradaren.camera.CameraViewTest
+    <no.kystverket.lommeradaren.camera.CameraView
         android:id="@+id/camera_preview_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:contentDescription="@string/description_unavailable"/>
 
     <ImageButton
-        android:id="@+id/btn_btn_take_picture"
+        android:id="@+id/btn_take_picture"
         style="?android:borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ package no.kystverket.lommeradaren.camera;
 import java.util.List;
 
 import no.kystverket.lommeradaren.R;
-import no.kystverket.lommeradaren.camera.CameraController.OnPhotoTakenListener;
+import no.kystverket.lommeradaren.camera.CameraView.OnPhotoTakenListener;
 import no.kystverket.lommeradaren.camera.augmented.SensorHandler;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerSurfaceView;
 import no.kystverket.lommeradaren.camera.augmented.opengl.MarkerWrapper;
@@ -12,6 +12,7 @@ import no.kystverket.lommeradaren.maps.MiniMapFragment.OnMarkerDataUpdatedListen
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.POI;
 import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,24 +32,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
-/**
- * 
- * @author Per Olav Flaten
- * 
- */
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnMarkerDataUpdatedListener, OnPhotoTakenListener {
 
+	// Android view-controller components
 	private MarkerSurfaceView mGLView;
-	private CameraView mPreview;
+	private CameraView mCameraView;
 	private MiniMapFragment gMap;
+	private ImageButton takePictureBtn;
 	private ImageButton renderActionBarBtn;
 
+	// Android sensors
 	private SensorManager mSensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -57,63 +55,54 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.cameraview);
-		mGLView = (MarkerSurfaceView) findViewById(R.id.marker_surface_view);
+
+		this.setContentView(R.layout.cameraview);
+		this.mGLView = (MarkerSurfaceView) findViewById(R.id.marker_surface_view);
+		this.mCameraView = (CameraView) findViewById(R.id.camera_preview_layout);
 		this.setRendererScreenSize();
-		sensorHandler = new SensorHandler();
-		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		accelerometer = mSensorManager
+		this.sensorHandler = new SensorHandler();
+		this.mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		this.accelerometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		magnetometer = mSensorManager
+		this.magnetometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		this.gMap = ((MiniMapFragment) getFragmentManager().findFragmentById(
 				R.id.mini_map_fragment));
 
-		if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else{
-        	getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-        }
-		getActionBar().hide();
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowTitleEnabled(false);
+		this.turnOffSystemBar();
+		this.getActionBar().hide();
+		this.getActionBar().setDisplayHomeAsUpEnabled(true);
+		this.getActionBar().setDisplayShowTitleEnabled(false);
 
+		this.takePictureBtn = (ImageButton) findViewById(R.id.btn_take_picture);
 		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mSensorManager.registerListener(this, accelerometer,
+		this.mSensorManager.registerListener(this, accelerometer,
 				SensorManager.SENSOR_DELAY_GAME);
-		mSensorManager.registerListener(this, magnetometer,
+		this.mSensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
-		initCameraView();
-		mPreview.registerOnPhotoTakenListener(this);
-	}
-
-	@Override
-	public boolean onKeyDown(int keycode, KeyEvent e) {
-		switch (keycode) {
-		case KeyEvent.KEYCODE_CAMERA:
-			this.mPreview.snapPicture();
-			return true;
-		case KeyEvent.KEYCODE_FOCUS:
-			this.mPreview.autoFocusAndTakePicture();
-			return true;
-		}
-		return super.onKeyDown(keycode, e);
+		this.mCameraView.setOnPhotoTakenListener(this);
 	}
 
 	@Override
 	protected void onPause() {
+		this.mSensorManager.unregisterListener(this);
 		super.onPause();
-		mSensorManager.unregisterListener(this);
 	}
 
 	@Override
-	public void onSensorChanged(SensorEvent evt) {
-		if (sensorHandler.handleEvent(evt)) {
+	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler,
+			Location myLocation) {
+		this.mGLView.set3DMarkerData(datasourceHandler, myLocation);
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if (sensorHandler.handleEvent(event)) {
 			float[] orientation = sensorHandler.getOrientation();
 			mGLView.getSensorData(orientation.clone());
 			this.gMap
@@ -122,8 +111,26 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	}
 
 	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_CAMERA:
+			this.takePictureBtn.setEnabled(false);
+			this.mCameraView.snapPicture();
+			this.takePictureBtn.setEnabled(true);
+			return true;
+		case KeyEvent.KEYCODE_FOCUS:
+			this.takePictureBtn.setEnabled(false);
+			this.mCameraView.autoFocusAndSnapPicture();
+			this.takePictureBtn.setEnabled(true);
+			return true;
+		default:
+			return super.onKeyDown(keyCode, event);
+		}
 	}
 
 	@Override
@@ -165,37 +172,50 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	}
 
 	@Override
-	public void onMarkerDataUpdated(DataSourceHandler datasourceHandler,
-			Location myLocation) {
-		this.mGLView.set3DMarkerData(datasourceHandler, myLocation);
+	public void onPhotoTaken(String imgPath) {
+		this.displayShipListDialog(imgPath);
 	}
 
-	/**
-	 * This is the method called as designated from the TakePicture-button in
-	 * cameraview.xml
-	 * 
-	 * @param v
-	 */
-	public void takePictureOnClick(View v) {
-		//this.mPreview.snapPicture();
-		//((ImageButton) findViewById(R.id.btn_btn_take_picture)).setVisibility(View.INVISIBLE);
-		this.mPreview.autoFocusAndTakePicture();
-		//android.os.SystemClock.sleep(2000);
-		//((ImageButton) findViewById(R.id.btn_btn_take_picture)).setVisibility(View.VISIBLE);
-
+	public void takePictureOnClick(View view) {
+		this.takePictureBtn.setEnabled(false);
+		this.mCameraView.autoFocusAndSnapPicture();
+		this.takePictureBtn.setEnabled(true);
 	}
 
-	private void initCameraView() {
-		this.mPreview = null;
-		this.mPreview = new CameraView(this, getString(R.string.app_name));
-		((RelativeLayout) findViewById(R.id.camera_preview_layout))
-				.addView(mPreview);
+	public void renderActionBarOnClick(View view) {
+		turnOnSystemBar();
+		getActionBar().show();
+		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
 
 	private void setRendererScreenSize() {
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 		this.mGLView.setRendererScreenSize(size.x, size.y);
+	}
+
+	@SuppressLint("InlinedApi")
+	private void turnOnSystemBar() {
+		if (Build.VERSION.SDK_INT < 16) {
+			getWindow().addFlags(
+					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		} else {
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_FULLSCREEN);
+		}
+	}
+
+	@SuppressLint("InlinedApi")
+	private void turnOffSystemBar() {
+		if (Build.VERSION.SDK_INT < 16) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			getWindow().clearFlags(
+					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		} else {
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_FULLSCREEN);
+		}
 	}
 
 	private void displayShipListDialog(String imgPath) {
@@ -237,13 +257,4 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		}
 	}
 
-	@Override
-	public void onPhotoTaken(String imgPath) {
-		displayShipListDialog(imgPath);
-	}
-
-	public void renderActionBarOnClick(View view) {
-		getActionBar().show();
-		this.renderActionBarBtn.setVisibility(View.GONE);
-	}
 }

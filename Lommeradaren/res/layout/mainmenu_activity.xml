@@ -68,20 +68,6 @@
             android:onClick="galleryOnClick"
             android:text="@string/string_gallery" />
 
-    <!--     <Button
-            android:id="@+id/button4"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"
-            android:layout_weight="1"
-            android:background="@drawable/buttonbackgroundselector"
-            android:onClick="goToUserScreenOnClick"
-            android:text="@string/string_user_account" /> -->
-
     </LinearLayout>
 
 
