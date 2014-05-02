@@ -5,49 +5,43 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
-using LommeradarenWeb.db;
+using Logic;
 using System.Diagnostics;
 
 namespace LommeradarenWeb
 {
+    /// <summary>
+    /// Handles logging in via username/password or googles oauth services
+    /// </summary>
     public partial class Login : System.Web.UI.Page
     {
-        private Authentication auth = new Authentication();
+        private GoogleAuthentication gAuth = new GoogleAuthentication();
+        private UserController uAuth = new UserController();
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+        /// <summary>
+        /// Allows a user to log in using the username/password combination in the input fields
+        /// </summary>
         protected void Button1_Click(object sender, EventArgs e)
         {
             if (!txtUserName.Value.Equals("") && !txtUserPass.Equals(""))
             {
-                if (ValidateUser(txtUserName.Value, txtUserPass.Value))
+                if (uAuth.ValidateUserLogin(txtUserName.Value, txtUserPass.Value))
                     FormsAuthentication.RedirectFromLoginPage(txtUserName.Value,
                     chkPersistCookie.Checked);
                 else
                     Response.Redirect("Login.aspx", true);
             }
         }
-        private bool ValidateUser(String userName, String passWord)
-        {
-            bool userValid = false;
-            using (LommeradarDBEntities entities = new LommeradarDBEntities())
-            {
-                try
-                {
-                    string hashedPW = (from user in entities.Users where user.UserName.Equals(userName) select user.UserPassword).First();
-                    userValid = Crypto.VerifyHashedPassword(hashedPW, passWord);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-            }
-            return userValid;
-        }
 
+        /// <summary>
+        /// Allows a user to log in using googles oauth service
+        /// </summary>
         protected void GoogleLoginButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(auth.GetAutenticationURI().ToString());
+            Response.Redirect(gAuth.GetAutenticationURI().ToString());
         }
     }
 }

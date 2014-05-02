@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LommeradarenWeb.db
+namespace Data
 {
     using System;
     using System.Collections.Generic;

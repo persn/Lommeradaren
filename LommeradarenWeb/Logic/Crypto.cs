@@ -4,16 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 
-namespace LommeradarenWeb
+namespace Logic
 {
-
+    /// <summary>
+    /// Contains functions to create and verify hashed passwords
+    /// </summary>
     public class Crypto
     {
         private const int PBKDF2IterCount = 1000; // default for Rfc2898DeriveBytes
         private const int PBKDF2SubkeyLength = 256 / 8; // 256 bits
         private const int SaltSize = 128 / 8; // 128 bits
 
-
+        /// <summary>
+        /// Hashes and salts the input string
+        /// </summary>
+        /// <param name="password">String to hash</param>
+        /// <returns></returns>
         public static string HashPassword(string password)
         {
             byte[] salt;
@@ -29,7 +35,12 @@ namespace LommeradarenWeb
             Buffer.BlockCopy(subkey, 0, outputBytes, 1 + SaltSize, PBKDF2SubkeyLength);
             return Convert.ToBase64String(outputBytes);
         }
-
+        /// <summary>
+        /// Hashes and salts the password parameter then checks if it corresponds with the hashed password from the hashedPassword parameter
+        /// </summary>
+        /// <param name="hashedPassword">Already hashed password to check</param>
+        /// <param name="password">String to check</param>
+        /// <returns></returns>
         public static bool VerifyHashedPassword(string hashedPassword, string password)
         {
             byte[] hashedPasswordBytes = Convert.FromBase64String(hashedPassword);

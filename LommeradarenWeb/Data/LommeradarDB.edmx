@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LommeradarDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LommeradarDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Pictures">
           <Key>
             <PropertyRef Name="PictureID" />
@@ -77,23 +77,11 @@
             <End Role="Pictures" EntitySet="Pictures" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LommeradarDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="LommeradarDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Pictures" EntityType="LommeradarDBModel.Pictures" />
-          <EntitySet Name="PointOfInterest" EntityType="LommeradarDBModel.PointOfInterest" />
-          <EntitySet Name="Users" EntityType="LommeradarDBModel.Users" />
-          <AssociationSet Name="FK_PointOfInterestPicture" Association="LommeradarDBModel.FK_PointOfInterestPicture">
-            <End Role="PointOfInterest" EntitySet="PointOfInterest" />
-            <End Role="Pictures" EntitySet="Pictures" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserPicture" Association="LommeradarDBModel.FK_UserPicture">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Pictures" EntitySet="Pictures" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Pictures">
           <Key>
             <PropertyRef Name="PictureID" />
@@ -104,12 +92,12 @@
           <Property Name="Latitude" Type="Double" />
           <Property Name="Longitude" Type="Double" />
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="PictureName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ExifData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PointOfInterest" Relationship="LommeradarDBModel.FK_PointOfInterestPicture" FromRole="Pictures" ToRole="PointOfInterest" />
-          <NavigationProperty Name="Users" Relationship="LommeradarDBModel.FK_UserPicture" FromRole="Pictures" ToRole="Users" />
+          <NavigationProperty Name="PointOfInterest" Relationship="Self.FK_PointOfInterestPicture" FromRole="Pictures" ToRole="PointOfInterest" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_UserPicture" FromRole="Pictures" ToRole="Users" />
         </EntityType>
         <EntityType Name="PointOfInterest">
           <Key>
@@ -120,7 +108,7 @@
           <Property Name="imo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="mmsi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="webpage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pictures" Relationship="LommeradarDBModel.FK_PointOfInterestPicture" FromRole="PointOfInterest" ToRole="Pictures" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_PointOfInterestPicture" FromRole="PointOfInterest" ToRole="Pictures" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -131,11 +119,11 @@
           <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserGoogleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pictures" Relationship="LommeradarDBModel.FK_UserPicture" FromRole="Users" ToRole="Pictures" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_UserPicture" FromRole="Users" ToRole="Pictures" />
         </EntityType>
         <Association Name="FK_PointOfInterestPicture">
-          <End Type="LommeradarDBModel.PointOfInterest" Role="PointOfInterest" Multiplicity="0..1" />
-          <End Type="LommeradarDBModel.Pictures" Role="Pictures" Multiplicity="*" />
+          <End Role="PointOfInterest" Type="Self.PointOfInterest" Multiplicity="0..1" />
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PointOfInterest">
               <PropertyRef Name="POI_ID" />
@@ -146,8 +134,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserPicture">
-          <End Type="LommeradarDBModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="LommeradarDBModel.Pictures" Role="Pictures" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
@@ -157,7 +145,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="LommeradarDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pictures" EntityType="Self.Pictures" />
+          <EntitySet Name="PointOfInterest" EntityType="Self.PointOfInterest" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_PointOfInterestPicture" Association="Self.FK_PointOfInterestPicture">
+            <End Role="PointOfInterest" EntitySet="PointOfInterest" />
+            <End Role="Pictures" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPicture" Association="Self.FK_UserPicture">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Pictures" EntitySet="Pictures" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -166,38 +167,38 @@
           <EntitySetMapping Name="Pictures">
             <EntityTypeMapping TypeName="LommeradarDBModel.Pictures">
               <MappingFragment StoreEntitySet="Pictures">
-                <ScalarProperty Name="ExifData" ColumnName="ExifData" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="PointOfInterestPOI_ID" ColumnName="PointOfInterestPOI_ID" />
-                <ScalarProperty Name="UserUserID" ColumnName="UserUserID" />
                 <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+                <ScalarProperty Name="UserUserID" ColumnName="UserUserID" />
+                <ScalarProperty Name="PointOfInterestPOI_ID" ColumnName="PointOfInterestPOI_ID" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ExifData" ColumnName="ExifData" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PointOfInterest">
             <EntityTypeMapping TypeName="LommeradarDBModel.PointOfInterest">
               <MappingFragment StoreEntitySet="PointOfInterest">
-                <ScalarProperty Name="webpage" ColumnName="webpage" />
-                <ScalarProperty Name="mmsi" ColumnName="mmsi" />
-                <ScalarProperty Name="imo" ColumnName="imo" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="POI_ID" ColumnName="POI_ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="imo" ColumnName="imo" />
+                <ScalarProperty Name="mmsi" ColumnName="mmsi" />
+                <ScalarProperty Name="webpage" ColumnName="webpage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LommeradarDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserGoogleId" ColumnName="UserGoogleId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
-                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserGoogleId" ColumnName="UserGoogleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -4,25 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using LommeradarenWeb.db;
+using Logic;
 
 namespace LommeradarenWeb.users
 {
+    /// <summary>
+    /// Displays basic information about the current user as well as allowing the user to change the registered email/password
+    /// </summary>
     public partial class UserInfo : System.Web.UI.Page
     {
-        private Users currentUser;
-        private LommeradarDBEntities entities;
+        private UserController userAuth = new UserController();
+
+        /// <summary>
+        /// Shows the current users username and email on their labels
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                entities = new LommeradarDBEntities();
-                currentUser = (from user in entities.Users where user.UserName.Equals(User.Identity.Name) select user).First();
-                emailLabel.Text = "Your eMail is: " + currentUser.UserEmail;
-                nameLabel.Text = "Logged in as: " + currentUser.UserName;
-            }
+            emailLabel.Text = "Your eMail is: " + userAuth.getUserEmail(User.Identity.Name);
+            nameLabel.Text = "Logged in as: " + User.Identity.Name;
         }
 
+        /// <summary>
+        /// blanks the inputs related to password change
+        /// </summary>
         protected void ResetPasswordFieldButton_Click(object sender, EventArgs e)
         {
             oldPasswordField.Text = null;
@@ -30,40 +34,39 @@ namespace LommeradarenWeb.users
             confirmNewPasswordField.Text = null;
         }
 
+        /// <summary>
+        /// Handles the password change
+        /// </summary>
         protected void ChangePasswordButton_Click(object sender, EventArgs e)
         {
             if (oldPasswordField.Text != null && newPasswordField != null)
             {
-                if (Crypto.VerifyHashedPassword(currentUser.UserPassword, oldPasswordField.Text) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
+                if (userAuth.ValidateUserLogin(User.Identity.Name, oldPasswordField.Text) && newPasswordField.Text.Equals(confirmNewPasswordField.Text))
                 {
-                    currentUser.UserPassword = Crypto.HashPassword(newPasswordField.Text);
-                    entities.SaveChanges();
+                    userAuth.setNewPassword(newPasswordField.Text, User.Identity.Name);
                 }
             }
         }
 
-
+        /// <summary>
+        /// resets the input fields related to email change
+        /// </summary>
         protected void ResetEmailFieldsButton_Click(object sender, EventArgs e)
-        {
-            ResetEmailFields();
-        }
-
-        private void ResetEmailFields()
         {
             newEmailField.Text = null;
             confirmNewEmailField.Text = null;
         }
 
+        /// <summary>
+        /// Handles the email change
+        /// </summary>
         protected void ChangeEmailButton_Click(object sender, EventArgs e)
         {
             if (newEmailField.Text != null && confirmNewEmailField != null)
             {
                 if (newEmailField.Text.Equals(confirmNewEmailField.Text))
                 {
-                    currentUser.UserEmail = newEmailField.Text;
-                    entities.SaveChanges();
-                    ResetEmailFields();
-                    emailLabel.Text = "Your eMail is: " + currentUser.UserEmail;
+                    userAuth.setNewEmail(User.Identity.Name, newEmailField.Text);
                 }
             }
         }

@@ -1,36 +1,36 @@
-﻿using LommeradarenWeb.db;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Web.Script.Serialization;
 using System.Diagnostics;
+using Logic;
 
 
 namespace LommeradarenWeb.users
 {
+    /// <summary>
+    /// Contains functions handling our gallery page
+    /// </summary>
     public partial class Gallery : System.Web.UI.Page
     {
-        private LommeradarDBEntities entities;
         private List<string[]> images;
         private int selectedBigImage;
+        private GalleryController gController = new GalleryController();
 
+        /// <summary>
+        /// Reads all the images contained in the database owned by the currently logged in user and displays them on the page
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-            entities = new LommeradarDBEntities();
-            int userId = (from Users in entities.Users where Users.UserName.Equals(Context.User.Identity.Name) select Users.UserID).FirstOrDefault();
-            int[] ids = (from Pictures in entities.Pictures where Pictures.UserUserID == userId select Pictures.PictureID).ToArray();
-            images = new List<string[]>(); //0=id, 1=filename
-            for (int i = 0; i < ids.Length; i++)
-            {
-                int id = ids[i];
-                string[] temp = { id.ToString(), (from Pictures in entities.Pictures where Pictures.PictureID == id select Pictures.PictureName).FirstOrDefault() };
-                images.Add(temp);
-            }
+            images = gController.getPictures(User.Identity.Name);
             fillTable();
         }
 
+        /// <summary>
+        /// Places the images from Page_Load into a scrollable field for easy overview
+        /// </summary>
         public void fillTable()
         {
             TableRow row = new TableRow();
@@ -53,11 +53,13 @@ namespace LommeradarenWeb.users
             imageTable.Rows.Add(row);
         }
 
+        /// <summary>
+        /// Shows the selected image in more detail
+        /// </summary>
         public void onImageClick(object sender, EventArgs e)
         {
             try
             {
-
                 if (!infoTable.Visible)
                 {
                     infoTable.Visible = true;
@@ -66,8 +68,7 @@ namespace LommeradarenWeb.users
                 BigImage.ImageUrl = img.ImageUrl;
                 int imageID = int.Parse(img.ID);
                 selectedBigImage = imageID;
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                imageData imgData = js.Deserialize<imageData>((from Pictures in entities.Pictures where Pictures.PictureID == imageID select Pictures.ExifData).FirstOrDefault());
+                ImageData imgData = gController.getImageData(imageID);
                 updateLabels(imgData);
                 if (BigImage.Height.Value > BigImage.Width.Value)
                 {
@@ -85,27 +86,28 @@ namespace LommeradarenWeb.users
 
         }
 
+        /// <summary>
+        /// Deletes the currently selected image
+        /// </summary>
         protected void DeleteImageButton_Click(object sender, EventArgs e)
         {
-            try
-            {
                 int id = int.Parse(BigImage.ImageUrl.Split('=')[1]);
-                Pictures pic = (from Pictures in entities.Pictures where Pictures.PictureID == id select Pictures).FirstOrDefault();
-                entities.Pictures.Remove(pic);
-                entities.SaveChanges();
+                gController.deleteImage(id);
                 Response.Redirect("Gallery.aspx");
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine(exc.Message);
-            }
         }
 
+        /// <summary>
+        /// Returns the actual imagefile that is currently displayed in detail view
+        /// </summary>
         protected void ViewLargeImageButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(BigImage.ImageUrl);
         }
-        private void updateLabels(imageData imgData)
+        /// <summary>
+        /// Updates the text in the labels in detail view for the selected image based on the supplied imagedata
+        /// </summary>
+        /// <param name="imgData">Data to update the labels from</param>
+        private void updateLabels(ImageData imgData)
         {
             LatitudeLabel.Text = "<b>Latitude: </b>" + imgData.lat;
             LongitudeLabel.Text = "<b>Longitude: </b>" + imgData.lng;
@@ -117,8 +119,5 @@ namespace LommeradarenWeb.users
             WebsiteLabel.Text = "<b>Website: </b>" + imgData.webpage;
         }
     }
-    public class imageData
-    {
-        public string id, name, lat, lng, alt, mmsi, distance, has_detail_page, webpage, positionTime, imo, speed, course;
-    }
+    
 }
