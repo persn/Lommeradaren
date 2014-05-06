@@ -3,11 +3,11 @@ package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 public class BatchTextProgram extends Program {
 
-	private static final AttribVariable[] programVariables = {
-			AttribVariable.A_Position, AttribVariable.A_TexCoordinate,
-			AttribVariable.A_MVPMatrixIndex };
+	private static final AttribVariable[] PROGRAM_VARIABLES = {
+			AttribVariable.A_POSITION, AttribVariable.A_TEX_COORDINATE,
+			AttribVariable.A_MVP_MATRIX_INDEX };
 
-	private static final String vertexShaderCode = "uniform mat4 u_MVPMatrix[24]; \n" // An
+	private static final String VERTEX_SHADER_CODE = "uniform mat4 u_MVPMatrix[24]; \n" // An
 																						// array
 																						// representing
 																						// the
@@ -39,7 +39,7 @@ public class BatchTextProgram extends Program {
 			// normalized screen coordinates.
 			+ "} \n";
 
-	private static final String fragmentShaderCode = "uniform sampler2D u_Texture; \n" // The
+	private static final String FRAGMENT_SHADER_CODE = "uniform sampler2D u_Texture; \n" // The
 																						// input
 																						// texture.
 			+ "precision mediump float; \n" // Set the default precision to
@@ -66,7 +66,7 @@ public class BatchTextProgram extends Program {
 
 	@Override
 	public void init() {
-		super.init(vertexShaderCode, fragmentShaderCode, programVariables);
+		super.init(VERTEX_SHADER_CODE, FRAGMENT_SHADER_CODE, PROGRAM_VARIABLES);
 	}
 
 }

@@ -1,7 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.opengl.sprites;
 
 public enum AttribVariable {
-	A_Position(1, "a_Position"), A_TexCoordinate(2, "a_TexCoordinate"), A_MVPMatrixIndex(
+	A_POSITION(1, "a_Position"), A_TEX_COORDINATE(2, "a_TexCoordinate"), A_MVP_MATRIX_INDEX(
 			3, "a_MVPMatrixIndex");
 
 	private int mHandle;

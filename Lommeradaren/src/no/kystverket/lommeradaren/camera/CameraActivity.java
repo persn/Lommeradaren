@@ -43,8 +43,8 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	private MarkerSurfaceView mGLView;
 	private CameraView mCameraView;
 	private MiniMapFragment gMap;
-	private ImageButton takePictureBtn;
-	private ImageButton renderActionBarBtn;
+	private ImageButton btn_takePicture;
+	private ImageButton btn_renderActionBar;
 
 	// Android sensors
 	private SensorManager mSensorManager;
@@ -74,8 +74,8 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		this.getActionBar().setDisplayHomeAsUpEnabled(true);
 		this.getActionBar().setDisplayShowTitleEnabled(false);
 
-		this.takePictureBtn = (ImageButton) findViewById(R.id.btn_take_picture);
-		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
+		this.btn_takePicture = (ImageButton) findViewById(R.id.btn_take_picture);
+		this.btn_renderActionBar = (ImageButton) findViewById(R.id.btn_galscrn_render_bar);
 	}
 
 	@Override
@@ -119,14 +119,14 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_CAMERA:
-			this.takePictureBtn.setEnabled(false);
+			this.btn_takePicture.setEnabled(false);
 			this.mCameraView.snapPicture();
-			this.takePictureBtn.setEnabled(true);
+			this.btn_takePicture.setEnabled(true);
 			return true;
 		case KeyEvent.KEYCODE_FOCUS:
-			this.takePictureBtn.setEnabled(false);
+			this.btn_takePicture.setEnabled(false);
 			this.mCameraView.autoFocusAndSnapPicture();
-			this.takePictureBtn.setEnabled(true);
+			this.btn_takePicture.setEnabled(true);
 			return true;
 		default:
 			return super.onKeyDown(keyCode, event);
@@ -164,7 +164,7 @@ public class CameraActivity extends Activity implements SensorEventListener,
 			return true;
 		case R.id.menu_hide_bar:
 			getActionBar().hide();
-			this.renderActionBarBtn.setVisibility(View.VISIBLE);
+			this.btn_renderActionBar.setVisibility(View.VISIBLE);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -177,15 +177,15 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	}
 
 	public void takePictureOnClick(View view) {
-		this.takePictureBtn.setEnabled(false);
+		this.btn_takePicture.setEnabled(false);
 		this.mCameraView.autoFocusAndSnapPicture();
-		this.takePictureBtn.setEnabled(true);
+		this.btn_takePicture.setEnabled(true);
 	}
 
 	public void renderActionBarOnClick(View view) {
 		turnOnSystemBar();
 		getActionBar().show();
-		this.renderActionBarBtn.setVisibility(View.GONE);
+		this.btn_renderActionBar.setVisibility(View.GONE);
 	}
 
 	private void setRendererScreenSize() {

@@ -77,9 +77,9 @@ public class Vertices {
 																// Buffer
 
 		// initialize the shader attribute handles
-		mTextureCoordinateHandle = AttribVariable.A_TexCoordinate.getHandle();
-		mMVPIndexHandle = AttribVariable.A_MVPMatrixIndex.getHandle();
-		mPositionHandle = AttribVariable.A_Position.getHandle();
+		mTextureCoordinateHandle = AttribVariable.A_TEX_COORDINATE.getHandle();
+		mMVPIndexHandle = AttribVariable.A_MVP_MATRIX_INDEX.getHandle();
+		mPositionHandle = AttribVariable.A_POSITION.getHandle();
 	}
 
 	// --Set Vertices--//

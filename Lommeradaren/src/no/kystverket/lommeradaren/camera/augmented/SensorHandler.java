@@ -16,7 +16,7 @@ public class SensorHandler {
 	private float[] orientation;
 	private float[] gravity = { 0, 0, 0 };
 	private float[] magnetic = { 0, 0, 0 };
-	private final float alpha = 0.15f;
+	private final static float ALPHA = 0.15f;
 	private LinkedList<float[]> values = new LinkedList<float[]>();
 	private int counter = 0;
 	
@@ -70,7 +70,7 @@ public class SensorHandler {
 
 	private void lowPass(float[] input, float[] output) {
 		for (int i = 0; i < input.length; i++) {
-			output[i] = output[i] + alpha * (input[i] - output[i]);
+			output[i] = output[i] + ALPHA * (input[i] - output[i]);
 		}
 	}
 }

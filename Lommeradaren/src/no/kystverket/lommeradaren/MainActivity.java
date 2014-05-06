@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
 		getWindowManager().getDefaultDisplay().getSize(screenSize);
 		setContentView(R.layout.mainmenu_activity);
 		backgroundImage = (ImageView) findViewById(R.id.mainmenu_background);
-
 	}
 
 	@Override

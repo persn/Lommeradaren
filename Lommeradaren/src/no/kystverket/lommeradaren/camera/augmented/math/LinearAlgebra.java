@@ -17,7 +17,7 @@ public class LinearAlgebra {
 	private final float[] mMVPMatrix = new float[16];
 	private final float[] mProjectionMatrix = new float[16];
 	private final float[] mViewMatrix = new float[16];
-	private float[] mTempMatrix = new float[16];
+	private float[] mBufferMatrix = new float[16];
 
 	/**
 	 * DEPENDING ON CUSTOM AXISES THE ORDER MIGHT NEED TO BE CHANGED
@@ -36,18 +36,18 @@ public class LinearAlgebra {
 		float[] rotationMatrixY = new float[16];
 		float[] rotationMatrixZ = new float[16];
 
-		Matrix.setIdentityM(mTempMatrix, 0);
+		Matrix.setIdentityM(mBufferMatrix, 0);
 
 		Matrix.setRotateM(rotationMatrixX, 0, rotationX, 1, 0, 0);
 		Matrix.setRotateM(rotationMatrixY, 0, rotationY, 0, 1, 0);
 		Matrix.setRotateM(rotationMatrixZ, 0, rotationZ, 0, 0, 1);
 
-		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixX, 0, mTempMatrix, 0);
-		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixY, 0, mTempMatrix, 0);
-		Matrix.multiplyMM(mTempMatrix, 0, rotationMatrixZ, 0, mTempMatrix, 0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixX, 0, mBufferMatrix, 0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixY, 0, mBufferMatrix, 0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixZ, 0, mBufferMatrix, 0);
 
-		Matrix.multiplyMM(mTempMatrix, 0, mViewMatrix, 0, mTempMatrix, 0);
-		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mTempMatrix, 0);
+		Matrix.multiplyMM(mBufferMatrix, 0, mViewMatrix, 0, mBufferMatrix, 0);
+		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mBufferMatrix, 0);
 	}
 
 	public void drawMarker(GLText glText, float[] color, String text, String dist, float posX, float posY, float posZ) {

@@ -27,7 +27,6 @@ import android.util.Log;
  */
 public class MarkerRenderer implements GLSurfaceView.Renderer {
 
-//	private DataSourceHandler datasourceHandler;
 	private List<MarkerWrapper> markerWrappers = new ArrayList<MarkerWrapper>();
 
 	private LinearAlgebra linAlg;
@@ -40,13 +39,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private int screenWidth;
 	private int screenHeight;
 
-	private static final int TOUCH_RADIUS = 50;
-	
-	float[] color1 = { 1.0f, 0.0f, 0.0f, 1.0f }; // red
-	float[] color2 = { 0.0f, 1.0f, 0.0f, 1.0f }; // green
-	float[] color3 = { 0.0f, 0.0f, 1.0f, 1.0f }; // blue
-	float[] color4 = { 1.0f, 0.0f, 1.0f, 1.0f }; // purple
-	float[] color5 = { 1.0f, 1.0f, 1.0f, 1.0f }; // White
+	private static final int TOUCH_RADIUS = 50;	
 
 	public MarkerRenderer(Context context) {
 		this.context = context;
@@ -90,10 +83,10 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		this.linAlg.drawMarker(glText, color5, "North", "", 0, 10, -50);
-		this.linAlg.drawMarker(glText, color5, "South", "", 0, 10, 50);
-		this.linAlg.drawMarker(glText, color5, "East", "", 50, 10, 0);
-		this.linAlg.drawMarker(glText, color5, "West", "", -50, 10, 0);
+		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "North", "", 0, 10, -50);
+		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "South", "", 0, 10, 50);
+		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "East", "", 50, 10, 0);
+		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "West", "", -50, 10, 0);
 
 		this.drawAllMarkers();
 	}
@@ -138,10 +131,6 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		
 	}
 
-//	public void setDataSourceHandler(DataSourceHandler datasourceHandler) {
-//		this.datasourceHandler = datasourceHandler;
-//	}
-
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
 		this.screenHeight = height;
@@ -170,11 +159,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private synchronized void drawAllMarkers() {
 		for (MarkerWrapper markerWrapper : this.markerWrappers) {
-//			Log.d("MarkerName",markerWrapper.getTag()[0]);
-//			Log.d("MarkerX", "" + markerWrapper.getCartesianCoordinates()[0]);
-//			Log.d("MarkerY", "" + markerWrapper.getCartesianCoordinates()[1]);
-//			Log.d("MarkerZ", "" + markerWrapper.getCartesianCoordinates()[2]);
-			this.linAlg.drawMarker(glText, color3, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText, new float[]{ 0.0f, 0.0f, 1.0f, 1.0f }, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
 		}
 	}
 }
