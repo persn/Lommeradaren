@@ -13,17 +13,17 @@ namespace Logic
     /// </summary>
     public class GoogleAuthentication
     {
-        private const String client_id = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
-        private const String client_secret = "ROxpdlouZOJraKkFYAyEx7qT";
-        private const String redirect_url = "http://localhost:2026/GoogleResponse.aspx";
-        private const String scope = "https://www.googleapis.com/auth/plus.profile.emails.read";
+        private const string CLIENT_ID = "413624543866-kailen70lui2e56nufddv72is61qr29e.apps.googleusercontent.com";
+        private const string CLIENT_SECRET = "ROxpdlouZOJraKkFYAyEx7qT";
+        private const string REDIRECT_URL = "http://localhost:2026/GoogleResponse.aspx";
+        private const string SCOPE = "https://www.googleapis.com/auth/plus.profile.emails.read";
 
         public Uri GetAutenticationURI()
         {
             List<String> postData = new List<String>();
-            postData.Add("client_id=" + client_id);
-            postData.Add("redirect_uri=" + redirect_url);
-            postData.Add("scope=" + scope);
+            postData.Add("client_id=" + CLIENT_ID);
+            postData.Add("redirect_uri=" + REDIRECT_URL);
+            postData.Add("scope=" + SCOPE);
             postData.Add("response_type=code");
             return new Uri("https://accounts.google.com/o/oauth2/auth" + "?" + string.Join("&", postData.ToArray()));
         }
@@ -36,8 +36,8 @@ namespace Logic
         public GoogleUser GoogleLogin(string code)
         {
             string grant_type = "authorization_code";
-            string gurl = "code=" + code + "&client_id=" + client_id +
-            "&client_secret=" + client_secret + "&redirect_uri=" + redirect_url + "&grant_type=" + grant_type;
+            string gurl = "code=" + code + "&client_id=" + CLIENT_ID +
+            "&client_secret=" + CLIENT_SECRET + "&redirect_uri=" + REDIRECT_URL + "&grant_type=" + grant_type;
             return (POSTResult(gurl));
         }
 

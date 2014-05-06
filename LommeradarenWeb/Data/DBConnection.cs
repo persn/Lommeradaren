@@ -18,13 +18,11 @@ namespace Data
         {
             return (from user in entities.Users where user.UserName.Equals(userName) select user.UserPassword).First();
         }
-
         public void setUserPassword(string newPassword, string userName)
         {
             entities.Users.Where(usr => usr.UserName == userName).First().UserPassword = newPassword;
             entities.SaveChanges();
         }
-
         public List<string[]> getAllUserPictures(string userName)
         {
             int userId = (from user in entities.Users where user.UserName.Equals(userName) select user.UserID).First();
@@ -81,12 +79,10 @@ namespace Data
         {
             return entities.Users.Where(usr => usr.UserEmail == email).Any();
         }
-
         public string getUserEmail(string userName)
         {
             return entities.Users.Where(usr => usr.UserName == userName).First().UserEmail;
         }
-
         public void setUserEmail(string newEmail, string userName)
         {
             entities.Users.Where(usr => usr.UserName == userName).First().UserEmail = newEmail;

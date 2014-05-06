@@ -11,13 +11,13 @@ namespace LommeradarenWeb.users
     /// </summary>
     public class GalleryHandler : IHttpHandler
     {
-        private GalleryController galleryHandler = new GalleryController();
+        private GalleryController galleryController = new GalleryController();
         public void ProcessRequest(HttpContext context)
         {
             int fileID = int.Parse(context.Request.QueryString["id"]);
             string filename;
             byte[] rawData;
-            galleryHandler.getPicture(fileID, out filename, out rawData);
+            galleryController.getPicture(fileID, out filename, out rawData);
             string[] split = filename.Split('.');
             string filetype = split[split.Length - 1];
             context.Response.Clear();

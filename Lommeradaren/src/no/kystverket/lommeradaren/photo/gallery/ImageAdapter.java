@@ -42,7 +42,4 @@ public class ImageAdapter extends BaseAdapter {
 	    i.setAdjustViewBounds(true);
 	    return i;
 	}
-
-
-
 }

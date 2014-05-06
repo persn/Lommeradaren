@@ -13,7 +13,7 @@ namespace LommeradarenWeb
     /// </summary>
     public partial class Newuser : System.Web.UI.Page
     {
-        UserController userAuth = new UserController();
+        private UserController userAuth = new UserController();
 
         protected void Page_Load(object sender, EventArgs e)
         {
