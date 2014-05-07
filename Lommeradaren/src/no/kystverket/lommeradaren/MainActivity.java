@@ -2,8 +2,8 @@ package no.kystverket.lommeradaren;
 
 import no.kystverket.lommeradaren.camera.CameraActivity;
 import no.kystverket.lommeradaren.maps.MapActivity;
+import no.kystverket.lommeradaren.photo.PhotoHandler;
 import no.kystverket.lommeradaren.photo.gallery.GalleryActivity;
-import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;

@@ -1,11 +1,10 @@
-package no.kystverket.lommeradaren.photo.gallery;
+package no.kystverket.lommeradaren.photo;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import no.kystverket.lommeradaren.markers.POI;
-import no.kystverket.lommeradaren.photo.Photo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -159,6 +159,8 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 
 	private synchronized void drawAllMarkers() {
 		for (MarkerWrapper markerWrapper : this.markerWrappers) {
+			int[] screenCoordinates = this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(), this.screenWidth, this.screenHeight);
+			markerWrapper.setScreenCoordinates(screenCoordinates);
 			this.linAlg.drawMarker(glText, new float[]{ 0.0f, 0.0f, 1.0f, 1.0f }, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
 		}
 	}

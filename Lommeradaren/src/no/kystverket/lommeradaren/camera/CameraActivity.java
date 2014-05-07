@@ -11,7 +11,7 @@ import no.kystverket.lommeradaren.maps.MiniMapFragment;
 import no.kystverket.lommeradaren.maps.MiniMapFragment.OnMarkerDataUpdatedListener;
 import no.kystverket.lommeradaren.markers.DataSourceHandler;
 import no.kystverket.lommeradaren.markers.POI;
-import no.kystverket.lommeradaren.photo.gallery.PhotoHandler;
+import no.kystverket.lommeradaren.photo.PhotoHandler;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;

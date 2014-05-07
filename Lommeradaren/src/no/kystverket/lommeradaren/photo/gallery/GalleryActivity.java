@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import no.kystverket.lommeradaren.MarkerDialogFragment;
 import no.kystverket.lommeradaren.R;
 import no.kystverket.lommeradaren.photo.Photo;
+import no.kystverket.lommeradaren.photo.PhotoHandler;
 import no.kystverket.lommeradaren.user.GoogleClientActivity;
 import android.app.Activity;
 import android.app.DialogFragment;
