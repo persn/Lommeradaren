@@ -11,9 +11,10 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
 /**
+ * Class handling access to googles location based services
  * 
  * @author Henrik Reitan
- *
+ * 
  */
 public class LocationHandler implements
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -35,23 +36,23 @@ public class LocationHandler implements
 	public Location getLocation() {
 		if (curLoc != null) {
 			return curLoc;
-		}else{
+		} else {
 			Location dummy = new Location("LastResort");
 			dummy.setLatitude(63);
 			dummy.setLongitude(10);
 			return dummy;
 		}
 	}
-	
-	public String getLongtitude(){
+
+	public String getLongtitude() {
 		return "" + this.getLocation().getLongitude();
 	}
-	
-	public String getLatitude(){
+
+	public String getLatitude() {
 		return "" + this.getLocation().getLatitude();
 	}
-	
-	public String getAltitude(){
+
+	public String getAltitude() {
 		return "" + this.getLocation().getAltitude();
 	}
 

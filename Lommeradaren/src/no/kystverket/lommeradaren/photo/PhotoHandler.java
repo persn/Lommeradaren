@@ -14,6 +14,8 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 /**
+ * Class handling the loading and saving of images between the phones storage
+ * and the applications memory.
  * 
  * @author Henrik Reitan
  * 
@@ -28,6 +30,13 @@ public class PhotoHandler {
 		this.pictures = getPhotos();
 	}
 
+	/**
+	 * Loads all images in the folder specified in the constructor when creating
+	 * the class. Also reads the metadata tags and combines this into a Photo
+	 * object
+	 * 
+	 * @return ArrayList containing all the images.
+	 */
 	private ArrayList<Photo> getPhotos() {
 		File folder = new File(
 				Environment
@@ -76,6 +85,14 @@ public class PhotoHandler {
 		return photos;
 	}
 
+	/**
+	 * Static method to save our own string into an image files metadata
+	 * 
+	 * @param path
+	 *            the location of the image
+	 * @param data
+	 *            the string to save
+	 */
 	public static void setExifData(String path, String data) {
 		try {
 			ExifInterface exif = new ExifInterface(path);
@@ -86,6 +103,14 @@ public class PhotoHandler {
 		}
 	}
 
+	/**
+	 * Deletes the imagefile that corresponds to the given Photo object from the
+	 * devices storage
+	 * 
+	 * @param img
+	 *            Photo object to delete
+	 * @return true if successfull, else false
+	 */
 	public boolean deleteImage(Photo img) {
 		File imgFile = new File(
 				Environment
@@ -98,6 +123,16 @@ public class PhotoHandler {
 		return res;
 	}
 
+	/**
+	 * Loads a bitmap with the given size from the devices storage into the
+	 * applications memory.
+	 * 
+	 * @param name
+	 *            Name of the file to load
+	 * @param length
+	 * @param height
+	 * @return
+	 */
 	public Bitmap getLargeImage(String name, int length, int height) {
 		return decodeSampledBitmapFromUrl(
 				Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
@@ -182,6 +217,12 @@ public class PhotoHandler {
 		return pictures;
 	}
 
+	/**
+	 * Helper method for clearing an imageview to free memory.
+	 * 
+	 * @param view
+	 *            ImageView to clear
+	 */
 	public static void stripImageView(ImageView view) {
 		if (view.getDrawable() instanceof BitmapDrawable) {
 			((BitmapDrawable) view.getDrawable()).getBitmap().recycle();

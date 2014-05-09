@@ -42,15 +42,30 @@ public class LinearAlgebra {
 		Matrix.setRotateM(rotationMatrixY, 0, rotationY, 0, 1, 0);
 		Matrix.setRotateM(rotationMatrixZ, 0, rotationZ, 0, 0, 1);
 
-		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixX, 0, mBufferMatrix, 0);
-		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixY, 0, mBufferMatrix, 0);
-		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixZ, 0, mBufferMatrix, 0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixX, 0, mBufferMatrix,
+				0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixY, 0, mBufferMatrix,
+				0);
+		Matrix.multiplyMM(mBufferMatrix, 0, rotationMatrixZ, 0, mBufferMatrix,
+				0);
 
 		Matrix.multiplyMM(mBufferMatrix, 0, mViewMatrix, 0, mBufferMatrix, 0);
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mBufferMatrix, 0);
 	}
 
-	public void drawMarker(GLText glText, float[] color, String text, String dist, float posX, float posY, float posZ) {
+	/**
+	 * Draws a ship marker with the input location and text
+	 * 
+	 * @param glText
+	 * @param color
+	 * @param text
+	 * @param dist
+	 * @param posX
+	 * @param posY
+	 * @param posZ
+	 */
+	public void drawMarker(GLText glText, float[] color, String text,
+			String dist, float posX, float posY, float posZ) {
 		float degRot = (float) Math.toDegrees(Math.atan2((double) posX,
 				(double) -posZ));
 		float[] drawMatrix = new float[16];
@@ -63,19 +78,32 @@ public class LinearAlgebra {
 		Matrix.multiplyMM(drawMatrix, 0, this.mMVPMatrix, 0, drawMatrix, 0);
 		Matrix.rotateM(rotationMatrixTest, 0, -degRot, 0, 1, 0);
 		Matrix.multiplyMM(drawMatrix, 0, drawMatrix, 0, rotationMatrixTest, 0);
-		
+
 		GLES20.glEnable(GLES20.GL_BLEND);
 		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-		
+
 		glText.drawMarker(128, 128, color, drawMatrix);
 		glText.begin(1.0f, 1.0f, 1.0f, 1.0f, drawMatrix);
 		glText.drawC(text, 0, 0, 0, 0, -0, 0);
 		glText.drawC(dist, 0, -2, 0, 0, -0, 0);
 		glText.end();
-		
-		GLES20.glDisable(GLES20.GL_BLEND); 
+
+		GLES20.glDisable(GLES20.GL_BLEND);
 	}
 
+	/**
+	 * Sets initial values for the openGL matrixes.
+	 * 
+	 * @param eyeX
+	 * @param eyeY
+	 * @param eyeZ
+	 * @param centerX
+	 * @param centerY
+	 * @param centerZ
+	 * @param upX
+	 * @param upY
+	 * @param upZ
+	 */
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
 			float centerX, float centerY, float centerZ, float upX, float upY,
 			float upZ) {
@@ -86,6 +114,15 @@ public class LinearAlgebra {
 				this.mViewMatrix, 0);
 	}
 
+	/**
+	 * Calculates a markers x and y coordinates in 2D space on the screen based
+	 * on its 3D coordinates.
+	 * 
+	 * @param cartesianCoordinates
+	 * @param screenWidth
+	 * @param screenHeight
+	 * @return
+	 */
 	public int[] findPointOfInterestScreenPosition(
 			float[] cartesianCoordinates, int screenWidth, int screenHeight) {
 		float[] vector = { cartesianCoordinates[0], cartesianCoordinates[1],

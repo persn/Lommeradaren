@@ -1,6 +1,8 @@
 package no.kystverket.lommeradaren.markers;
 
 /**
+ * Simple class created to hold our JSON data about a POI returned from the
+ * DataSource in a more accessible format
  * 
  * @author Henrik Reitan
  * 
@@ -137,6 +139,10 @@ public class POI {
 				+ course;
 	}
 
+	/**
+	 * Turns this POI objects information into a JSON string 
+	 * @return JSON formatted string version of this POI
+	 */
 	public String toJSON() {
 		return "{\"id\": \"" + id + "\", \"name\": \"" + name
 				+ "\", \"lat\": \"" + lat + "\", \"lng\": \"" + lng

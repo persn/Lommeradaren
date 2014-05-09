@@ -57,16 +57,28 @@ public class MainActivity extends Activity {
 		PhotoHandler.stripImageView(backgroundImage);
 	}
 
+	/**
+	 * Switches to the camera activity
+	 * @param v
+	 */
 	public void cameraOnClick(View v) {
 		startActivity(new Intent(this.getApplicationContext(),
 				CameraActivity.class));
 	}
 
+	/**
+	 * Switches to the gallery activity
+	 * @param v
+	 */
 	public void galleryOnClick(View v) {
 		startActivity(new Intent(this.getApplicationContext(),
 				GalleryActivity.class));
 	}
 
+	/**
+	 * Switches to the map activity
+	 * @param v
+	 */
 	public void goToMapScreenOnClick(View v) {
 		startActivity(new Intent(this.getApplicationContext(),
 				MapActivity.class));

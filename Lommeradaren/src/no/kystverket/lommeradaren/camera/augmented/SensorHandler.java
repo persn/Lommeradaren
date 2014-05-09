@@ -7,6 +7,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
 /**
+ * Class for handling the logic behind sensor events. Creates matrixes to set
+ * orientation and even out the results to make everything appear more smoothly
  * 
  * @author Henrik Reitan
  * 
@@ -19,8 +21,14 @@ public class SensorHandler {
 	private final static float ALPHA = 0.15f;
 	private LinkedList<float[]> values = new LinkedList<float[]>();
 	private int counter = 0;
-	
-	
+
+	/**
+	 * Receives and handles the data contained in SensorEvents, also does
+	 * required lowpass filtering with the helper method.
+	 * 
+	 * @param evt
+	 * @return
+	 */
 	public boolean handleEvent(SensorEvent evt) {
 		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 			lowPass(evt.values.clone(), gravity);
@@ -34,9 +42,10 @@ public class SensorHandler {
 			if (SensorManager.getRotationMatrix(rotationMatrix,
 					inclinationMatrix, gravity, magnetic)) {
 				float orientationMatrix[] = new float[3];
-				orientationMatrix = SensorManager.getOrientation(rotationMatrix,
-						orientationMatrix);
-				orientation = orientationMatrix;//interpolate(orientationMatrix); TODO: add back interpolation
+				orientationMatrix = SensorManager.getOrientation(
+						rotationMatrix, orientationMatrix);
+				orientation = orientationMatrix;// interpolate(orientationMatrix);
+												// TODO: add back interpolation
 				return true;
 			} else {
 				return false;
@@ -44,16 +53,24 @@ public class SensorHandler {
 		}
 	}
 
-	public float[] interpolate(float[] newValues){
-		if(values.size() < 20 ){
+	/**
+	 * Supposed to even out values to help smooth marker positions and avoid
+	 * jittering. Has some issues with the jump between 0 and 360 degrees so is
+	 * currently unused.
+	 * 
+	 * @param newValues
+	 * @return
+	 */
+	public float[] interpolate(float[] newValues) {
+		if (values.size() < 20) {
 			values.add(newValues);
 		} else {
 			values.set(counter, newValues);
 			counter++;
-			counter = counter%20;
+			counter = counter % 20;
 		}
 		float[] res = new float[3];
-		for (float[] f : values){
+		for (float[] f : values) {
 			res[0] += f[0];
 			res[1] += f[1];
 			res[2] += f[2];
@@ -68,6 +85,13 @@ public class SensorHandler {
 		return orientation;
 	}
 
+	/**
+	 * Applies a simple lowpass filter on the input array and passes it via the
+	 * output.
+	 * 
+	 * @param input
+	 * @param output
+	 */
 	private void lowPass(float[] input, float[] output) {
 		for (int i = 0; i < input.length; i++) {
 			output[i] = output[i] + ALPHA * (input[i] - output[i]);

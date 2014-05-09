@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Class handling queries to DataSources to receive information about POI based
+ * on our location
  * 
  * @author Per Olav Flaten
  * 
@@ -24,8 +26,10 @@ public class DataSourceHandler {
 	public DataSourceHandler(DataSource newDataSource) {
 		this.textHandler = new TextHandler();
 		this.dataSource = newDataSource;
-		
-		this.readyToRead = false; //Default value false, since data must have been loaded and initated before ready to read.
+
+		this.readyToRead = false; // Default value false, since data must have
+									// been loaded and initated before ready to
+									// read.
 	}
 
 	public String getDataSourceName() {
@@ -44,7 +48,7 @@ public class DataSourceHandler {
 	}
 
 	/**
-	 * Refreshes POIs from the given datasource stored in the object of this
+	 * Refreshes POIs from the given DataSource stored in the object of this
 	 * class.
 	 * 
 	 * @param newLat
@@ -56,8 +60,8 @@ public class DataSourceHandler {
 	 * @param newRadius
 	 *            Given radius to search for ships from current location.
 	 */
-	public void refreshData(final String lat, final String lng, final String alt,
-			final String radius) {
+	public void refreshData(final String lat, final String lng,
+			final String alt, final String radius) {
 
 		Thread thread = new Thread(new Runnable() {
 
@@ -117,12 +121,12 @@ public class DataSourceHandler {
 			double distance = currentJSON.getDouble("distance");
 			String hasPage = currentJSON.getString("has_detail_page");
 			String webpage = currentJSON.getString("webpage");
-			
+
 			String imo = currentJSON.optString("imo");
 			String mmsi = currentJSON.optString("mmsi");
 			String speed = currentJSON.optString("speed");
 			String course = currentJSON.optString("course");
-			
+
 			String positionTime = currentJSON.getString("positionTime");
 			pointOfInterest = new POI(id, title, lat, lng, alt, mmsi, distance,
 					hasPage, webpage, positionTime, speed, course, imo);

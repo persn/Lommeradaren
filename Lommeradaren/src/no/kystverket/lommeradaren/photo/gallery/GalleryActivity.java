@@ -34,6 +34,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 /**
+ * Activity which displays the gallery. Uses a GridView to display thumbnails
+ * and a larger ImageView for a detailed look a selected picture.
  * 
  * @author Henrik Reitan
  */
@@ -96,6 +98,10 @@ public class GalleryActivity extends Activity implements
 		return super.onTouchEvent(event);
 	}
 
+	/**
+	 * Sets the selected picture to be displayed in the detail view to the one
+	 * being clicked in the gridview
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		selectedPosition = position;
@@ -179,6 +185,10 @@ public class GalleryActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * Displays a popup dialog displaying the information contained in the
+	 * currently selected images metadata.
+	 */
 	private void showInfoDialog() {
 		FragmentManager fm = getFragmentManager();
 		DialogFragment newFragment = new MarkerDialogFragment();
@@ -195,6 +205,9 @@ public class GalleryActivity extends Activity implements
 		newFragment.show(fm, "marker_dialog");
 	}
 
+	/**
+	 * Deletes the currently selected image from the device.
+	 */
 	private void deleteImage() {
 		pHandler.deleteImage(pictures.get(selectedPosition));
 		pictures = pHandler.getPictures();
@@ -210,6 +223,10 @@ public class GalleryActivity extends Activity implements
 		return false;
 	}
 
+	/**
+	 * changes the selected image to the next or previous based on the direction
+	 * of the finger gesture.
+	 */
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
@@ -261,6 +278,10 @@ public class GalleryActivity extends Activity implements
 
 	}
 
+	/**
+	 * Toggles hiding/showing the gui elements when tapping a finger on the
+	 * screen
+	 */
 	@Override
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		if (textSwitcher.getAlpha() == 1f && gallery.getAlpha() == 1f) {
@@ -283,6 +304,9 @@ public class GalleryActivity extends Activity implements
 		this.renderActionBarBtn.setVisibility(View.GONE);
 	}
 
+	/**
+	 * Method for assisting the onFling method for changing the selected image
+	 */
 	public void onSwipeRight() {
 		if (selectedPosition > 0) {
 			selectedPosition--;
@@ -294,6 +318,9 @@ public class GalleryActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * Method for assisting the onFling method for changing the selected image
+	 */
 	public void onSwipeLeft() {
 		if (selectedPosition < pictures.size()) {
 			selectedPosition++;

@@ -36,6 +36,13 @@ import android.widget.ImageButton;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
+/**
+ * Activity class for the augmented reality/camera part of the application.
+ * Contains logic for handling events that occurs in sensor and camera classes.
+ * 
+ * @author Henrik
+ * 
+ */
 public class CameraActivity extends Activity implements SensorEventListener,
 		OnMarkerDataUpdatedListener, OnPhotoTakenListener {
 
@@ -176,6 +183,12 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		this.displayShipListDialog(imgPath);
 	}
 
+	/**
+	 * Disables the camerabutton and tells the cameraview to save a picture of
+	 * the current focus to storage.
+	 * 
+	 * @param view
+	 */
 	public void takePictureOnClick(View view) {
 		this.btn_takePicture.setEnabled(false);
 		this.mCameraView.autoFocusAndSnapPicture();
@@ -218,6 +231,13 @@ public class CameraActivity extends Activity implements SensorEventListener,
 		}
 	}
 
+	/**
+	 * Creates a popup dialog asking which ship a photo was just taken. Gets
+	 * called once a picture has been successfully created by the cameraview.
+	 * The information about that ship is then written to the images metadata.
+	 * 
+	 * @param imgPath Image to write metadata into.
+	 */
 	private void displayShipListDialog(String imgPath) {
 		final List<MarkerWrapper> markers = mGLView.getMarkerList();
 		final String path = imgPath;

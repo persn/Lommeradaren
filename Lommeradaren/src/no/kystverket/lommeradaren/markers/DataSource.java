@@ -1,9 +1,11 @@
 package no.kystverket.lommeradaren.markers;
 
 /**
+ * Simple class containing a name and base url for a DataSource we can query for
+ * JSON information strings
  * 
  * @author Per Olav Flaten
- *
+ * 
  */
 public class DataSource {
 

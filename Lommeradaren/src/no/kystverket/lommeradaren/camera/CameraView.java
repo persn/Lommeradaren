@@ -17,6 +17,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * Class for accessing the camera and displaying what it sees in SurfaceView. Also responsible for saving images to device storage.
+ * @author Henrik
+ *
+ */
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private SurfaceHolder mHolder;
@@ -91,6 +96,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		this.mOnPhotoTakenListener = listener;
 	}
 
+	/**
+	 * Saves a picture to the devices storage
+	 */
 	public void snapPicture() {
 		try {
 			this.mCamera.takePicture(null, null, this.mPictureCallback);
@@ -101,6 +109,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
+	/**
+	 * Calls the cameras autofocus 
+	 */
 	public void autoFocusAndSnapPicture() {
 
 		this.mCamera.autoFocus(new Camera.AutoFocusCallback() {
@@ -112,6 +123,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		});
 	}
 
+	/**
+	 * Method for making sure the camera doesnt get "stuck"
+	 */
 	private void setCamera() {
 		releaseCamera(); // Make sure camera is not already set.
 		this.mCamera = Camera.open();
@@ -126,6 +140,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
+	/**
+	 * Creates a PictureCallback with the required settings such as storage path.
+	 * @return
+	 */
 	private PictureCallback initPictureCallback() {
 
 		PictureCallback mPicture = new PictureCallback() {
@@ -154,6 +172,12 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		return mPicture;
 	}
 
+	/**
+	 * Creates a file to write the image to
+	 * @param type media type to save
+	 * @param appName used to identify the save path
+	 * @return 
+	 */
 	private static File getOutputMediaFile(int type, String appName) {
 		File mediaStorageDir = new File(
 				Environment

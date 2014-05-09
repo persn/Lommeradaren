@@ -4,6 +4,8 @@ import no.kystverket.lommeradaren.markers.POI;
 import android.graphics.Bitmap;
 
 /**
+ * Simple class containing a Photo and a POI object combined with a name to ease
+ * the handling of pictures and information in the gallery.
  * 
  * @author Henrik Reitan
  * 
@@ -19,8 +21,8 @@ public class Photo {
 		this.imgName = imgName;
 		this.poi = poi;
 	}
-	
-	public Photo(Bitmap image, String imgName){
+
+	public Photo(Bitmap image, String imgName) {
 		this.image = image;
 		this.imgName = imgName;
 		this.poi = new POI(-1, "", -1, -1, -1, "", -1, "", "", "", "", "", "");
