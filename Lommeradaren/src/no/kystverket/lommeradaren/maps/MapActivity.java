@@ -4,7 +4,6 @@ import no.kystverket.lommeradaren.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,15 +14,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 
 /**
- * This class initializes the Map screen, the logic is divided to the class
- * CustomGoogleMapFragment, for convenience so that the code may be reused in
- * other Activites.
+ * The controller class that deals with the view components associated with
+ * Google Maps in fullscreen mode.
  * 
  * @author Per Olav Flaten
  * 
  */
 public class MapActivity extends Activity {
-	
+
 	private ImageButton renderActionBarBtn;
 
 	@Override
@@ -33,21 +31,9 @@ public class MapActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
+
 		this.renderActionBarBtn = (ImageButton) findViewById(R.id.btn_mapscrn_render_bar);
 		this.renderActionBarBtn.setVisibility(View.GONE);
-	}
-
-	@Override
-	public boolean onKeyDown(int keycode, KeyEvent e) {
-		switch (keycode) {
-		// case KeyEvent.KEYCODE_BACK:
-		// startActivity(new Intent(this.getApplicationContext(),
-		// MainActivity.class));
-		// finish();
-		// return true;
-		}
-		return super.onKeyDown(keycode, e);
 	}
 
 	@Override
@@ -64,20 +50,19 @@ public class MapActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.sub_item_normal_map:
-			((MapView) findViewById(R.id.map)).getMap()
-			.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_NORMAL);
 			return true;
 		case R.id.sub_item_terrain_map:
-			((MapView) findViewById(R.id.map)).getMap()
-			.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_TERRAIN);
 			return true;
 		case R.id.sub_item_hybrid_map:
-			((MapView) findViewById(R.id.map)).getMap()
-			.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
+					GoogleMap.MAP_TYPE_HYBRID);
 			return true;
 		case R.id.sub_item_satellite_map:
-			((MapView) findViewById(R.id.map)).getMap()
-			.setMapType(
+			((MapView) findViewById(R.id.map)).getMap().setMapType(
 					GoogleMap.MAP_TYPE_SATELLITE);
 			return true;
 		case R.id.menu_hide_bar:
@@ -89,8 +74,8 @@ public class MapActivity extends Activity {
 		}
 
 	}
-	
-	public void renderActionBarOnClick(View view){
+
+	public void renderActionBarOnClick(View view) {
 		getActionBar().show();
 		this.renderActionBarBtn.setVisibility(View.GONE);
 	}

@@ -12,13 +12,19 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * An extension of BaseMapFragment to deal with customization of Google Map for
+ * use in camera mode.
+ * 
+ * @author Per Olav Flaten
+ * 
+ */
 public class MiniMapFragment extends BaseMapFragment {
 
 	private OnMarkerDataUpdatedListener markerDataCallback;
-	
+
 	@Override
 	public void setMapSettings() {
-		// Update UI
 		this.getGoogleMap().getUiSettings().setMyLocationButtonEnabled(false);
 		this.getGoogleMap().getUiSettings().setZoomControlsEnabled(false);
 		this.getGoogleMap().getUiSettings().setAllGesturesEnabled(false);
@@ -31,33 +37,43 @@ public class MiniMapFragment extends BaseMapFragment {
 	public void getMarkerData() {
 		Location location = this.getGoogleMap().getMyLocation();
 		if (location != null) {
-			this.getDataSourceHandler().refreshData("" + location.getLatitude(), "" + location.getLongitude(),"" + location.getAltitude(), "20");
+			this.getDataSourceHandler().refreshData(
+					"" + location.getLatitude(), "" + location.getLongitude(),
+					"" + location.getAltitude(), "20");
 		}
 	}
 
 	@Override
 	public void addMapMarker(POI poi) {
 		this.getGoogleMap().addMarker(
-				new MarkerOptions().position(new LatLng(poi.getLat(), poi.getLng())));
+				new MarkerOptions().position(new LatLng(poi.getLat(), poi
+						.getLng())));
 	}
 
 	@Override
 	public void clearMapMarkers() {
-		this.markerDataCallback.onMarkerDataUpdated(getDataSourceHandler(), getGoogleMap().getMyLocation());
+		this.markerDataCallback.onMarkerDataUpdated(getDataSourceHandler(),
+				getGoogleMap().getMyLocation());
 		this.getGoogleMap().clear();
 	}
-	
+
 	@Override
-	public void onAttach(Activity activity){
+	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
-		try{
-			this.markerDataCallback = (OnMarkerDataUpdatedListener)activity;
-		}catch(ClassCastException e){
+
+		try {
+			this.markerDataCallback = (OnMarkerDataUpdatedListener) activity;
+		} catch (ClassCastException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Rotate the map to give the user a compass feeling.
+	 * 
+	 * @param bearing
+	 *            The direction the user is pointing in compass direction.
+	 */
 	public void updateBearing(float bearing) {
 		if (this.getGoogleMap().getMyLocation() != null) {
 			LatLng location = new LatLng(this.getGoogleMap().getMyLocation()
@@ -70,9 +86,15 @@ public class MiniMapFragment extends BaseMapFragment {
 					CameraUpdateFactory.newCameraPosition(currentPlace));
 		}
 	}
-	
+
+	/**
+	 * Sets the refresh timer initially to every five seconds in case of issues
+	 * connecting to the data stream with the marker data. Once marker data has
+	 * been retrieved the refresh timer is set to every minute, to refresh in
+	 * according to that the user might move location.
+	 */
 	@Override
-	public int getRefreshTimer(){
+	public int getRefreshTimer() {
 		if (this.isFirstMarkerLoad()) {
 			return 1000 * 5;
 		} else {
@@ -80,6 +102,13 @@ public class MiniMapFragment extends BaseMapFragment {
 		}
 	}
 
+	/**
+	 * Calculates a relative distance to zoom in on the minimap, this method is
+	 * needed because Google Maps decide zoom factor on screen size and not in
+	 * meters or other traditional distance measures.
+	 * 
+	 * @return The level the zoom should be set at. Value between 1-15.
+	 */
 	private float calculateRelativeZoomDistance() {
 		final float EQUATOR_LENGTH_METER = 40075016.6856f;
 		Point size = new Point();
@@ -96,6 +125,10 @@ public class MiniMapFragment extends BaseMapFragment {
 		return zoomLevel;
 	}
 
+	/**
+	 * Overrides the onlocationchanged listener to move the minimap when the
+	 * user moves.
+	 */
 	private void setOnLocationChangeListener() {
 		this.getGoogleMap().setOnMyLocationChangeListener(
 				new OnMyLocationChangeListener() {
@@ -114,9 +147,10 @@ public class MiniMapFragment extends BaseMapFragment {
 
 				});
 	}
-	
-	public interface OnMarkerDataUpdatedListener{
-		public void onMarkerDataUpdated(DataSourceHandler datasourceHandler, Location myLocation);
+
+	public interface OnMarkerDataUpdatedListener {
+		public void onMarkerDataUpdated(DataSourceHandler datasourceHandler,
+				Location myLocation);
 	}
 
 }
