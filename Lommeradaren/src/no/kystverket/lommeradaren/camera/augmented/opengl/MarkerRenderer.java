@@ -20,7 +20,8 @@ import android.util.Log;
 
 /**
  * Class for rendering markers associated with PointOfInterests, this is handled
- * by treating the surroundings as a 3D environment in OpenGL.
+ * by treating the surroundings as a 3D environment with the user in the center
+ * in OpenGL.
  * 
  * @author Per Olav Flaten
  * 
@@ -39,7 +40,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 	private int screenWidth;
 	private int screenHeight;
 
-	private static final int TOUCH_RADIUS = 50;	
+	private static final int TOUCH_RADIUS = 50;
 
 	public MarkerRenderer(Context context) {
 		this.context = context;
@@ -83,10 +84,14 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.linAlg.initCameraView(eye[0], eye[1], eye[2], center[0],
 				center[1], center[2], up[0], up[1], up[2]);
 
-		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "North", "", 0, 10, -50);
-		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "South", "", 0, 10, 50);
-		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "East", "", 50, 10, 0);
-		this.linAlg.drawMarker(glText, new float[]{ 1.0f, 1.0f, 1.0f, 1.0f }, "West", "", -50, 10, 0);
+		this.linAlg.drawMarker(glText, new float[] { 1.0f, 1.0f, 1.0f, 1.0f },
+				"North", "", 0, 10, -50);
+		this.linAlg.drawMarker(glText, new float[] { 1.0f, 1.0f, 1.0f, 1.0f },
+				"South", "", 0, 10, 50);
+		this.linAlg.drawMarker(glText, new float[] { 1.0f, 1.0f, 1.0f, 1.0f },
+				"East", "", 50, 10, 0);
+		this.linAlg.drawMarker(glText, new float[] { 1.0f, 1.0f, 1.0f, 1.0f },
+				"West", "", -50, 10, 0);
 
 		this.drawAllMarkers();
 	}
@@ -112,34 +117,60 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 			throw new RuntimeException(glOperation + ": glError " + error);
 		}
 	}
-	
-	public synchronized void set3DMarkerList(DataSourceHandler dataSourceHandler, Location myLocation){
+
+	/**
+	 * Updates the list of markers from the provided DatasourceHandler and
+	 * current location
+	 * 
+	 * @param dataSourceHandler
+	 *            DatasourceHandler to use for updating markers
+	 * @param myLocation
+	 *            The users location
+	 */
+	public synchronized void set3DMarkerList(
+			DataSourceHandler dataSourceHandler, Location myLocation) {
 		this.markerWrappers = new ArrayList<MarkerWrapper>();
 		DecimalFormat df = new DecimalFormat("0.0#");
-		for(int i=0;i<dataSourceHandler.getPointOfInterestsSize();i++){
+		for (int i = 0; i < dataSourceHandler.getPointOfInterestsSize(); i++) {
 			POI poi = dataSourceHandler.getPOI(i);
-			String[] tag = {poi.getName(),df.format(poi.getDistance()) + " m"};
+			String[] tag = { poi.getName(), df.format(poi.getDistance()) + " m" };
 			float[] cartesianCoordinates = {
-					RelativePosition.getDifference((float)myLocation.getLongitude(), (float)poi.getLng()),
-					RelativePosition.getAltitudeDifference((float)myLocation.getAltitude(), (float)poi.getAlt()),
-					-RelativePosition.getDifference((float)myLocation.getLatitude(), (float)poi.getLat()),
-					};
-			int[] screenCoordinates = this.linAlg.findPointOfInterestScreenPosition(cartesianCoordinates, this.screenWidth, this.screenHeight);
-			MarkerWrapper markerWrapper = new MarkerWrapper(poi,tag,cartesianCoordinates,screenCoordinates);
+					RelativePosition.getDifference(
+							(float) myLocation.getLongitude(),
+							(float) poi.getLng()),
+					RelativePosition.getAltitudeDifference(
+							(float) myLocation.getAltitude(),
+							(float) poi.getAlt()),
+					-RelativePosition.getDifference(
+							(float) myLocation.getLatitude(),
+							(float) poi.getLat()), };
+			int[] screenCoordinates = this.linAlg
+					.findPointOfInterestScreenPosition(cartesianCoordinates,
+							this.screenWidth, this.screenHeight);
+			MarkerWrapper markerWrapper = new MarkerWrapper(poi, tag,
+					cartesianCoordinates, screenCoordinates);
 			this.markerWrappers.add(markerWrapper);
 		}
-		
+
 	}
 
 	public void setScreenSize(int width, int height) {
 		this.screenWidth = width;
 		this.screenHeight = height;
 	}
-	
-	public List<MarkerWrapper> getMarkerList(){
+
+	public List<MarkerWrapper> getMarkerList() {
 		return markerWrappers;
 	}
 
+	/**
+	 * Creates a list of markers that is within a certain radius of a point on
+	 * the screen used to handle markers overlapping behind each other.
+	 * 
+	 * @param touchX
+	 * @param touchY
+	 * @return
+	 */
 	public MarkerWrapper[] getMarkerCluster(float touchX, float touchY) {
 		List<MarkerWrapper> markerCluster = new ArrayList<MarkerWrapper>();
 		int clusterElementCount = 0;
@@ -157,11 +188,22 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		return markerCluster.toArray(new MarkerWrapper[clusterElementCount]);
 	}
 
+	/**
+	 * Iterates through the list of markers and draws them using OpenGL
+	 */
 	private synchronized void drawAllMarkers() {
 		for (MarkerWrapper markerWrapper : this.markerWrappers) {
-			int[] screenCoordinates = this.linAlg.findPointOfInterestScreenPosition(markerWrapper.getCartesianCoordinates(), this.screenWidth, this.screenHeight);
+			int[] screenCoordinates = this.linAlg
+					.findPointOfInterestScreenPosition(
+							markerWrapper.getCartesianCoordinates(),
+							this.screenWidth, this.screenHeight);
 			markerWrapper.setScreenCoordinates(screenCoordinates);
-			this.linAlg.drawMarker(glText, new float[]{ 0.0f, 0.0f, 1.0f, 1.0f }, markerWrapper.getTag()[0], markerWrapper.getTag()[1], markerWrapper.getCartesianCoordinates()[0], markerWrapper.getCartesianCoordinates()[1], markerWrapper.getCartesianCoordinates()[2]);
+			this.linAlg.drawMarker(glText,
+					new float[] { 0.0f, 0.0f, 1.0f, 1.0f },
+					markerWrapper.getTag()[0], markerWrapper.getTag()[1],
+					markerWrapper.getCartesianCoordinates()[0],
+					markerWrapper.getCartesianCoordinates()[1],
+					markerWrapper.getCartesianCoordinates()[2]);
 		}
 	}
 }

@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
+ * The view layer related to everything displayed using OpenGL. Handles touch
+ * events in relation to markers displayed on screen.
  * 
  * @author Per Olav Flaten
  * 
@@ -33,10 +35,16 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		this.setRenderer(this.mRenderer);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		this.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-		
+
 		this.setZOrderMediaOverlay(true);
 	}
 
+	/**
+	 * Uses the orientation matrix from the compass/gps combination to set the
+	 * viewport correclty for OpenGL
+	 * 
+	 * @param orientation
+	 */
 	public void getSensorData(float[] orientation) {
 		this.mRenderer.setEye(0, 0, 0);
 		// Camera lookAt point x-, and z- axis is decided with compass
@@ -62,7 +70,8 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		return true;
 	}
 
-	public void set3DMarkerData(DataSourceHandler dataSourceHandler, Location myLocation) {
+	public void set3DMarkerData(DataSourceHandler dataSourceHandler,
+			Location myLocation) {
 		this.mRenderer.set3DMarkerList(dataSourceHandler, myLocation);
 	}
 
@@ -70,6 +79,12 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		this.mRenderer.setScreenSize(width, height);
 	}
 
+	/**
+	 * Creates and displays a dialog for selecting a ship when theres several
+	 * markers within a certain radius of the touch point on screen
+	 * 
+	 * @param markerCluster
+	 */
 	private void displayMarkerClusterDialog(final MarkerWrapper[] markerCluster) {
 		if (markerCluster.length > 0) { // Avoid displaying blank dialog
 			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -80,17 +95,22 @@ public class MarkerSurfaceView extends GLSurfaceView {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							FragmentManager fm = ((Activity) getContext()).getFragmentManager();
+							FragmentManager fm = ((Activity) getContext())
+									.getFragmentManager();
 							DialogFragment newFragment = new MarkerDialogFragment();
-							((MarkerDialogFragment)newFragment).setContent(
-									markerCluster[which].getTag()[0], 
-									"" + markerCluster[which].getPOI().getLat(), 
-									"" + markerCluster[which].getPOI().getLng(),
-									"" + markerCluster[which].getPOI().getAlt(),
+							((MarkerDialogFragment) newFragment).setContent(
+									markerCluster[which].getTag()[0], ""
+											+ markerCluster[which].getPOI()
+													.getLat(), ""
+											+ markerCluster[which].getPOI()
+													.getLng(), ""
+											+ markerCluster[which].getPOI()
+													.getAlt(),
 									markerCluster[which].getPOI().getImo(),
 									markerCluster[which].getPOI().getMmsi(),
 									markerCluster[which].getPOI().getSpeed(),
-									markerCluster[which].getPOI().getPositionTime(),
+									markerCluster[which].getPOI()
+											.getPositionTime(),
 									markerCluster[which].getPOI().getWebpage());
 							newFragment.show(fm, "marker_dialog");
 						}
@@ -107,8 +127,8 @@ public class MarkerSurfaceView extends GLSurfaceView {
 		}
 		return options;
 	}
-	
-	public List<MarkerWrapper> getMarkerList(){
+
+	public List<MarkerWrapper> getMarkerList() {
 		return mRenderer.getMarkerList();
 	}
 

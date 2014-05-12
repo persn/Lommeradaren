@@ -1,0 +1,2 @@
+The code in this package is originally created by Aleksandar Kodzhabashev and can be found at https://github.com/d3kod/Texample2.
+It is licenced under CC0 1.0 public domain license, which basically means there is no restrictions, but we feel credit to the author is due.
