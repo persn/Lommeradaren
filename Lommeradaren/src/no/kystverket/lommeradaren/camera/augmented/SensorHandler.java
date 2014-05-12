@@ -7,7 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
 /**
- * Class for handling the logic behind sensor events. Creates matrixes to set
+ * Class for handling the logic behind sensor events. Creates matrices to set
  * orientation and even out the results to make everything appear more smoothly
  * 
  * @author Henrik Reitan

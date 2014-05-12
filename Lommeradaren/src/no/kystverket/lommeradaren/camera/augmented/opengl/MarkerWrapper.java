@@ -3,8 +3,8 @@ package no.kystverket.lommeradaren.camera.augmented.opengl;
 import no.kystverket.lommeradaren.markers.POI;
 
 /**
- * Class for combining a POI object and its associated cartesian and 2d onscreen
- * coordinates for easier handling.
+ * Class for combining a POI object and its associated cartesian and 2D
+ * on-screen coordinates for easier handling.
  * 
  * @author Per Olav Flaten
  * 

@@ -95,14 +95,23 @@ public class LinearAlgebra {
 	 * Sets initial values for the openGL matrixes.
 	 * 
 	 * @param eyeX
+	 *            X-coordinate of the user
 	 * @param eyeY
+	 *            Y-coordinate of the user
 	 * @param eyeZ
+	 *            Z-coordinate of the user
 	 * @param centerX
+	 *            X-coordinate of the fixated point the user is viewing at
 	 * @param centerY
+	 *            Y-coordinate of the fixated point the user is viewing at
 	 * @param centerZ
+	 *            Z-coordinate of the fixated point the user is viewing at
 	 * @param upX
+	 *            X-coordinate of the point directly above the users head
 	 * @param upY
+	 *            Y-coordinate of the point directly above the users head
 	 * @param upZ
+	 *            Z-coordinate of the point directly above the users head
 	 */
 	public void initCameraView(float eyeX, float eyeY, float eyeZ,
 			float centerX, float centerY, float centerZ, float upX, float upY,

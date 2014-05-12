@@ -232,11 +232,12 @@ public class CameraActivity extends Activity implements SensorEventListener,
 	}
 
 	/**
-	 * Creates a popup dialog asking which ship a photo was just taken. Gets
+	 * Creates a popup dialog asking which ship a photo was just taken. Is
 	 * called once a picture has been successfully created by the cameraview.
 	 * The information about that ship is then written to the images metadata.
 	 * 
-	 * @param imgPath Image to write metadata into.
+	 * @param imgPath
+	 *            Image to write metadata into.
 	 */
 	private void displayShipListDialog(String imgPath) {
 		final List<MarkerWrapper> markers = mGLView.getMarkerList();

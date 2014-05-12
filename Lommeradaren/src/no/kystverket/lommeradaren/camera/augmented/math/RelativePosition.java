@@ -1,7 +1,7 @@
 package no.kystverket.lommeradaren.camera.augmented.math;
 
 /**
- * Class for handling the conversion between raw gps coordinates and cartesian
+ * Class for handling the conversion between raw GPS coordinates and cartesian
  * coordinates to use with OpenGL
  * 
  * @author Per Olav Flaten

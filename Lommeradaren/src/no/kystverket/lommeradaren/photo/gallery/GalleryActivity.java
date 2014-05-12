@@ -185,38 +185,6 @@ public class GalleryActivity extends Activity implements
 		}
 	}
 
-	/**
-	 * Displays a popup dialog displaying the information contained in the
-	 * currently selected images metadata.
-	 */
-	private void showInfoDialog() {
-		FragmentManager fm = getFragmentManager();
-		DialogFragment newFragment = new MarkerDialogFragment();
-		((MarkerDialogFragment) newFragment).setContent(
-				pictures.get(selectedPosition).getPoi().getName(), ""
-						+ pictures.get(selectedPosition).getPoi().getLat(), ""
-						+ pictures.get(selectedPosition).getPoi().getLng(), ""
-						+ pictures.get(selectedPosition).getPoi().getAlt(),
-				pictures.get(selectedPosition).getPoi().getImo(),
-				pictures.get(selectedPosition).getPoi().getMmsi(), pictures
-						.get(selectedPosition).getPoi().getSpeed(), pictures
-						.get(selectedPosition).getPoi().getPositionTime(),
-				pictures.get(selectedPosition).getPoi().getWebpage());
-		newFragment.show(fm, "marker_dialog");
-	}
-
-	/**
-	 * Deletes the currently selected image from the device.
-	 */
-	private void deleteImage() {
-		pHandler.deleteImage(pictures.get(selectedPosition));
-		pictures = pHandler.getPictures();
-		gallery.setAdapter(new ImageAdapter(this, pictures));
-		mSwitcher.setImageDrawable(null);
-		selectedPosition = -1;
-		textSwitcher.setText("");
-	}
-
 	@Override
 	public boolean onDown(MotionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -224,7 +192,7 @@ public class GalleryActivity extends Activity implements
 	}
 
 	/**
-	 * changes the selected image to the next or previous based on the direction
+	 * Changes the selected image to the next or previous based on the direction
 	 * of the finger gesture.
 	 */
 	@Override
@@ -336,6 +304,38 @@ public class GalleryActivity extends Activity implements
 	}
 
 	public void onSwipeBottom() {
+	}
+	
+	/**
+	 * Displays a popup dialog displaying the information contained in the
+	 * currently selected images metadata.
+	 */
+	private void showInfoDialog() {
+		FragmentManager fm = getFragmentManager();
+		DialogFragment newFragment = new MarkerDialogFragment();
+		((MarkerDialogFragment) newFragment).setContent(
+				pictures.get(selectedPosition).getPoi().getName(), ""
+						+ pictures.get(selectedPosition).getPoi().getLat(), ""
+						+ pictures.get(selectedPosition).getPoi().getLng(), ""
+						+ pictures.get(selectedPosition).getPoi().getAlt(),
+				pictures.get(selectedPosition).getPoi().getImo(),
+				pictures.get(selectedPosition).getPoi().getMmsi(), pictures
+						.get(selectedPosition).getPoi().getSpeed(), pictures
+						.get(selectedPosition).getPoi().getPositionTime(),
+				pictures.get(selectedPosition).getPoi().getWebpage());
+		newFragment.show(fm, "marker_dialog");
+	}
+
+	/**
+	 * Deletes the currently selected image from the device.
+	 */
+	private void deleteImage() {
+		pHandler.deleteImage(pictures.get(selectedPosition));
+		pictures = pHandler.getPictures();
+		gallery.setAdapter(new ImageAdapter(this, pictures));
+		mSwitcher.setImageDrawable(null);
+		selectedPosition = -1;
+		textSwitcher.setText("");
 	}
 
 }

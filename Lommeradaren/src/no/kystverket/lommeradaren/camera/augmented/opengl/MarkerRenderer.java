@@ -50,18 +50,36 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		this.up = new float[3];
 	}
 
+	/**
+	 * Sets vector of the users position.
+	 * @param eyeX
+	 * @param eyeY
+	 * @param eyeZ
+	 */
 	public void setEye(float eyeX, float eyeY, float eyeZ) {
 		this.eye[0] = eyeX;
 		this.eye[1] = eyeY;
 		this.eye[2] = eyeZ;
 	}
 
+	/**
+	 * Sets vector of the point the user is fixating at.
+	 * @param centerX
+	 * @param centerY
+	 * @param centerZ
+	 */
 	public void setCenter(float centerX, float centerY, float centerZ) {
 		this.center[0] = centerX;
 		this.center[1] = centerY;
 		this.center[2] = centerZ;
 	}
 
+	/**
+	 * Sets the vector of the position directly above the user.
+	 * @param upX
+	 * @param upY
+	 * @param upZ
+	 */
 	public void setUp(float upX, float upY, float upZ) {
 		this.up[0] = upX;
 		this.up[1] = upY;
@@ -109,7 +127,7 @@ public class MarkerRenderer implements GLSurfaceView.Renderer {
 		return shader;
 	}
 
-	public static void checkGlError(String glOperation) {
+	public static void checkGLError(String glOperation) {
 		int error;
 		while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
 			Log.e("no.kystverket.lommeradaren", glOperation + ": glError "
