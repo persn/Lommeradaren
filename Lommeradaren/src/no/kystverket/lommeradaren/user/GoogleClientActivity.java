@@ -16,6 +16,12 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 
+/**
+ * Activity class for handling user login, logout and account revoke on Google+ login.
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class GoogleClientActivity extends FragmentActivity implements
 		ConnectionCallbacks, OnConnectionFailedListener {
 
@@ -31,7 +37,7 @@ public class GoogleClientActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.fragment_google_plu);
+		this.setContentView(R.layout.google_plus_activity);
 
 		this.mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
@@ -114,6 +120,11 @@ public class GoogleClientActivity extends FragmentActivity implements
 		this.mGoogleApiClient.connect();
 	}
 
+	/**
+	 * Click-method for btn_sign_in in res\layout\google_plus_activity.xml
+	 * 
+	 * @param view
+	 */
 	public void loginGoogleOnClick(View view) {
 		if (!this.mGoogleApiClient.isConnecting()) {
 			this.mSignInClicked = true;
@@ -121,6 +132,11 @@ public class GoogleClientActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * Click-method for btn_sign_out in res\layout\google_plus_activity.xml 
+	 * 
+	 * @param view
+	 */
 	public void signoutGoogleOnClick(View view) {
 		if (this.mGoogleApiClient.isConnected()) {
 			Plus.AccountApi.clearDefaultAccount(this.mGoogleApiClient);
@@ -129,6 +145,11 @@ public class GoogleClientActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * Click-method for btn_revoke_access in res\layout\google_plus_activity.xml
+	 * 
+	 * @param view
+	 */
 	public void revokeGoogleOnClick(View view) {
 		Plus.AccountApi.clearDefaultAccount(this.mGoogleApiClient);
 		Plus.AccountApi.revokeAccessAndDisconnect(this.mGoogleApiClient)
@@ -158,16 +179,22 @@ public class GoogleClientActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * Help method for enabling/disabling login/logout buttons when user has logged in.
+	 */
 	private void renderButtonsOnSignedIn() {
-		((Button) findViewById(R.id.sign_in_button)).setEnabled(false);
-		((Button) findViewById(R.id.sign_out_button)).setEnabled(true);
-		((Button) findViewById(R.id.revoke_access_button)).setEnabled(true);
+		((Button) findViewById(R.id.btn_sign_in)).setEnabled(false);
+		((Button) findViewById(R.id.btn_sign_out)).setEnabled(true);
+		((Button) findViewById(R.id.btn_revoke_access)).setEnabled(true);
 	}
 
+	/**
+	 * Help method for enabling/disabling login/logout buttons when user has logged out.
+	 */
 	private void renderButtonsOnSignedOut() {
-		((Button) findViewById(R.id.sign_in_button)).setEnabled(true);
-		((Button) findViewById(R.id.sign_out_button)).setEnabled(false);
-		((Button) findViewById(R.id.revoke_access_button)).setEnabled(false);
+		((Button) findViewById(R.id.btn_sign_in)).setEnabled(true);
+		((Button) findViewById(R.id.btn_sign_out)).setEnabled(false);
+		((Button) findViewById(R.id.btn_revoke_access)).setEnabled(false);
 	}
 
 }

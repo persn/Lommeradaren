@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+     <!--   
+     <com.google.android.gms.common.SignInButton
+          android:id="@+id/sign_in_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:enabled="false" 
+          android:onClick="loginGoogleOnClick">
+
+      </com.google.android.gms.common.SignInButton>
+      
+      -->
+
+      <Button
+          android:id="@+id/btn_sign_in"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentRight="true"
+          android:onClick="loginGoogleOnClick"
+          android:text="@string/sign_in_google" />
+
+      <Button
+          android:id="@+id/btn_sign_out"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignRight="@+id/btn_sign_in"
+          android:layout_below="@+id/btn_sign_in"
+          android:enabled="false"
+          android:onClick="signoutGoogleOnClick"
+          android:text="@string/log_out_google" />
+
+      <Button
+          android:id="@+id/btn_revoke_access"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignRight="@+id/btn_sign_out"
+          android:layout_below="@+id/btn_sign_out"
+          android:enabled="false"
+          android:onClick="revokeGoogleOnClick"
+          android:text="@string/revoke_google" />
+    
+</RelativeLayout>

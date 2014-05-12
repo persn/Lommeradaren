@@ -17,6 +17,13 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableNotifiedException;
 
+/**
+ * A thread class that executes transfer of user pictures from the Android application
+ * to the web client.
+ * 
+ * @author Per Olav Flaten
+ *
+ */
 public class StreamPictureTask extends AsyncTask<Void, Void, Void> {
 
 	protected Activity activity;
@@ -26,9 +33,9 @@ public class StreamPictureTask extends AsyncTask<Void, Void, Void> {
 	protected String pictureFileData;
 	protected String url;
 
-	private String boundary = "SwA" + Long.toString(System.currentTimeMillis())
+	private final static String boundary = "SwA" + Long.toString(System.currentTimeMillis())
 			+ "SwA";
-	private String delimiter = "--";
+	private final static String delimiter = "--";
 
 	public StreamPictureTask(Activity activity, String email, String scope,
 			String pictureFileName, String pictureFileData, String url) {
