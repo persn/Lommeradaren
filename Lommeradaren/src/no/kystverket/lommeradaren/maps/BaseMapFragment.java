@@ -99,7 +99,7 @@ public abstract class BaseMapFragment extends Fragment {
 
 	/**
 	 * Setup the UI components of the map that should be active. For example,
-	 * onn a small mini-map we'll want to disable several components to avoid
+	 * on a small mini-map we'll want to disable several components to avoid
 	 * cluttering.
 	 */
 	public abstract void setMapSettings();
