@@ -40,14 +40,14 @@ public class MainActivity extends Activity {
 		if (screenSize.x < screenSize.y) {
 			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
 					PhotoHandler.decodeSampledBitmapFromResource(
-							getResources(),
-							R.drawable.mainmenu_background, screenSize.x,
-							screenSize.y)));
+							getResources(), R.drawable.mainmenu_background,
+							screenSize.x, screenSize.y)));
 		} else {
 			backgroundImage.setImageDrawable(new BitmapDrawable(getResources(),
 					PhotoHandler.decodeSampledBitmapFromResource(
-							getResources(), R.drawable.mainmenu_background_land,
-							screenSize.x, screenSize.y)));
+							getResources(),
+							R.drawable.mainmenu_background_land, screenSize.x,
+							screenSize.y)));
 		}
 	}
 
@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Switches to the camera activity
+	 * 
 	 * @param v
 	 */
 	public void cameraOnClick(View v) {
@@ -68,6 +69,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Switches to the gallery activity
+	 * 
 	 * @param v
 	 */
 	public void galleryOnClick(View v) {
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Switches to the map activity
+	 * 
 	 * @param v
 	 */
 	public void goToMapScreenOnClick(View v) {

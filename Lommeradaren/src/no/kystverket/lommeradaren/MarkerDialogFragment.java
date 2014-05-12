@@ -14,8 +14,9 @@ import android.widget.TextView;
 
 /**
  * Class for handling the information dialogs in the application
+ * 
  * @author Per Olav Flaten
- *
+ * 
  */
 public class MarkerDialogFragment extends DialogFragment {
 
@@ -64,18 +65,20 @@ public class MarkerDialogFragment extends DialogFragment {
 		this.setDialogText(view);
 		return dialog;
 	}
-/**
- * Method for updating the information contained in this dialogFragment
- * @param title
- * @param latitude 
- * @param longitude
- * @param elevation
- * @param imo
- * @param mmsi
- * @param speed
- * @param positionTime
- * @param website
- */
+
+	/**
+	 * Method for updating the information contained in this dialogFragment
+	 * 
+	 * @param title
+	 * @param latitude
+	 * @param longitude
+	 * @param elevation
+	 * @param imo
+	 * @param mmsi
+	 * @param speed
+	 * @param positionTime
+	 * @param website
+	 */
 	public void setContent(String title, String latitude, String longitude,
 			String elevation, String imo, String mmsi, String speed,
 			String positionTime, String website) {
@@ -91,7 +94,9 @@ public class MarkerDialogFragment extends DialogFragment {
 	}
 
 	/**
-	 * Binds the information in the class variables to the text fields in the dialog
+	 * Binds the information in the class variables to the text fields in the
+	 * dialog
+	 * 
 	 * @param view
 	 */
 	private void setDialogText(View view) {
